@@ -33,6 +33,7 @@ game.init = function()
     player.animation.timerAnim = setInterval(player.animate, 100);
 
     // Initialize items
+    item.y = canvas.height - item.sheet.frameHeight - 15;
     items.push(item);
 
     // Start the gameLoop
@@ -45,7 +46,7 @@ game.init = function()
  */
 game.loop = function (timeStamp) 
 {
-    // Calculate the number of seconds passed since the last frame
+    // Calculate the number of seconds passed since the last loop 
     game.secondsPassed = (timeStamp - game.oldTimeStamp) / 1000;
     game.oldTimeStamp = timeStamp;
 
