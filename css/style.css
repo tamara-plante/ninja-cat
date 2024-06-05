@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 html, body {
     width: 100%;
@@ -14,6 +14,18 @@ html, body {
     padding: 0;
 }
 
+
+#guiCanvas {    
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1; 
+    display: block;
+    margin: auto;
+    padding: 0; 
+}
+
 #menu {
     display: flex;
     direction: ltr;
@@ -27,10 +39,10 @@ html, body {
     width: 140px;
     height: 36px;
     margin-top: 10px;        
-    font-family: 'Press Start 2P', sans-serif;
+    font-family: "Press Start 2P", system-ui;
     font-size: 10px;
     text-transform: uppercase;
-    color: #222034;
+    color: #222034;  
     background: #5FCFD4;
     border: 0px;
     position: relative;
@@ -73,7 +85,7 @@ html, body {
     width: 100%;
     height: 108%;
     z-index: -1;
-  }
+}
 
 /*
 @media (min-width: 768px) {

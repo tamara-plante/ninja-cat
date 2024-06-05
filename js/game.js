@@ -71,6 +71,11 @@ game.loop = function (timeStamp)
     player.update(game.secondsPassed);
     // Draw to canvas
     game.draw();
+
+    // Draw the score on the GUI canvas
+    game.drawScore();
+
+
     // Keep requesting new frames
     window.requestAnimationFrame(game.loop);
 }
@@ -86,6 +91,29 @@ game.draw = function()
     }
     player.draw();
 }
+
+game.drawScore = function() {
+    // Clear the GUI canvas
+    guiContext.clearRect(0, 0, guiCanvas.width, guiCanvas.height);
+
+
+    // Draw the button
+    guiContext.fillStyle = '#5FCFD4'; // Background color
+    guiContext.strokeStyle = '#306082'; // Border color
+    guiContext.lineWidth = 1; // Border width
+
+    // Draw the button background
+    guiContext.fillRect(10, 10, 100, 30); // x, y, width, height
+    guiContext.strokeRect(10, 10, 100, 30); // x, y, width, height
+
+    // Set text properties
+    guiContext.font = '9px "Press Start 2P"'; 
+    guiContext.fillStyle = '#222034'; 
+
+    // Draw the score on the GUI canvas
+    guiContext.fillText('Score: ' + game.points, 20, 30); // Text and position (x: 10, y: 30)
+};
+
 
 // testing an object collision
 item = {
