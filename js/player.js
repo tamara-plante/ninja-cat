@@ -57,8 +57,8 @@ player.isColliding = function(item)
     // Add padding to collision so the character has to overlap more visually to count as a collision. 
     return ( 
         player.y <= item.y + (item.height-20) && // top
-        player.x < item.x + (item.width-20) && // right
-        item.x < player.x + (player.width-20) // left
+        item.x < player.x + (player.width-20) && // right
+        player.x < item.x + item.width // left
     );
 }
 

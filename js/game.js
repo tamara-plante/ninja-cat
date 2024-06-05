@@ -58,7 +58,7 @@ game.loop = function (timeStamp)
             console.log("current points: " + game.points);
             
             // random spawn on the x axis for the next nugget.
-            item.x = Math.floor(Math.max(0, Math.random() * canvas.width - item.width)); 
+            item.x = Math.floor(Math.max(0, Math.random() * (canvas.width - item.sheet.frameWidth))); 
             setTimeout(function() {items.push(item)}, 3000);
         }
     }
