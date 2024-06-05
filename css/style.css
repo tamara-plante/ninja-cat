@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap');
 
 html, body {
     width: 100%;
@@ -24,9 +24,56 @@ html, body {
 }
 
 #start{
-    font-family: Silkscreen, sans-serif
+    width: 150px;
+    height: 36px;
+    margin-top: 10px;        
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #222034;
+    background: #5FCFD4;
+    border: 0px;
+    position: relative;
+    box-shadow: 
+    inset -4px 2px 1px 1px grey,
+    inset -4px -2px 1px 1px lightgray,
+    inset 4px 0px 1px 1px lightgray;  
 }
 
+#start:hover {
+    cursor: pointer;
+    background-color: #40a1a6;
+}
+  
+#start:active {
+    top: 5px;
+    box-shadow: 
+    -4px 2px 1px 1px grey,
+    -4px -2px 1px 1px lightgray,
+    4px 0px 1px 1px lightgray; 
+}
+  
+#start::after {
+    content: '';
+    background: #306082;
+    position: absolute;
+    left: -1%;
+    top: 0;
+    width: 102%;
+    height: 100%;
+    z-index: -1;
+}
+  
+#start::before {
+    content: '';
+    background: #306082;
+    position: absolute;
+    left: 0;
+    top: -3%;
+    width: 100%;
+    height: 108%;
+    z-index: -1;
+  }
 
 /*
 @media (min-width: 768px) {
