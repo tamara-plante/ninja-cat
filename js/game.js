@@ -99,13 +99,52 @@ game.drawScore = function() {
 
     // Draw the button
     guiContext.fillStyle = '#5FCFD4'; // Background color
-    guiContext.strokeStyle = '#306082'; // Border color
-    guiContext.lineWidth = 1; // Border width
 
     // Draw the button background
     guiContext.fillRect(10, 10, 110, 30); // x, y, width, height
-    guiContext.strokeRect(10, 10, 110, 30); // x, y, width, height
 
+    // strokes
+    guiContext.strokeStyle = '#222034'; // Border color #306082
+    guiContext.lineWidth = 1; // Border width
+   // guiContext.strokeRect(10, 10, 110, 30);  // complete stroke of the button
+
+    // gray highlights 
+    guiContext.fillStyle = '#bfbfbf'; 
+    guiContext.fillRect(11, 11, 108, 2);
+    guiContext.fillRect(115, 11, 4, 28);
+
+    // Draw the lines
+    // left border line 
+    guiContext.beginPath(); // Start a new path
+    guiContext.moveTo(10, 11); // Move to the starting point
+    guiContext.lineTo(10, 38); // Draw a line to the ending point
+    guiContext.stroke(); // Stroke the line
+
+    // top border line 
+    guiContext.beginPath(); // Start a new path
+    guiContext.moveTo(11, 10); // Move to the starting point
+    guiContext.lineTo(119, 10); // Draw a line to the ending point
+    guiContext.stroke(); // Stroke the line
+
+
+    // right border line 
+    guiContext.beginPath(); // Start a new path
+    guiContext.moveTo(120, 11); // Move to the starting point
+    guiContext.lineTo(120, 38); // Draw a line to the ending point
+    guiContext.stroke(); // Stroke the line
+
+    // bottom border line 
+    guiContext.beginPath(); // Start a new path
+    guiContext.moveTo(11, 40); // Move to the starting point
+    guiContext.lineTo(118, 40); // Draw a line to the ending point
+    guiContext.stroke(); // Stroke the line
+
+    // lightgray highlights 
+    guiContext.fillStyle = '#e0e0e0'; 
+    guiContext.fillRect(11, 11, 4, 28);
+    guiContext.fillRect(11, 37, 108, 2);
+
+    
     // Set text properties
     guiContext.font = '9px "Press Start 2P"'; 
     guiContext.fillStyle = '#222034'; 
