@@ -5,16 +5,13 @@ player =
     movingSpeed: 250,
     x: 0, // current position-x
     y: 30, // current position-y
-    width: 60, // collision size
-    height: 75, // collision size
-    getCollisionMarginX: function() { // Get how much white space from the actual collision shape to the frame edge there is.
-        return (player.sheet.frameWidth - player.width)/2;
-    },
+    width: 66, // collision size
+    height: 81, // collision size
     sheet: {
         columns: 4,
         rows: 2,
-        frameWidth: 96,
-        frameHeight: 96
+        frameWidth: 66,
+        frameHeight: 81
     },
     animation: {
         timerAnim: null, // setInterval of 100ms that controls animations, should run forever.
@@ -23,8 +20,8 @@ player =
         currentAnim: "idleRight",
         idleLeft: [{col:0, row:0, delay:600}, {col:1, row:0, delay:300}],
         idleRight: [{col:0, row:1, delay:600}, {col:1, row:1, delay:300}],
-        movingLeft: [{col:2,row:0}, {col:3,row:0}],
-        movingRight: [{col:2,row:1}, {col:3,row:1}]
+        movingLeft: [{col:2, row:0}, {col:3, row:0}],
+        movingRight: [{col:2, row:1}, {col:3, row:1}]
     }
 };
 
@@ -59,11 +56,16 @@ player.isColliding = function(item)
         player.y <= item.y + item.height && // top
         item.x < player.x + player.width && // right
         player.x < item.x + item.width-10 // left
-    );*/
-    return ( 
+        
         (player.y + player.height) >= item.y &&
         player.y <= (item.y + item.height) &&
         (player.x + player.width) >= item.x &&
+        player.x <= (item.x + item.width)
+    );*/
+    return (
+        item.y <= (player.y + player.height) &&
+        player.y <= (item.y + item.height) &&
+        item.x <= (player.x + player.width) &&
         player.x <= (item.x + item.width)
     );
 }
@@ -82,13 +84,13 @@ player.update = function(secondsPassed)
 
         // Set the new x, while accounting for canvas boundary. Round to nearest int.
         if (rightPressed) {
-            posX = Math.min(player.x + distance, canvas.width - player.sheet.frameWidth + player.getCollisionMarginX());
+            posX = Math.min(player.x + distance, canvas.width - player.sheet.frameWidth);
             player.direction = "right";
             player.animation.update("movingRight");
         }
         // leftPressed
         else {
-            posX = Math.max(player.x - distance, 0 - player.getCollisionMarginX());
+            posX = Math.max(player.x - distance, 0);
             player.direction = "left";
             player.animation.update("movingLeft");
         }
