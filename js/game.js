@@ -136,7 +136,7 @@ game.drawScore = function() {
     // bottom border line 
     guiContext.beginPath(); // Start a new path
     guiContext.moveTo(11, 40); // Move to the starting point
-    guiContext.lineTo(118, 40); // Draw a line to the ending point
+    guiContext.lineTo(119, 40); // Draw a line to the ending point
     guiContext.stroke(); // Stroke the line
 
     // lightgray highlights 
