@@ -26,6 +26,11 @@ html, body {
     padding: 0; 
 }
 
+
+#guiCanvas, #game {
+    image-rendering: pixelated;
+}
+
 #menu {
     display: flex;
     direction: ltr;
@@ -95,3 +100,4 @@ html, body {
     }
 }
 */
+
