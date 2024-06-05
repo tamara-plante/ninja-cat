@@ -103,8 +103,8 @@ game.drawScore = function() {
     guiContext.lineWidth = 1; // Border width
 
     // Draw the button background
-    guiContext.fillRect(10, 10, 100, 30); // x, y, width, height
-    guiContext.strokeRect(10, 10, 100, 30); // x, y, width, height
+    guiContext.fillRect(10, 10, 110, 30); // x, y, width, height
+    guiContext.strokeRect(10, 10, 110, 30); // x, y, width, height
 
     // Set text properties
     guiContext.font = '9px "Press Start 2P"'; 
