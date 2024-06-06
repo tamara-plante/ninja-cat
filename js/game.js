@@ -75,6 +75,7 @@ game.loop = function (timeStamp)
     // Draw the score on the GUI canvas
     game.drawScore();
 
+    game.drawGameOver();
 
     // Keep requesting new frames
     window.requestAnimationFrame(game.loop);
@@ -153,6 +154,24 @@ game.drawScore = function() {
     guiContext.fillText('Score: ' + game.points, 20, 30); // Text and position (x: 10, y: 30)
 };
 
+game.drawGameOver = function() {
+    // Clear the canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw the text background
+    context.fillStyle = '#5FCFD4'; // Background color
+    context.fillRect(canvas.width / 2 - 150, canvas.height / 2 - 20, 360, 40); // Background rectangle
+
+    // Draw "GAME OVER" text
+    context.font = '30px "Press Start 2P"';
+    context.fillStyle = '#222034';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
+};
+
+
+
 
 // testing an object collision
 item = {
@@ -172,3 +191,4 @@ item.draw = function()
 {
     context.drawImage(item.sprite, item.x, item.y);
 }
+
