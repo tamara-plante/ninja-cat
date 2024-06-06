@@ -75,8 +75,6 @@ game.loop = function (timeStamp)
     // Draw the score on the GUI canvas
     game.drawScore();
 
-    game.drawGameOver();
-
     // Keep requesting new frames
     window.requestAnimationFrame(game.loop);
 }
@@ -158,16 +156,39 @@ game.drawGameOver = function() {
     // Clear the canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw the text background
-    context.fillStyle = '#5FCFD4'; // Background color
-    context.fillRect(canvas.width / 2 - 150, canvas.height / 2 - 20, 360, 40); // Background rectangle
+    // Create a gradient
+    // Create a vertical gradient for the text fill
+    let gradient = context.createLinearGradient(
+        canvas.width / 2 -100, canvas.height / 2 + 12, // x0, y0 (bottom of the text)
+        canvas.width / 2 -100, canvas.height / 2 -16 // x1, y1 (top of the text)    
+    );  
+    gradient.addColorStop(0, '#AA373C'); 
+    gradient.addColorStop(1, '#E9B23D');
+
+    // Draw the text backround stroke 1 
+    context.strokeStyle = '#5FCFD4'; // Border color #306082
+    context.lineWidth = 4; // Border width
+    context.strokeRect(canvas.width / 2 - 150, canvas.height / 2 - 24, 300, 44);
+
+    
+    // Draw the text backround stroke 2 
+    context.strokeStyle = '#000000'; // Border color #306082
+    context.lineWidth = 1; // Border width
+    context.strokeRect(canvas.width / 2 - 152, canvas.height / 2 - 26, 304, 48);
 
     // Draw "GAME OVER" text
     context.font = '30px "Press Start 2P"';
-    context.fillStyle = '#222034';
+    context.fillStyle = gradient; // Set the gradient as the fill style
+
+    context.strokeStyle = '#000000'; // Text stroke color
     context.textAlign = 'center';
     context.textBaseline = 'middle';
-    context.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
+    
+    // Fill and stroke the text
+    context.fillText('GAME OVER',canvas.width / 2, canvas.height / 2);
+    context.strokeText('GAME OVER', canvas.width / 2, canvas.height / 2);
+
+   
 };
 
 
