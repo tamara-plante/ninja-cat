@@ -29,11 +29,11 @@ game.init = function()
     item.sprite = document.getElementById("item");
 
     // Initialize the player
-    player.y = canvas.height - player.sheet.frameHeight;
+    player.y = canvas.height - player.height;
     player.animation.timerAnim = setInterval(player.animate, 100);
 
     // Initialize items
-    item.y = canvas.height - item.sheet.frameHeight - 15;
+    item.y = canvas.height - item.height - 15;
     items.push(item);
 
     // Start the gameLoop
@@ -59,7 +59,7 @@ game.loop = function (timeStamp)
             console.log("current points: " + game.points);
             
             // random spawn on the x axis for the next nugget.
-            item.x = Math.floor(Math.max(0, Math.random() * (canvas.width - item.sheet.frameWidth))); 
+            item.x = Math.floor(Math.max(0, Math.random() * (canvas.width - item.width + 25)));
             setTimeout(function() {items.push(item)}, 3000);
         }
     }
@@ -90,14 +90,10 @@ game.draw = function()
 // testing an object collision
 item = {
     sprite: null,
-    sheet: {
-        frameWidth: 96,
-        frameHeight: 96
-    },
-    x: 250,
+    x: 280,
     y: 585-55+30,
-    width: 42, // actual image size without empty space around
-    height: 45,
+    width: 48, // actual image size without empty space around
+    height: 51,
     points: 10 // added to the score
 }
 
