@@ -64,6 +64,8 @@ game.loop = function (timeStamp)
         }
     }
 
+    this.nuggets = [];
+    
     // Clear the canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -72,6 +74,28 @@ game.loop = function (timeStamp)
     // Draw to canvas
     game.draw();
     // Keep requesting new frames
+
+    constructor(canvas, difficulty, difficultyDelta) {
+  
+
+        this.nuggets = [];
+        this.difficulty = difficulty;
+        this.difficultyDelta = difficultyDelta;
+    
+        this.nuggetsInterval = setInterval(() => {
+          this.dropNuggets(Math.ceil(this.difficulty));
+          // this.dropNuggets(1);
+          this.difficulty += this.difficultyDelta;
+        }, 1500);
+      }
+
+      dropNuggets(n) {
+        const nuggets = document.getElementById("item")
+        const numNuggets = Math.ceil(Math.random() * n)
+        for(let i = 0; i < numNuggets; i++) {
+          this.nuggets.push(new Rock(nuggets[Math.floor(Math.random() * nuggets.length)], randomX()));
+        }
+      }
     window.requestAnimationFrame(game.loop);
 }
 
@@ -105,3 +129,21 @@ item.draw = function()
 {
     context.drawImage(item.sprite, item.x, item.y);
 }
+
+
+class Nugget {
+    constructor(symbol, x) {
+      this.symbol = symbol;
+      this.x = x;
+      this.y = 50;
+    }
+  
+    render(ctx) {
+      ctx.font = '40px serif'
+      ctx.fillText(this.symbol, this.x, this.y)
+    }
+  
+    fall(diff) {
+      this.y += diff;
+    }
+  }
