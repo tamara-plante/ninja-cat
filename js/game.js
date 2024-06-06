@@ -19,8 +19,7 @@ let item;
 let items = [];
 
 // Background image
-let bgImg = new Image();
-bgImg.src = 'images/japan-5.png';
+let bgImg = document.getElementById('bgImg');
 let bgLoaded = false;
 
 /**
@@ -37,7 +36,7 @@ game.init = function()
     };
     */
 
-    drawBackground(bgContext); 
+    drawBackground(); 
 
     // Get a reference to our main elements
     player.sprite = document.getElementById("player");
@@ -179,7 +178,7 @@ game.drawScore = function() {
 
 
 // image background
-function drawBackground(bgContext) {
+function drawBackground() {
 
     bgContext.drawImage(bgImg, 0, 0,  (bgImg.width * bgCanvas.height/ bgImg.height), bgCanvas.height);
    /*
