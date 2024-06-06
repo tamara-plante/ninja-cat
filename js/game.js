@@ -18,7 +18,10 @@ let player;
 let item;
 let items = [];
 
-
+// Background image
+let bgImg = new Image();
+bgImg.src = 'images/japan-5.png';
+let bgLoaded = false;
 
 /**
  * Initialize the game.
@@ -26,6 +29,16 @@ let items = [];
 game.init = function()
 {
     start.disabled = "true";
+
+    /*
+    bgImg.onload = function() {
+        bgLoaded = true;
+        drawBackground(bgContext); 
+    };
+    */
+
+    drawBackground(bgContext); 
+
     // Get a reference to our main elements
     player.sprite = document.getElementById("player");
     item.sprite = document.getElementById("item");
@@ -80,6 +93,7 @@ game.loop = function(timeStamp) {
   // Update player
   player.update(game.secondsPassed);
 
+  
   // Draw items and player
   game.draw();
   
@@ -162,6 +176,24 @@ game.drawScore = function() {
     // Draw the score on the GUI canvas
     guiContext.fillText('Score: ' + game.points, 20, 30); // Text and position (x: 10, y: 30)
 };
+
+
+// image background
+function drawBackground(bgContext) {
+
+    bgContext.drawImage(bgImg, 0, 0,  (bgImg.width * bgCanvas.height/ bgImg.height), bgCanvas.height);
+   /*
+    if (bgContext && bgLoaded) {
+        console.log('background');
+        bgContext.drawImage(bgImg, 0, 0,  (bgImg.width * bgCanvas.height/ bgImg.height), bgCanvas.height);
+    } else if (!bgContext){
+        console.error("bgContext is undefined ");
+    } if (!bgLoaded){
+        console.error("bgImg is not loaded.");
+    }*/
+}
+
+
 
 game.drawGameOver = function() {
     // Clear the canvas

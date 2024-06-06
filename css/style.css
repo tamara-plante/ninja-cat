@@ -15,6 +15,17 @@ html, body {
 }
 
 
+#bgCanvas {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1; /* behind other elements */
+    border:1px solid red;
+    display: block;
+    margin: auto;
+    padding: 0;
+}
 #guiCanvas {    
     position: absolute;
     top: 0;
@@ -27,7 +38,7 @@ html, body {
 }
 
 
-#guiCanvas, #game {
+#guiCanvas, #game, #bgCanvas {
     image-rendering: pixelated;
 }
 

@@ -6,6 +6,10 @@ let start;
 let guiCanvas;
 let guiContext;
 
+// background canvas
+let bgCanvas;
+let bgContext;
+
 let rightPressed = false;
 let leftPressed = false;
 
@@ -16,6 +20,11 @@ function init()
     start = document.getElementById("start");
     canvas = document.getElementById("game");
     context = canvas.getContext("2d");//, { willReadFrequently: true });
+
+
+    //  background canvas
+    bgCanvas = document.getElementById("bgCanvas");
+    bgContext = bgCanvas.getContext("2d");    
 
 
     // gui canvas for displaying score
