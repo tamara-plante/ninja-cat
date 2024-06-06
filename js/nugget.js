@@ -1,63 +1,35 @@
-const HEIGHT = 400;
-const WIDTH = 500;
+/**
+ * Function to create new items that start at a random x position and above the canva
+ * @returns New items that start from the start at a random x position
+ */
+function newItem() {
+  return {
+      sprite: item.sprite,
+      sheet: item.sheet,
+      x: Math.floor(Math.random() * (canvas.width - item.sheet.frameWidth)), 
+      y: 0 - item.sheet.frameHeight, 
+      width: item.width,
+      height: item.height,
+      points: item.points
+  };
+}
 
-const randomX = () => {
-  return Math.ceil(Math.random() * WIDTH);
-};
-
-
-
-class Nugget {
-  constructor(symbol, x) {
-    this.symbol = symbol;
-    this.x = x;
-    this.y = 50;
-  }
-
-  render(ctx) {
-    ctx.font = '40px serif'
-    ctx.fillText(this.symbol, this.x, this.y)
-  }
-
-  fall(diff) {
-    this.y += diff;
-  }
+// item specification
+item = {
+  sprite: null,
+  sheet: {
+      frameWidth: 96,
+      frameHeight: 96
+  },
+  x: 250,
+  y: 585-55+30,
+  width: 42, 
+  height: 45,
+  points: 10 
 }
 
 
-class Game {
-  constructor(canvas, difficulty, difficultyDelta) {
-    this.score = 0;
-    this.canvas = canvas;
-    this.ctx = canvas.getContext("2d");
-    this.nuggets = [];
-    this.difficulty = difficulty;
-    this.difficultyDelta = difficultyDelta;
-
-    this.nuggetsInterval = setInterval(() => {
-      this.dropNuggets(Math.ceil(this.difficulty));
-      // this.dropNuggets(1);
-      this.difficulty += this.difficultyDelta;
-    }, 1500);
-  }
-
-
-
-  dropNuggets(n) {
-    const nuggets = document.getElementById("item")
-    const numNuggets = Math.ceil(Math.random() * n)
-    for(let i = 0; i < numNuggets; i++) {
-      this.nuggets.push(new Rock(nuggets[Math.floor(Math.random() * nuggets.length)], randomX()));
-    }
-  }
-
-
-  render() {
-    this.nuggets.forEach((r) => {
-      r.fall(this.difficulty);
-      r.render(this.ctx)
-    })
-  }
+item.draw = function()
+{
+    context.drawImage(item.sprite, item.x, item.y);
 }
-
-var canvas = document.getElementById("game");
