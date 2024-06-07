@@ -17,7 +17,6 @@ function init()
     canvas = document.getElementById("game");
     context = canvas.getContext("2d");//, { willReadFrequently: true });
 
-
     // gui canvas for displaying score
     guiCanvas = document.getElementById('guiCanvas');
     guiContext = guiCanvas.getContext('2d');
