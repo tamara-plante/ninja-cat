@@ -2,9 +2,17 @@ let canvas;
 let context;
 let start;
 
+// background canvas
+let bgCanvas;
+let bgContext;
+
 // gui canvas for displaying score
 let guiCanvas;
 let guiContext;
+
+// help canvas
+let helpCanvas;
+let helpContext;
 
 let rightPressed = false;
 let leftPressed = false;
@@ -22,9 +30,18 @@ function init()
     canvas = document.getElementById("game");
     context = canvas.getContext("2d");//, { willReadFrequently: true });
 
+    //  background canvas
+    bgCanvas = document.getElementById("bgCanvas");
+    bgContext = bgCanvas.getContext("2d"); 
+
     // gui canvas for displaying score
     guiCanvas = document.getElementById('guiCanvas');
     guiContext = guiCanvas.getContext('2d');
+    
+    // canvas for help icon
+    let helpCanvas = document.getElementById('helpCanvas');
+    helpContext = helpCanvas.getContext('2d');
+
 
     start.addEventListener("click", game.init, false);
 

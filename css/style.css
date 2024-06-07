@@ -17,9 +17,22 @@ html, body {
 }
 
 
-#guiCanvas {    
+#bgCanvas {
     position: absolute;
-    top: 15px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1; /* behind other elements */
+    display: block;
+    margin: auto;
+    padding: 0;
+}
+
+#header{
+    width: 360px;
+    height: 50px;
+    position: absolute;
+    top: 16px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1; 
@@ -27,9 +40,14 @@ html, body {
     margin: auto;
     padding: 0; 
 }
+#livesCanvas {
+    background-color: lightblue;
+}
+#guiCanvas, #helpCanvas, #livesCanvas {    
+    float: left;
+}
 
-
-#guiCanvas, #game {
+#guiCanvas, #game, #bgCanvas, #helpCanvas, #livesCanvas {
     image-rendering: pixelated;
 }
 
@@ -141,7 +159,6 @@ html, body {
     bottom:200px;
     left:50%;
     transform: translate(-50%, -50%);
-    background-color: ;
 }
 
 #cat{

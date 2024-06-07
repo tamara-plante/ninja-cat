@@ -27,15 +27,25 @@
             
         </div>       
 
-        <canvas id="guiCanvas" width="360" height="50"></canvas>
+        <div id="header">                
+            <canvas id="guiCanvas" width="130" height="50"></canvas>
+            <canvas id="livesCanvas" width="170" height="50"></canvas>
+            <canvas id="helpCanvas" width="50" height="50"></canvas>
+        </div>
         <div id="menu">
             <button id="start">Start game</button>
         </div>
+
+        <canvas id="bgCanvas" width="700" height="600">
+            Your browser does not support the HTML5 canvas tag.
+        </canvas>
 
         
         <img id="player" src="images/ninja-cat-spritesheet.png" style="display:none;">
         <img id="items" src="images/items-spritesheet.png" style="display:none;">
         <img id="water" src="images/water.png" style="display:none;">
+
+        <img id="bgImg" src="images/japan-5.png" style="display:none;">
         
         <script src="js/index.js"></script>
         <script src="js/game.js"></script>
