@@ -31,6 +31,10 @@ function init()
     guiCanvas = document.getElementById('guiCanvas');
     guiContext = guiCanvas.getContext('2d');
 
+    // canvas for help icon
+    let helpCanvas = document.getElementById('helpCanvas');
+    helpContext = helpCanvas.getContext('2d');
+
     start.addEventListener("click", game.init, false);
 
     // Setup the key listeners

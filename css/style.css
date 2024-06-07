@@ -32,7 +32,6 @@ html, body {
     position: absolute;
     top: 0;
     left: 50%;
-    background-color: pink;
     transform: translateX(-50%);
     z-index: 1; 
     display: block;
@@ -41,12 +40,10 @@ html, body {
 }
 #guiCanvas {    
     float: left;
-    background-color: lightblue;
 }
 
-#help {    
+#helpCanvas {    
     float: left;
-    background-color: yellow;
 }
 
 #guiCanvas, #game, #bgCanvas {
