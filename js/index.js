@@ -10,6 +10,10 @@ let guiContext;
 let bgCanvas;
 let bgContext;
 
+// help canvas
+let helpCanvas;
+let helpContext;
+
 let rightPressed = false;
 let leftPressed = false;
 
@@ -32,7 +36,7 @@ function init()
     guiContext = guiCanvas.getContext('2d');
 
     // canvas for help icon
-    let helpCanvas = document.getElementById('helpCanvas');
+    helpCanvas = document.getElementById('helpCanvas');
     helpContext = helpCanvas.getContext('2d');
 
     start.addEventListener("click", game.init, false);
