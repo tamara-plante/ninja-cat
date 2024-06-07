@@ -14,6 +14,8 @@ class GameObject
         this.sheet = {
             coordX: null,
             coordY: null,
+            frameWidth: 10,
+            frameHeight: 10
         }
     }
 
@@ -39,9 +41,14 @@ class GameObject
         this.sheet.frameHeight = frameHeight;
     }
 
+    /**
+     * Update the position of the update based on the speed * secondsPassed
+     * since the last game loop.
+     * @param {number} secondsPassed the seconds since the last game loop
+     */
     update(secondsPassed) 
     {
-        this.y += this.speed * secondsPassed;
+        this.y += this.speed * secondsPassed; // distance
     }
 
     /**
@@ -151,7 +158,7 @@ class GameAnimatedObject extends GameObject
     }
 
     /**
-     * Update the sheet parameters.
+     * Update the spritesheet parameters.
      * @param {number} columns spritesheet total columns
      * @param {number} rows spritesheet total rows
      * @param {number} frameWidth spritesheet frame width

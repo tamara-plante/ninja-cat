@@ -2,7 +2,7 @@
  * Where we generate fancy nuggets (and more) or damaging items!
  */
 const goodTypes = [
-    {name: "nugget", coord_x:0, coord_y:0, fwidth:48, fheight:51, points:10},
+    {name: "nugget", coord_x:0, coord_y:0, width:48, height:51, points:10},
     {name: "fish", coord_x:48, coord_y:0, fwidth: 90, fheight:96, width:45, height:48, points:5}
 ]
 const badTypes = ["water"];
@@ -26,19 +26,24 @@ function randomizer()
  */
 class Item extends GameObject
 {
-    constructor(aName, aSpeed, aCoordX, aCoordY, aFrameWidth, aFrameHeight, aWidth, aHeight, points)
+    constructor(aGoodTypeItem, aSpeed)
     {
         super();
 
         this.sprite = itemsSprite;
-        this.name = aName;
+        this.name = aGoodTypeItem.name;
         this.speed = aSpeed;
-        this.width = aWidth;
-        this.height = aHeight;
-        this.points = points;
+        this.width = aGoodTypeItem.width;
+        this.height = aGoodTypeItem.height;
+        this.points = aGoodTypeItem.points;
+
+        if (typeof aGoodTypeItem.fwidth !== "number")
+            aGoodTypeItem.fwidth = this.width;
+        if (typeof aGoodTypeItem.fheight !== "number")
+            aGoodTypeItem.fheight = this.height;
 
         // Setup where the image should be clipped at.
-        this.updateSheetCoords(aCoordX, aCoordY, aFrameWidth, aFrameHeight);
+        this.updateSheetCoords(aGoodTypeItem.coord_x, aGoodTypeItem.coord_y, aGoodTypeItem.fwidth, aGoodTypeItem.fheight);
     }
 }
 
@@ -99,13 +104,7 @@ game.items.generate = function()
     }
     // Add new items randomly
     else if (Math.random() < 0.045)  { 
-        let data = randomizer();
-        item = new Item(data.name, randomSpeed, 
-                        data.coord_x, data.coord_y, 
-                        data.fwidth, data.fheight, 
-                        data.width || data.fwidth, 
-                        data.height || data.fheight, 
-                        data.points);
+        item = new Item(randomizer(), randomSpeed);
     }
     // No spawn this time
     else return;
