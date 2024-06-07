@@ -7,14 +7,14 @@ class GameObject
     {
         this.sprite = null;
         this.speed = 0;
-        this.x = 0;
+        this.x = 0; // position on the canvas
         this.y = 0;
-        this.width = 10;
+        this.width = 10; // used as scaling when drawing image
         this.height = 10;
         this.sheet = {
             coordX: null,
             coordY: null,
-            frameWidth: 10,
+            frameWidth: 10, // actual size in the spritesheet
             frameHeight: 10
         }
     }
@@ -23,7 +23,8 @@ class GameObject
      * Set a different canvas context to draw to.
      * @param {object} aContext the canvas context
      */
-    setContext(aContext) {
+    setContext(aContext) 
+    {
         this.context = aContext;
     }
 
@@ -34,7 +35,8 @@ class GameObject
      * @param {number} frameWidth spritesheet frame width
      * @param {number} frameHeight spritesheet frame height
      */
-    updateSheetCoords(aCoordX, aCoordY, frameWidth, frameHeight) {
+    updateSheetCoords(aCoordX, aCoordY, frameWidth, frameHeight) 
+    {
         this.sheet.coordX = aCoordX;
         this.sheet.coordY = aCoordY;
         this.sheet.frameWidth = frameWidth;
@@ -86,7 +88,7 @@ class GameAnimatedObject extends GameObject
     {
         super();
 
-        this.updateSheetFrames(1, 1, 10, 10);
+        this.updateSheetFrames(0, 0, 10, 10); // Default spritesheet values
         this.animation = {
             timerAnim: null, // setInterval of 100ms that controls animations, should run forever.
             timerFrame: null, // setTimeout to control the frame delay value if it exists.
@@ -98,8 +100,18 @@ class GameAnimatedObject extends GameObject
              * Start the animation setInterval 100s or a custom value.
              * @param {number} [anInterval] the interval speed
              */
-            play: function(anInterval=100) {
-                this.timerAnim = setInterval(this.animate.bind(this), anInterval);
+            play: function(anInterval=100) 
+            {
+                this.timerAnim = setInterval(() => this.animate(), anInterval); // be able to pass this to animate
+            },
+
+            /**
+             * Stop the timer that keeps the animation going infinitely.
+             */
+            stop: function() 
+            {
+                clearInterval(this.timerAnim);
+                this.cancel();
             },
             
             /**
@@ -112,7 +124,8 @@ class GameAnimatedObject extends GameObject
                 if (this.currentAnim != anAnimation) {
                     this.cancel();
                     this.currentAnim = anAnimation;
-                    this.currentFrame = 0;
+                    this.currentFrame = -1 // Initialize with -1
+                    this.animate();
                 }
             },
 
@@ -132,15 +145,15 @@ class GameAnimatedObject extends GameObject
             {
                 // If there's no delayed frame in progress...
                 if (!this.timerFrame) {
-
+                    
                     // Pick a new frame and account for frame loop
-                    if (++this.currentFrame > this.animations[this.currentAnim].length - 1){
+                    if (++this.currentFrame > this.animations[this.currentAnim].length - 1) {
                         this.currentFrame = 0;
                     }
                     // Get the animation frame and set a delay if there is one.
                     let frame = this.getFrame();
                     if (frame.delay) {
-                        this.timerFrame = setTimeout(this.cancel.bind(this), frame.delay); // Pass the object to the function callback
+                        this.timerFrame = setTimeout(() => this.cancel(), frame.delay); // be able to pass this to cancel
                     }
                 }
             },
@@ -164,7 +177,8 @@ class GameAnimatedObject extends GameObject
      * @param {number} frameWidth spritesheet frame width
      * @param {number} frameHeight spritesheet frame height
      */
-    updateSheetFrames(columns, rows, frameWidth, frameHeight) {
+    updateSheetFrames(columns, rows, frameWidth, frameHeight) 
+    {
         this.sheet.columns = columns;
         this.sheet.rows = rows;
         super.updateSheetCoords(this.sheet.coordX, this.sheet.coordY, frameWidth, frameHeight);

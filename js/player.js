@@ -38,12 +38,13 @@ player.init = function()
  */
 player.isColliding = function(item) 
 {
-    // Add padding to collision so the character has to overlap more visually to count as a collision. 
+    // Add padding to collision so the character has to overlap more visually to count as a collision.
+    let padding = 10;
     return (
-        item.y <= (this.y + this.height) &&
-        this.y <= (item.y + item.height) &&
-        item.x <= (this.x + this.width) &&
-        this.x <= (item.x + item.width)
+        item.y <= (this.y + this.height) - padding &&
+        this.y <= (item.y + item.height) - padding &&
+        item.x <= (this.x + this.width) - padding &&
+        this.x <= (item.x + item.width) - padding
     );
 }
 
@@ -59,7 +60,7 @@ player.update = function(secondsPassed)
         let distance = this.speed * secondsPassed;
         let posX;
 
-        // Set the new x, while accounting for canvas boundary. Round to nearest int.
+        // Set the new x, while accounting for canvas boundary.
         if (rightPressed) {
             posX = Math.min(this.x + distance, canvas.width - this.sheet.frameWidth);
             this.direction = "right";
@@ -71,6 +72,7 @@ player.update = function(secondsPassed)
             this.direction = "left";
             this.animation.update("movingLeft");
         }
+        // Round to nearest int.
         this.x = Math.floor(posX);
     }
     // Set the idle state based on the player.direction
