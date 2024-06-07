@@ -2,6 +2,10 @@ let canvas;
 let context;
 let start;
 
+// gui canvas for displaying score
+let guiCanvas;
+let guiContext;
+
 let rightPressed = false;
 let leftPressed = false;
 
@@ -17,6 +21,10 @@ function init()
     start = document.getElementById("start");
     canvas = document.getElementById("game");
     context = canvas.getContext("2d");//, { willReadFrequently: true });
+
+    // gui canvas for displaying score
+    guiCanvas = document.getElementById('guiCanvas');
+    guiContext = guiCanvas.getContext('2d');
 
     start.addEventListener("click", game.init, false);
 
