@@ -12,12 +12,14 @@ html, body {
     border: 1px solid lightgrey;
     margin: auto;
     padding: 0;
+    position: relative;
+    top: 15px;
 }
 
 
 #guiCanvas {    
     position: absolute;
-    top: 0;
+    top: 15px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1; 
@@ -32,7 +34,7 @@ html, body {
 }
 
 #menu {
-    display: flex;
+    display:flex;
     direction: ltr;
     justify-content: center;
 }
@@ -43,14 +45,15 @@ html, body {
 #start{
     width: 140px;
     height: 36px;
-    margin-top: 10px;        
-    font-family: "Press Start 2P", system-ui;
+    margin-top: 20px;        
+    font-family: 'Press Start 2P', sans-serif;
     font-size: 10px;
     text-transform: uppercase;
     color: #222034;  
     background: #5FCFD4;
     border: 0px;
-    position: relative;
+    position: absolute;
+    top:520px;
     box-shadow: 
     inset -4px 2px 1px 1px grey,
     inset -4px -2px 1px 1px lightgray,
@@ -63,7 +66,7 @@ html, body {
 }
   
 #start:active {
-    top: 5px;
+    top: 520px;
     box-shadow: 
     -4px 2px 1px 1px grey,
     -4px -2px 1px 1px lightgray,
@@ -100,4 +103,54 @@ html, body {
     }
 }
 */
+
+
+#splash {
+    position: absolute;
+    top: 266px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.47);
+    width: 360px;
+
+}
+
+
+#container {
+    width: 360px;
+    height: 180px;
+    position: relative;
+    top:-380px;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+#logo{
+    position: absolute;
+    top: 80px;
+    left:50.5%;
+    transform: translate(-50%, -50%);
+    
+}
+
+#container1{
+    width: 360px;
+    height: 60px;
+    position: relative;
+    bottom:200px;
+    left:50%;
+    transform: translate(-50%, -50%);
+    background-color: ;
+}
+
+#cat{
+    position: absolute;
+    height:50px;
+    top: 20px;
+    left:90px;
+    transform: translate(-50%, -50%);
+    z-index:10;
+}
+
 

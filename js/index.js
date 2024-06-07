@@ -9,10 +9,15 @@ let guiContext;
 let rightPressed = false;
 let leftPressed = false;
 
+
 window.onload = init;
 
+
+
 function init() 
-{
+{   
+    intro();
+
     start = document.getElementById("start");
     canvas = document.getElementById("game");
     context = canvas.getContext("2d");//, { willReadFrequently: true });
@@ -36,6 +41,8 @@ function init()
     canvas.height = window.innerHeight;
 }*/
 
+
+
 function keyDownHandler(e) 
 {
     if (e.key === "Right" || e.key === "ArrowRight") {
@@ -55,3 +62,4 @@ function keyUpHandler(e)
         leftPressed = false;
     }
 }
+
