@@ -88,13 +88,14 @@ html, body {
 
 
 #splash {
-    position: fixed;
-    top: 46.3%;
+    position: absolute;
+    top: 266px;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     background-color: rgba(0, 0, 0, 0.47);
     width: 360px;
+
 }
 
 
