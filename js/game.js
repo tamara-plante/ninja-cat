@@ -66,17 +66,9 @@ game.loop = function(timeStamp)
     game.secondsPassed = (timeStamp - game.oldTimeStamp) / 1000;
     game.oldTimeStamp = timeStamp;
 
-  // Update item positions and check collisions
-  for (let i = items.length - 1; i >= 0; i--) {
-      let fallingItem = items[i];
-      fallingItem.y += 6; // Adjust speed
     let items = game.items.active;
 
 
-  // Add new items randomly
-  if (Math.random() < 0.055) {
-      items.push(newItem());
-  }
     // Update item positions and check collisions
     for (let i = items.length - 1; i >= 0; i--) {
         let fallingItem = items[i];

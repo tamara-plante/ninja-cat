@@ -19,7 +19,7 @@ html, body {
 
 #guiCanvas {    
     position: absolute;
-    top: 0;
+    top: 15px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1; 
