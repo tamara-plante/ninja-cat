@@ -213,7 +213,6 @@ function drawBackground() {
 
 // draw on help canvas
 function drawHelp() {
-    //helpContext.drawImage(helpImg, 0, 0,  helpImg.width, helpImg.height);
     helpContext.beginPath();
     helpContext.arc(25, 25, 20, 0, 2 * Math.PI);    
     helpContext.fillStyle = '#5FCFD4';
