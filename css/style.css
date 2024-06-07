@@ -25,17 +25,29 @@ html, body {
     margin: auto;
     padding: 0;
 }
-#guiCanvas {    
+
+#header{
+    width: 360px;
+    height: 50px;
     position: absolute;
     top: 0;
     left: 50%;
+    background-color: pink;
     transform: translateX(-50%);
     z-index: 1; 
     display: block;
     margin: auto;
     padding: 0; 
 }
+#guiCanvas {    
+    float: left;
+    background-color: lightblue;
+}
 
+#help {    
+    float: left;
+    background-color: yellow;
+}
 
 #guiCanvas, #game, #bgCanvas {
     image-rendering: pixelated;
