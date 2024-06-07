@@ -14,13 +14,24 @@
             Your browser does not support the HTML5 canvas tag.
         </canvas>
 
-        <img id="splash" src="images/ninja-intro-logo.svg" alt="Logo intro">        
+        
+        <div id="intro">
+            <img id="splash" src="images/bg-intro.svg" alt="background intro">
+            <div id="container">
+            <img id="logo"  src="images/ninja-cat-logo.svg" alt="Logo intro">
+            </div>
+
+            <div id="container1">
+                <img id="cat" src="images/output-onlinegiftools.gif" alt="running ninja=cat">
+            </div>
+            
+        </div>       
 
         <div id="menu">
             <button id="start">Start game</button>
         </div>
 
-       
+        
         <img id="player" src="images/ninja-cat-spritesheet.png" style="display:none;">
         <img id="item" src="images/ninja-cat-nugget.png" style="display:none;">
         
@@ -28,6 +39,7 @@
         <script src="js/game.js"></script>
         <script src="js/player.js"></script>
         <script src="js/nugget.js"></script>
+        <script src="js/intro.js"></script>
         
         
     </body>

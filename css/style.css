@@ -17,7 +17,7 @@ html, body {
 }
 
 #menu {
-    display: flex;
+    display:flex;
     direction: ltr;
     justify-content: center;
 }
@@ -35,7 +35,8 @@ html, body {
     color: #222034;
     background: #5FCFD4;
     border: 0px;
-    position: relative;
+    position: absolute;
+    top:520px;
     box-shadow: 
     inset -4px 2px 1px 1px grey,
     inset -4px -2px 1px 1px lightgray,
@@ -48,7 +49,7 @@ html, body {
 }
   
 #start:active {
-    top: 5px;
+    top: 520px;
     box-shadow: 
     -4px 2px 1px 1px grey,
     -4px -2px 1px 1px lightgray,
@@ -99,7 +100,40 @@ html, body {
 }
 
 
-
-#splash.hidden {
-    display: none;
+#container {
+    width: 360px;
+    height: 180px;
+    position: relative;
+    top:-380px;
+    left:50%;
+    transform: translate(-50%, -50%);
 }
+
+#logo{
+    position: absolute;
+    top: 80px;
+    left:50.5%;
+    transform: translate(-50%, -50%);
+    
+}
+
+#container1{
+    width: 360px;
+    height: 60px;
+    position: relative;
+    bottom:200px;
+    left:50%;
+    transform: translate(-50%, -50%);
+    background-color: ;
+}
+
+#cat{
+    position: absolute;
+    height:50px;
+    top: 20px;
+    left:90px;
+    transform: translate(-50%, -50%);
+    z-index:10;
+}
+
+
