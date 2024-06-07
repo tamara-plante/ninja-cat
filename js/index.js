@@ -5,10 +5,32 @@ let start;
 let rightPressed = false;
 let leftPressed = false;
 
+
 window.onload = init;
 
+/**
+ * Intro - Ninja cat designed by 
+ */
+function intro() {
+    let splash = document.getElementById("splash");
+    let startButton = document.getElementById("start");
+
+    // Hide splash when start is clicked
+    startButton.addEventListener("click", function() {
+        // Fade out the splash element
+        splash.style.transition = "opacity 0.8s ease";
+        splash.style.opacity = "0";
+        
+        // Start the game after fade out
+        setTimeout(function() {
+            splash.style.display = "none"; 
+        }, 600); 
+    });
+};
+
 function init() 
-{
+{  
+    intro();
     start = document.getElementById("start");
     canvas = document.getElementById("game");
     context = canvas.getContext("2d");//, { willReadFrequently: true });
@@ -27,6 +49,8 @@ function init()
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }*/
+
+
 
 function keyDownHandler(e) 
 {
@@ -47,3 +71,4 @@ function keyUpHandler(e)
         leftPressed = false;
     }
 }
+

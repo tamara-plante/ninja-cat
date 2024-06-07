@@ -54,7 +54,7 @@ game.loop = function(timeStamp) {
   // Update item positions and check collisions
   for (let i = items.length - 1; i >= 0; i--) {
       let fallingItem = items[i];
-      fallingItem.y += 7; // Adjust speed
+      fallingItem.y += 6; // Adjust speed
 
       if (fallingItem.y > canvas.height) {
           // Remove items that fall beyond the canvas
@@ -70,7 +70,7 @@ game.loop = function(timeStamp) {
   }
 
   // Add new items randomly
-  if (Math.random() < 0.06) {
+  if (Math.random() < 0.055) {
       items.push(newItem());
   }
 
