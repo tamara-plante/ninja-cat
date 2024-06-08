@@ -283,18 +283,18 @@ function drawBackground() {
 // draw on help canvas
 function drawHelp() {
     helpContext.beginPath();
-    helpContext.arc(25, 25, 20, 0, 2 * Math.PI);    
+    helpContext.arc(22, 22, 18, 0, 2 * Math.PI);    
     helpContext.fillStyle = '#5FCFD4';
     helpContext.fill();
 
     helpContext.beginPath();
-    helpContext.arc(25, 25, 20, 0, 2 * Math.PI);    
+    helpContext.arc(22, 22, 18, 0, 2 * Math.PI);    
     helpContext.strokeStyle = '#222034';
     helpContext.lineWidth = 1;
     helpContext.stroke();
 
     helpContext.beginPath();
-    helpContext.arc(25, 25, 18, 0, 2 * Math.PI);    
+    helpContext.arc(22, 22, 16, 0, 2 * Math.PI);    
     helpContext.strokeStyle = '#bfbfbf';
     helpContext.lineWidth = 3;
     helpContext.stroke();
@@ -306,7 +306,7 @@ function drawHelp() {
     helpContext.fillStyle = '#222034'; 
 
     // Draw the score on the GUI canvas
-    helpContext.fillText("?", 19, 33); // Text and position (x: 10, y: 30)
+    helpContext.fillText("?", 16, 30); // Text and position (x: 10, y: 30)
 
 
 }
