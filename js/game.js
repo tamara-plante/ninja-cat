@@ -45,7 +45,7 @@ game.init = function()
 
     // Set up initial game values
     game.points = 0;
-    game.lives = 4;
+    game.lives = -1;
     game.secondsPassed = null;
     game.oldTimeStamp = null;
     game.items.clear();
@@ -116,6 +116,9 @@ game.loop = function(timeStamp)
                     }
                     else if (fallingItem.name == "pepper") {
                         player.stun.active = true;
+                    }
+                    else if (fallingItem.name == "donut") {
+                        player.slow.active = true;
                     }
                     game.points += removedItem.points;
                     //console.log("Current points: " + game.points);

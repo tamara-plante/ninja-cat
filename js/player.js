@@ -2,6 +2,8 @@
  * Create the player and animate it.
  * @author Tamara Plante
  */
+const SPEED = 250;
+
 player = new GameAnimatedObject();
 
 /**
@@ -13,7 +15,7 @@ player.init = function()
 
     this.sprite = document.getElementById("player");
     this.direction = "right";
-    this.speed = 250;
+    this.speed = SPEED;
     this.width = 66;
     this.height = 81;
     this.x = 30;
@@ -96,26 +98,52 @@ player._draw = player.draw; // original draw method preserved
 player.draw = function() {
     this._draw(); // Call the original draw method, no super?!
 
-    let specials = [this.damage, this.powerUp, this.stun];
+    let specials = [this.stun, this.slow, this.powerUp, this.damage, ];
 
     for (let special of specials) {
         if (special.active) {
-            this.shader(special.shader);
+            if (special.shader) this.shader(special.shader);
+            
             special.callback();
         }
     }
 }
 
 /**
+ * Slow the player, they just ate a big donut!
+ * 
+ * Do nothing if player is stunned. Lose the power up.
+ */
+player.slow = new Effect
+(
+    function() { // Active callback function
+        console.log("SLOW!")
+        if (player.stun.active) return this.cancel(); // Do nothing!
+
+        if (player.powerUp.active) player.powerUp.cancel();
+
+        if (!this.timer) {
+             player.speed = 100;
+            this.timer = setTimeout(() => this.cancel(), 2000);
+        }
+    },
+    function() { // Cancel function
+        player.speed = SPEED;
+        this.active = false;
+
+        clearTimeout(this.timer);
+        this.timer = null;
+    }
+)
+
+/**
  * When the player takes damage, 
  * use this object to activate the shader.
  * active = true
- * the timer is set in the drawing phase
  */
-player.damage = ShaderEffect
+player.damage = new ShaderEffect
 (   
-    100, // Timeout
-    function(i, data) {
+    function(i, data) { // Shader callback function
         // The area that is not transparent, make white.
         if (data[i + 3] != 0) {
             data[i] = 255
@@ -123,32 +151,48 @@ player.damage = ShaderEffect
             data[i + 2] = 255
         }
     },
-    function() { // Setup the timer
-        this.timer = setTimeout(() => {
-            this.active = false;
-            this.timer = null;
-        }, this.timeout);
+    function() { // Active callback function
+        console.log("DMG!")
+        this.timer = setTimeout(() => this.cancel(), 100);
+    },
+    function() { // Cancel
+        this.active = false;
+
+        clearTimeout(this.timer);
+        this.timer = null;
     }
 )
 
-player.stun = ShaderEffect
+/**
+ * Stun the player for a little bit.
+ * They just ate a hot pepper, ouch!
+ * 
+ * Lose power up. Lose the slow.
+ */
+player.stun = new ShaderEffect
 (
-    800, // Timeout
-    function(i, data) {
+    function(i, data) { // Shader callback function
         // The area that is not transparent, make red.
         if (data[i + 3] != 0) {
             data[i] = 255
         }
     },
-    function() {
+    function() { // Active callback function
+        console.log("STUN!")
+        if (player.powerUp.active) player.powerUp.cancel();
+        if (player.slow.active) player.slow.cancel();
+
         if (!this.timer) {
             player.speed = 0;
-            this.timer = setTimeout(() => {
-                player.speed = 250;
-                this.active = false;
-                this.timer = null;
-            }, this.timeout)
+            this.timer = setTimeout(() => this.cancel(), 800)
         }
+    },
+    function() { // Cancel
+        player.speed = SPEED;
+        this.active = false;
+
+        clearTimeout(this.timer);
+        this.timer = null;
     }
 )
 
@@ -156,12 +200,12 @@ player.stun = ShaderEffect
  * When the player should power up,
  * use this object to activate the shader
  * active = true
- * the timer is set in the drawing phase
+ * 
+ * Effect can be renewed.
  */
-player.powerUp = ShaderEffect
+player.powerUp = new ShaderEffect
 (
-    3000, // Timeout
-    function(i, data) {
+    function(i, data) { // Shader callback function
         // Blue fur convert to orange.
         if ((data[i] == 95 && data[i + 1] == 205 && data[i + 2] == 228)) {
             data[i] = 255
@@ -179,15 +223,22 @@ player.powerUp = ShaderEffect
             // red belt
         }*/
     },
-    function() { // Setup the timer if there's one active yet.
+    function() { // Active callback function
+        /*if (this.timer) this.cancel();*/
+        console.log("POWERUP!")
         if (!this.timer) {
+            //this.active = true; // renew the effect
             player.speed = 500
-            this.timer = setTimeout(() => {
-                player.speed = 250;
-                this.active = false;
-                this.timer = null;
-            }, this.timeout);
+            this.timer = setTimeout(() => this.cancel(), 3000);
         }
+        
+    },
+    function() { // Cancel
+        player.speed = SPEED;
+        this.active = false;
+
+        clearTimeout(this.timer);
+        this.timer = null;
     }
 )
 

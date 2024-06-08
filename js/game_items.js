@@ -1,7 +1,7 @@
 /**
  * Where we generate fancy nuggets (and more) or damaging items!
  */
-const items = [
+const ITEMS = [
     {name: "nugget", coord_x:0, coord_y:0, fwidth:48, fheight:51, width:32, height:34, points:50},
     {name: "pepper", coord_x:426, coord_y:0, fwidth:96, fheight:96, width:40, height:40, points:-75},
     {name: "fish", coord_x:48, coord_y:0, fwidth:90, fheight:96, width:45, height:48},
@@ -9,8 +9,8 @@ const items = [
     /*{name: "steak", coord_x:234, coord_y:0, fwidth:96, fheight:93, width:40, height:38}*/
     /*{name: "salmon", coord_x:330, coord_y:0, fwidth:96, fheight:84, width:40, height:35}*/
 ]
-const itemsSprite = document.getElementById("items");
-const waterSprite = document.getElementById("water");
+const ITEMS_SPR = document.getElementById("items");
+const WATER_SPR = document.getElementById("water");
 
 
 /**
@@ -19,8 +19,8 @@ const waterSprite = document.getElementById("water");
  */
 function randomizer() 
 {
-    let random = Math.floor(Math.random() * (items.length - 2) + 2); // to start at a specific index
-    return items[random];
+    let random = Math.floor(Math.random() * (ITEMS.length - 2) + 2); // to start at a specific index
+    return ITEMS[random];
 }
 
 
@@ -38,7 +38,7 @@ class Item extends GameObject
         if (typeof anItem.fwidth !== "number") anItem.fwidth = anItem.width;
         if (typeof anItem.fheight !== "number") anItem.fheight = anItem.height;
 
-        this.sprite = itemsSprite;
+        this.sprite = ITEMS_SPR;
         this.name = anItem.name;
         this.speed = aSpeed;
         this.width = anItem.width;
@@ -59,7 +59,7 @@ class Water extends GameAnimatedObject
     {
         super();
         
-        this.sprite = waterSprite;
+        this.sprite = WATER_SPR;
         this.width = 42;
         this.height = 54;
         this.speed = aSpeed;
@@ -111,12 +111,12 @@ game.items.generate = function()
         let spawn;
         // Try to spawn a nugget powerup
         if (Math.random() < 0.0075) {
-            spawn = items[0];
+            spawn = ITEMS[0];
         }
         // Add new items randomly
         else if (Math.random() < 0.035)  { 
             // Try to spawn a hot pepper
-            spawn = (Math.random() < 0.07) ? items[1] : randomizer();
+            spawn = (Math.random() < 0.07) ? ITEMS[1] : randomizer();
         }
         // No spawn this time
         else return;

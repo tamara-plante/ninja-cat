@@ -207,20 +207,57 @@ class GameAnimatedObject extends GameObject
     }
 }
 
-/**
- * Shader effect factory.
- * @param {number} aTimeout the timeout value for the timer
- * @param {function} aShaderF the shader function that takes an index, data.
- * @param {function} aCallbackF the timeout function callback
- * @returns a shader effect object
- */
 
-function ShaderEffect(aTimeout, aShaderF, aCallbackF) {
-    return {
-        active: false,
-        timer: null,
-        shader: aShaderF,
-        timeout: aTimeout,
-        callback: aCallbackF
+/**
+ * A basic effect class.
+ */
+class Effect {
+    /**
+     * The effect object.
+     * @param {function} aCallbackF the active function callback, i.e what to do after it's activated is activated
+     * @param {function} aCancelF the cancel function for the effect
+     */
+    constructor(aCallbackF, aCancelF) {
+        this.active = false;
+        this.timer = null;
+        this.callback = aCallbackF;
+        this.cancel = aCancelF;
+    }
+}
+
+/**
+ * A shader effect based on the effect class.
+ */
+class ShaderEffect extends Effect {
+    /**
+     * Shader effect factory.
+     * @param {function} aShaderF the shader callback function that takes an index, data
+     * @param {function} aCallbackF the active function callback, i.e what to do after the shader is activated
+     * @param {function} aCancelF the cancel function for the shader
+     * @returns a shader effect object
+
+    * new ShaderEffect(   
+        function(i, data) { // Shader callback function
+            // The area that is not transparent, make white.
+            if (data[i + 3] != 0) {
+                data[i] = 255
+                data[i + 1] = 255
+                data[i + 2] = 255
+            }
+        },
+        function() { // Active callback function
+            this.timer = setTimeout(() => this.cancel(), 100);
+        },
+        function() { // Cancel
+            this.active = false;
+
+            clearTimeout(this.timer);
+            this.timer = null;
+        }
+    )
+    */
+    constructor(aShaderF, aCallbackF, aCancelF) {
+        super(aCallbackF, aCancelF);
+        this.shader = aShaderF;
     }
 }
