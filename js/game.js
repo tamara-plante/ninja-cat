@@ -41,11 +41,7 @@ game.init = function()
 {
     // Disable start game button
     start.disabled = "true";
-
-    
     drawBackground(); 
-    drawHelp();
-
 
     // Set up initial game values
     game.points = 0;
