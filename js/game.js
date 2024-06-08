@@ -34,6 +34,9 @@ const scaleMin = 0.8;
 const scaleMax = 1.2;
 
 
+// high score
+let highScore = localStorage.getItem('highScore') || 0;
+
 /**
  * Initialize the game and the default values.
  */
@@ -68,6 +71,15 @@ game.end = function()
     game.drawGameOver();
     // Enable start game button
     start.disabled = "";
+    // Check and update high score
+    highScore = localStorage.getItem('highScore') || 0;
+    if (game.points > highScore) {
+        highScore = game.points;
+        localStorage.setItem('highScore', highScore);
+        alert("New High Score! " + highScore);
+    } else {
+        alert("Game Over! Your score: " + game.points + ". High Score: " + highScore);
+    }
 }
 
 
