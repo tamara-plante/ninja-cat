@@ -2,8 +2,8 @@
  * Where we generate fancy nuggets (and more) or damaging items!
  */
 const goodTypes = [
-    {name: "nugget", coord_x:0, coord_y:0, width:48, height:51, points:10},
-    {name: "fish", coord_x:48, coord_y:0, fwidth: 90, fheight:96, width:45, height:48, points:5}
+    {name: "nugget", coord_x:0, coord_y:0, fwidth:48, fheight:51, width:32, height:34, points:10},
+    {name: "fish", coord_x:48, coord_y:0, fwidth:90, fheight:96, width:45, height:48, points:5}
 ]
 const badTypes = ["water"];
 const itemsSprite = document.getElementById("items");

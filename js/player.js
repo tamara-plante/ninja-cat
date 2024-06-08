@@ -145,18 +145,22 @@ player.powerUp = {
     active: false,
     timer: null,
     shader: function(i, data) {
-        // Blue fur convert to yellow.
+        // Blue fur convert to orange.
         if ((data[i] == 95 && data[i + 1] == 205 && data[i + 2] == 228)) {
-            data[i] = 251
-            data[i + 1] = 242
-            data[i + 2] = 54
+            data[i] = 255
+            data[i + 1] = 151
+            data[i + 2] = 87
         }
-        // Highlight in fur and red belt to orange.
-        else if ((data[i] == 91 && data[i + 1] == 110 && data[i + 2] == 225) || data[i] == 222) {
+        // Highlight in fur.
+        else if ((data[i] == 91 && data[i + 1] == 110 && data[i + 2] == 225)) {
             data[i] = 248
             data[i + 1] = 134
             data[i + 2] = 58
         }
+        /*
+        else if (data[i] == 222) {
+            // red belt
+        }*/
     }
 }
 
