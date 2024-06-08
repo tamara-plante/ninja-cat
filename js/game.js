@@ -21,6 +21,9 @@ let game = {
 let player;
 
 
+// Background image
+let bgImg = document.getElementById('bgImg');
+
 
 /**
  * Initialize the game and the default values.
@@ -29,6 +32,11 @@ game.init = function()
 {
     // Disable start game button
     start.disabled = "true";
+
+    
+    drawBackground(); 
+    drawHelp();
+
 
     // Set up initial game values
     game.points = 0;
@@ -141,17 +149,13 @@ game.drawScore = function() {
     guiContext.fillStyle = '#5FCFD4'; // Background color
 
     // Draw the button background
-    guiContext.fillRect(10, 10, 110, 30); // x, y, width, height
+    guiContext.fillRect(10, 10, 116, 30); // x, y, width, height
 
     // strokes
     guiContext.strokeStyle = '#222034'; // Border color #306082
     guiContext.lineWidth = 1; // Border width
    // guiContext.strokeRect(10, 10, 110, 30);  // complete stroke of the button
 
-    // gray highlights 
-    guiContext.fillStyle = '#bfbfbf'; 
-    guiContext.fillRect(11, 11, 108, 2);
-    guiContext.fillRect(115, 11, 4, 28);
 
     // Draw the lines
     // left border line 
@@ -163,26 +167,32 @@ game.drawScore = function() {
     // top border line 
     guiContext.beginPath(); // Start a new path
     guiContext.moveTo(11, 10); // Move to the starting point
-    guiContext.lineTo(119, 10); // Draw a line to the ending point
+    guiContext.lineTo(125, 10); // Draw a line to the ending point
     guiContext.stroke(); // Stroke the line
 
 
     // right border line 
     guiContext.beginPath(); // Start a new path
-    guiContext.moveTo(120, 11); // Move to the starting point
-    guiContext.lineTo(120, 38); // Draw a line to the ending point
+    guiContext.moveTo(126, 11); // Move to the starting point
+    guiContext.lineTo(126, 38); // Draw a line to the ending point
     guiContext.stroke(); // Stroke the line
 
     // bottom border line 
     guiContext.beginPath(); // Start a new path
     guiContext.moveTo(11, 40); // Move to the starting point
-    guiContext.lineTo(119, 40); // Draw a line to the ending point
+    guiContext.lineTo(125, 40); // Draw a line to the ending point
     guiContext.stroke(); // Stroke the line
 
+    
+    // gray highlights 
+    guiContext.fillStyle = '#bfbfbf'; 
+    guiContext.fillRect(11, 11, 114, 2);
+    guiContext.fillRect(121, 11, 4, 28);
+    
     // lightgray highlights 
     guiContext.fillStyle = '#e0e0e0'; 
     guiContext.fillRect(11, 11, 4, 28);
-    guiContext.fillRect(11, 37, 108, 2);
+    guiContext.fillRect(11, 37, 114, 2);
 
     
     // Set text properties
@@ -192,6 +202,46 @@ game.drawScore = function() {
     // Draw the score on the GUI canvas
     guiContext.fillText('Score: ' + game.points, 20, 30); // Text and position (x: 10, y: 30)
 };
+
+
+// image background
+function drawBackground() {
+    bgContext.drawImage(bgImg, 0, 0,  (bgImg.width * bgCanvas.height/ bgImg.height), bgCanvas.height);
+   
+}
+
+
+// draw on help canvas
+function drawHelp() {
+    helpContext.beginPath();
+    helpContext.arc(25, 25, 20, 0, 2 * Math.PI);    
+    helpContext.fillStyle = '#5FCFD4';
+    helpContext.fill();
+
+    helpContext.beginPath();
+    helpContext.arc(25, 25, 20, 0, 2 * Math.PI);    
+    helpContext.strokeStyle = '#222034';
+    helpContext.lineWidth = 1;
+    helpContext.stroke();
+
+    helpContext.beginPath();
+    helpContext.arc(25, 25, 18, 0, 2 * Math.PI);    
+    helpContext.strokeStyle = '#bfbfbf';
+    helpContext.lineWidth = 3;
+    helpContext.stroke();
+
+    
+    
+    // Set text properties
+    helpContext.font = '14px "Press Start 2P"'; 
+    helpContext.fillStyle = '#222034'; 
+
+    // Draw the score on the GUI canvas
+    helpContext.fillText("?", 19, 33); // Text and position (x: 10, y: 30)
+
+
+}
+
 
 game.drawGameOver = function() {
     // Clear the canvas
