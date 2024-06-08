@@ -266,19 +266,6 @@ game.drawLives = function(scale = 1) {
     livesContext.fillText(game.lives, 200, 34); // Text and position (x: 200, y: 34)
 }
 
-game.drawLives0 = function(){  
-    // Clear the lives canvas
-    livesContext.clearRect(0, 0, livesCanvas.width, livesCanvas.height);  
-    livesContext.drawImage(heart, 160, 15, heart.width/4, heart.height/4);
-    
-    // Set text properties
-    livesContext.font = '14px "Press Start 2P"'; 
-    livesContext.fillStyle = '#222034'; 
-
-    // Draw the score on the GUI canvas
-    livesContext.fillText(game.lives, 200, 34); // Text and position (x: 10, y: 30)
-}
-
 // image background
 function drawBackground() {
     bgContext.drawImage(bgImg, 0, 0,  (bgImg.width * bgCanvas.height/ bgImg.height), bgCanvas.height);
