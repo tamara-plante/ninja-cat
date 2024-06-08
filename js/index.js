@@ -12,6 +12,10 @@ let playerContext;
 let guiCanvas;
 let guiContext;
 
+// lives canvas
+let livesCanvas;
+let livesContext;
+
 // help canvas
 let helpCanvas;
 let helpContext;
@@ -44,9 +48,14 @@ function init()
 
     playerCanvas = document.getElementById("playerCanvas");
     playerContext = playerCanvas.getContext("2d", { willReadFrequently: true });
+
     // gui canvas for displaying score
     guiCanvas = document.getElementById('guiCanvas');
     guiContext = guiCanvas.getContext('2d');
+    
+    // lives canvas
+    livesCanvas = document.getElementById('livesCanvas');
+    livesContext = livesCanvas.getContext('2d');
     
     // canvas for help icon
     helpCanvas = document.getElementById('helpCanvas');

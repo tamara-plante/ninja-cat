@@ -25,6 +25,8 @@ let player;
 // Background image
 let bgImg = document.getElementById('bgImg');
 
+// Background image
+let heart = document.getElementById('heart');
 
 /**
  * Initialize the game and the default values.
@@ -45,6 +47,7 @@ game.init = function()
     game.secondsPassed = null;
     game.oldTimeStamp = null;
     game.items.clear();
+    game.drawLives();
 
     // Get a reference to our main elements
     player.init();
@@ -102,6 +105,7 @@ game.loop = function(timeStamp)
                     fallingItem.destroy();
                     game.lives--;
                     console.log("Remaining lives: " + game.lives);
+                    game.drawLives();
 
                     if (game.lives == 0) {
                         return game.end();
@@ -211,6 +215,19 @@ game.drawScore = function() {
     guiContext.fillText('Score: ' + game.points, 20, 30); // Text and position (x: 10, y: 30)
 };
 
+
+game.drawLives = function(){  
+    // Clear the lives canvas
+    livesContext.clearRect(0, 0, livesCanvas.width, livesCanvas.height);  
+    livesContext.drawImage(heart, 150, 15, heart.width/5, heart.height/5);
+    
+    // Set text properties
+    livesContext.font = '10px "Press Start 2P"'; 
+    livesContext.fillStyle = '#222034'; 
+
+    // Draw the score on the GUI canvas
+    livesContext.fillText(game.lives, 185, 32); // Text and position (x: 10, y: 30)
+}
 
 // image background
 function drawBackground() {
