@@ -17,6 +17,9 @@ let helpContext;
 // How to p[lay instruction (help)
 let helpInfo = document.getElementById('helpInfo');
 
+// Close help
+let closeHelp = document.getElementById('closeHelp');
+
 let rightPressed = false;
 let leftPressed = false;
 
@@ -50,6 +53,10 @@ function init()
 
     helpCanvas.addEventListener("click", function() {
         helpInfo.style.display = 'block';
+    });
+
+    closeHelp.addEventListener("click", function() {
+        helpInfo.style.display = 'none';
     });
 
     // Setup the key listeners
