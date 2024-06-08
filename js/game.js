@@ -72,6 +72,7 @@ game.end = function()
     player.damage.active = false;
     player.powerUp.active = false;
 
+    game.clearCanvas();
     game.drawGameOver();
     // Enable start game button
     start.disabled = "";
@@ -133,8 +134,7 @@ game.loop = function(timeStamp)
     game.items.generate();
 
     // Clear canvas
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
+    game.clearCanvas();
 
     // Update player
     player.update(game.secondsPassed);
@@ -156,6 +156,15 @@ game.draw = function()
 {
     game.items.draw();
     player.draw();
+}
+
+/**
+ * Clear all the game related canvas
+ */
+game.clearCanvas = function()
+{
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
 }
 
 game.drawScore = function() {
@@ -307,7 +316,7 @@ function drawHelp() {
 
 game.drawGameOver = function() {
     // Clear the canvas
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    /*context.clearRect(0, 0, canvas.width, canvas.height);*/
 
     // Create a gradient
     // Create a vertical gradient for the text fill
