@@ -41,7 +41,7 @@ game.init = function()
 
     // Set up initial game values
     game.points = 0;
-    game.lives = -1;
+    game.lives = 4;
     game.secondsPassed = null;
     game.oldTimeStamp = null;
     game.items.clear();
@@ -93,6 +93,7 @@ game.loop = function(timeStamp)
                 let removedItem = items.splice(i, 1)[0];
 
                 if (fallingItem instanceof Water) {
+                    player.damage.active = true;
                     game.items.destroy.push(removedItem);
                     fallingItem.destroy();
                     game.lives--;
@@ -103,6 +104,9 @@ game.loop = function(timeStamp)
                     }
                 }
                 else {
+                    if (fallingItem instanceof Item && fallingItem.name == "nugget") {
+                        player.powerUp.active = true;
+                    }
                     game.points += removedItem.points;
                     //console.log("Current points: " + game.points);
                 }
