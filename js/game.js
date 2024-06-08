@@ -45,7 +45,7 @@ game.init = function()
 
     // Set up initial game values
     game.points = 0;
-    game.lives = 4;
+    game.lives = 9;
     game.secondsPassed = null;
     game.oldTimeStamp = null;
     game.items.clear();
@@ -64,10 +64,6 @@ game.init = function()
  */
 game.end = function() 
 {
-    // Reset the player state
-    player.damage.active = false;
-    player.powerUp.active = false;
-
     game.clearCanvas();
     game.drawGameOver();
     // Enable start game button
@@ -103,11 +99,11 @@ game.loop = function(timeStamp)
                 let removedItem = items.splice(i, 1)[0];
 
                 if (fallingItem instanceof Water) {
-                    player.damage.active = true;
+                    player.damage.activate();
                     game.items.destroy.push(removedItem);
                     fallingItem.destroy();
                     game.lives--;
-                    console.log("Remaining lives: " + game.lives);
+                    /*console.log("Remaining lives: " + game.lives);*/
                     onLivesChange();
 
                     if (game.lives == 0) {
@@ -115,8 +111,14 @@ game.loop = function(timeStamp)
                     }
                 }
                 else {
-                    if (fallingItem instanceof Item && fallingItem.name == "nugget") {
-                        player.powerUp.active = true;
+                    if (fallingItem.name == "nugget") {
+                        player.powerUp.activate();
+                    }
+                    else if (fallingItem.name == "pepper") {
+                        player.stun.activate();
+                    }
+                    else if (fallingItem.name == "donut") {
+                        player.slow.activate();
                     }
                     game.points += removedItem.points;
                     //console.log("Current points: " + game.points);
@@ -129,17 +131,14 @@ game.loop = function(timeStamp)
     // Add new items randomly
     game.items.generate();
 
-    // Clear canvas
-    game.clearCanvas();
-
     // Update player
     player.update(game.secondsPassed);
 
+    // Clear canvas
+    game.clearCanvas();
+
     // Draw items and player
     game.draw();
-    
-    // Draw the score on the GUI canvas
-    game.drawScore();
 
     // Request next frame
     window.requestAnimationFrame(game.loop);
@@ -152,6 +151,9 @@ game.draw = function()
 {
     game.items.draw();
     player.draw();
+
+    // Draw the score on the GUI canvas
+    game.drawScore();
 }
 
 /**

@@ -206,3 +206,60 @@ class GameAnimatedObject extends GameObject
         );
     }
 }
+
+
+/**
+ * A basic effect class.
+ */
+class Effect {
+    /**
+     * The effect object.
+     * @param {function} aTriggerF the trigger function to activate the effect, by setting this.active = true;
+     * @param {function} aCancelF the cancel function for the effect
+     */
+    constructor(aTriggerF, aCancelF) {
+        this.activate = aTriggerF;
+        this.active = false;
+        this.timer = null;
+        this.cancel = aCancelF;
+    }
+}
+
+/**
+ * A shader effect based on the effect class.
+ */
+class ShaderEffect extends Effect {
+    /**
+     * Shader effect factory.
+     * @param {function} aShaderF the shader callback function that takes an index, data
+     * @param {function} aTriggerF the trigger function to activate the effect
+     * @param {function} aCancelF the cancel function for the shader
+     * @returns a shader effect object
+
+    * new ShaderEffect
+    (   
+        function(i, data) { // Shader callback function
+            // The area that is not transparent, make white.
+            if (data[i + 3] != 0) {
+                data[i] = 255
+                data[i + 1] = 255
+                data[i + 2] = 255
+            }
+        },
+        function() { // Activate trigger function
+            this.active = true;
+            this.timer = setTimeout(() => this.cancel(), 100);
+        },
+        function() { // Cancel
+            this.active = false;
+
+            clearTimeout(this.timer);
+            this.timer = null;
+        }
+    )
+    */
+    constructor(aShaderF, aTriggerF, aCancelF) {
+        super(aTriggerF, aCancelF);
+        this.shader = aShaderF;
+    }
+}
