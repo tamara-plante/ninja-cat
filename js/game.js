@@ -27,6 +27,12 @@ let bgImg = document.getElementById('bgImg');
 
 // Background image
 let heart = document.getElementById('heart');
+let pulseStartTime;
+let pulsing = false;
+const pulseDuration = 2000; // 2 seconds
+const scaleMin = 0.8;
+const scaleMax = 1.2;
+
 
 /**
  * Initialize the game and the default values.
@@ -105,7 +111,7 @@ game.loop = function(timeStamp)
                     fallingItem.destroy();
                     game.lives--;
                     console.log("Remaining lives: " + game.lives);
-                    game.drawLives();
+                    onLivesChange();
 
                     if (game.lives == 0) {
                         return game.end();
@@ -216,17 +222,48 @@ game.drawScore = function() {
 };
 
 
-game.drawLives = function(){  
+function onLivesChange() {
+    pulseStartTime = performance.now();
+    pulsing = true;
+    requestAnimationFrame(pulseHeart);
+}
+// Pulse animation function
+function pulseHeart(timestamp) {
+    if (!pulseStartTime) pulseStartTime = timestamp;
+    const elapsed = timestamp - pulseStartTime;
+    const progress = elapsed / pulseDuration;
+
+    if (progress < 1) {
+        const scale = scaleMin + (scaleMax - scaleMin) * Math.sin(progress * Math.PI);
+        game.drawLives(scale);
+        requestAnimationFrame(pulseHeart);
+    } else {
+        pulsing = false;
+        game.drawLives(); // draw normally after pulse ends
+    }
+}
+
+game.drawLives = function(scale = 1) {  
     // Clear the lives canvas
     livesContext.clearRect(0, 0, livesCanvas.width, livesCanvas.height);  
-    livesContext.drawImage(heart, 150, 15, heart.width/5, heart.height/5);
-    
+
+    // Draw the heart image with scaling
+    const heartWidth = heart.width / 4 * scale;
+    const heartHeight = heart.height / 4 * scale;
+    const heartX = 160 - (heartWidth / 2 - heart.width / 8);
+    const heartY = 15 - (heartHeight / 2 - heart.height / 8);
+
+    livesContext.drawImage(
+        heart, 
+        heartX, heartY, heartWidth, heartHeight
+    );
+
     // Set text properties
-    livesContext.font = '10px "Press Start 2P"'; 
+    livesContext.font = '14px "Press Start 2P"'; 
     livesContext.fillStyle = '#222034'; 
 
     // Draw the score on the GUI canvas
-    livesContext.fillText(game.lives, 185, 32); // Text and position (x: 10, y: 30)
+    livesContext.fillText(game.lives, 200, 34); // Text and position (x: 200, y: 34)
 }
 
 // image background
