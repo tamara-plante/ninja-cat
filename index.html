@@ -9,32 +9,37 @@
     </head>
     <body>
 
+        <div id="gameContainer"><!-- width: 360px -->
+            <div>
+                <canvas id="game" width="360" height="500">
+                    Your browser does not support the HTML5 canvas tag.
+                </canvas>
+                <canvas id="playerCanvas" width="360" height="500">
+                    Your browser does not support the HTML5 canvas tag.
+                </canvas>
+                <div id="intro">
+                    <img id="splash" src="images/bg-intro.svg" alt="background intro">
+                    <div id="container">
+                    <img id="logo"  src="images/ninja-cat-logo.svg" alt="Logo intro">
+                    </div>
         
-        <canvas id="game" width="360" height="500">
-            Your browser does not support the HTML5 canvas tag.
-        </canvas>
+                    <div id="container1">
+                        <img id="cat" src="images/ninja-cat-anim.gif" alt="running ninja=cat">
+                    </div>
+                </div>
 
-        
-        <div id="intro">
-            <img id="splash" src="images/bg-intro.svg" alt="background intro">
-            <div id="container">
-            <img id="logo"  src="images/ninja-cat-logo.svg" alt="Logo intro">
+                <div id="header">                
+                    <canvas id="guiCanvas" width="130" height="50"></canvas>
+                    <canvas id="livesCanvas" width="230" height="50"></canvas>
+                </div>
             </div>
 
-            <div id="container1">
-                <img id="cat" src="images/ninja-cat-anim.gif" alt="running ninja=cat">
+            <div id="menu">
+                <button id="start">Start game</button>
+                <canvas id="helpCanvas" width="50" height="50"></canvas>
             </div>
-            
-        </div>       
+        </div>
 
-        <div id="header">                
-            <canvas id="guiCanvas" width="130" height="50"></canvas>
-            <canvas id="livesCanvas" width="230" height="50"></canvas>
-        </div>
-        <div id="menu">
-            <button id="start">Start game</button>
-            <canvas id="helpCanvas" width="50" height="50"></canvas>
-        </div>
 
         <canvas id="bgCanvas" width="700" height="600">
             Your browser does not support the HTML5 canvas tag.

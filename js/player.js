@@ -9,6 +9,8 @@ player = new GameAnimatedObject();
  */
 player.init = function() 
 {
+    this.setContext(playerContext);
+
     this.sprite = document.getElementById("player");
     this.direction = "right";
     this.speed = 250;

@@ -116,6 +116,7 @@ game.loop = function(timeStamp)
 
     // Clear canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
+    playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
 
     // Update player
     player.update(game.secondsPassed);

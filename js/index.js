@@ -5,6 +5,8 @@ let start;
 // background canvas
 let bgCanvas;
 let bgContext;
+let playerCanvas;
+let playerContext;
 
 // gui canvas for displaying score
 let guiCanvas;
@@ -40,6 +42,8 @@ function init()
     bgCanvas = document.getElementById("bgCanvas");
     bgContext = bgCanvas.getContext("2d"); 
 
+    playerCanvas = document.getElementById("playerCanvas");
+    playerContext = playerCanvas.getContext("2d", { willReadFrequently: true });
     // gui canvas for displaying score
     guiCanvas = document.getElementById('guiCanvas');
     guiContext = guiCanvas.getContext('2d');
