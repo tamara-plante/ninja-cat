@@ -1,11 +1,14 @@
 /**
  * Where we generate fancy nuggets (and more) or damaging items!
  */
-const goodTypes = [
-    {name: "nugget", coord_x:0, coord_y:0, fwidth:48, fheight:51, width:32, height:34, points:10},
-    {name: "fish", coord_x:48, coord_y:0, fwidth:90, fheight:96, width:45, height:48, points:5}
+const items = [
+    {name: "nugget", coord_x:0, coord_y:0, fwidth:48, fheight:51, width:32, height:34, points:50},
+    {name: "pepper", coord_x:426, coord_y:0, fwidth:96, fheight:96, width:40, height:40, points:-75},
+    {name: "fish", coord_x:48, coord_y:0, fwidth:90, fheight:96, width:45, height:48},
+    {name: "donut", coord_x:138, coord_y:0, fwidth:96, fheight:93, width:36, height:36}
+    /*{name: "steak", coord_x:234, coord_y:0, fwidth:96, fheight:93, width:40, height:38}*/
+    /*{name: "salmon", coord_x:330, coord_y:0, fwidth:96, fheight:84, width:40, height:35}*/
 ]
-const badTypes = ["water"];
 const itemsSprite = document.getElementById("items");
 const waterSprite = document.getElementById("water");
 
@@ -16,8 +19,8 @@ const waterSprite = document.getElementById("water");
  */
 function randomizer() 
 {
-    let random = Math.floor(Math.random() * goodTypes.length);
-    return goodTypes[random];
+    let random = Math.floor(Math.random() * (items.length - 2) + 2); // to start at a specific index
+    return items[random];
 }
 
 
@@ -26,26 +29,24 @@ function randomizer()
  */
 class Item extends GameObject
 {
-    constructor(aGoodTypeItem, aSpeed)
+    constructor(anItem, aSpeed)
     {
         super();
+        // TODO: Make a function to check if value is a number
+        // Fill in optional parameters
+        if (typeof anItem.points !== "number") anItem.points = 10;
+        if (typeof anItem.fwidth !== "number") anItem.fwidth = anItem.width;
+        if (typeof anItem.fheight !== "number") anItem.fheight = anItem.height;
 
         this.sprite = itemsSprite;
-        this.name = aGoodTypeItem.name;
+        this.name = anItem.name;
         this.speed = aSpeed;
-        this.width = aGoodTypeItem.width;
-        this.height = aGoodTypeItem.height;
-        this.points = aGoodTypeItem.points;
-
-        // Set up frame width/height to item width and height 
-        // if the scaling value is missing.
-        if (typeof aGoodTypeItem.fwidth !== "number")
-            aGoodTypeItem.fwidth = this.width;
-        if (typeof aGoodTypeItem.fheight !== "number")
-            aGoodTypeItem.fheight = this.height;
+        this.width = anItem.width;
+        this.height = anItem.height;
+        this.points = anItem.points;
 
         // Setup where the image should be clipped at.
-        this.updateSheetCoords(aGoodTypeItem.coord_x, aGoodTypeItem.coord_y, aGoodTypeItem.fwidth, aGoodTypeItem.fheight);
+        this.updateSheetCoords(anItem.coord_x, anItem.coord_y, anItem.fwidth, anItem.fheight);
     }
 }
 
@@ -102,22 +103,32 @@ game.items.generate = function()
     let randomSpeed = Math.floor((Math.random() * 300) + 100);
     let item;
 
-    // Try to spawn a bad item
+    // Try to spawn a water drop
     if (Math.random() < 0.01) {
         item = new Water(randomSpeed);
     }
-    // Add new items randomly
-    else if (Math.random() < 0.045)  { 
-        item = new Item(randomizer(), randomSpeed);
+    else {
+        let spawn;
+        // Try to spawn a nugget powerup
+        if (Math.random() < 0.0075) {
+            spawn = items[0];
+        }
+        // Add new items randomly
+        else if (Math.random() < 0.035)  { 
+            // Try to spawn a hot pepper
+            spawn = (Math.random() < 0.07) ? items[1] : randomizer();
+        }
+        // No spawn this time
+        else return;
+        
+        item = new Item(spawn, randomSpeed);
     }
-    // No spawn this time
-    else return;
 
     // Random position on the x axis.
     item.x = Math.floor(Math.random() * (canvas.width - item.width));
 
     // Add to the active array
-    game.items.active.push(item);
+    this.active.push(item);
 }
 
 /**
@@ -142,19 +153,10 @@ game.items.clear = function()
     game.items.destroy = [];
 }
 
-/** TODO: Is it needed?
- * Remove an item from the active array.
- * @param {number} anIndex the index in the array to remove
- * @returns the removed item
- */
-game.items.remove = function(anIndex)
-{
-    return this.active.splice(anIndex, 1);
-}
 
 /**
  * Destroy the items when they are ready to be destroyed 
- * (after destroyed=true)
+ * (after item.destroyed=true)
  */
 game.items.clearDestroyed = function()
 {

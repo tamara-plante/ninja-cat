@@ -16,6 +16,7 @@ player.init = function()
     this.speed = 250;
     this.width = 66;
     this.height = 81;
+    this.x = 30;
     this.y = canvas.height - this.height;
 
     // Update the spritesheet
@@ -28,6 +29,11 @@ player.init = function()
         movingLeft: [{col:2, row:0}, {col:3, row:0}],
         movingRight: [{col:2, row:1}, {col:3, row:1}]
     };
+
+    // (Re)set the special effects
+    player.damage.active = false;
+    player.powerUp.active = false;
+    player.stun.active = false;
 
     // Start the animation
     this.animation.play();
@@ -78,11 +84,8 @@ player.update = function(secondsPassed)
         this.x = Math.floor(posX);
     }
     // Set the idle state based on the player.direction
-    else if (this.direction == "right") {
-        this.animation.update("idleRight");
-    }
-    else if (this.direction == "left") {
-        this.animation.update("idleLeft");
+    else {
+        this.animation.update((this.direction == "right") ? "idleRight" : "idleLeft");
     }
 }
 
@@ -93,25 +96,12 @@ player._draw = player.draw; // original draw method preserved
 player.draw = function() {
     this._draw(); // Call the original draw method, no super?!
 
-    if (this.damage.active) {
-        this.shader(this.damage.shader);
-        this.damage.timer = setTimeout(() => {
-            this.damage.active = false;
-            this.damage.timer = null;
-        }, 100);
-    }
-    if (this.powerUp.active) {
-        // Keep shader active
-        this.shader(this.powerUp.shader);
+    let specials = [this.damage, this.powerUp, this.stun];
 
-        // Set up the timer
-        if (!this.powerUp.timer) {
-            this.speed = 500;
-            this.powerUp.timer = setTimeout(() => {
-                this.speed = 250;
-                this.powerUp.active = false;
-                this.powerUp.timer = null;
-            }, 3000);
+    for (let special of specials) {
+        if (special.active) {
+            this.shader(special.shader);
+            special.callback();
         }
     }
 }
@@ -122,18 +112,45 @@ player.draw = function() {
  * active = true
  * the timer is set in the drawing phase
  */
-player.damage = {
-    active: false,
-    timer: null,
-    shader: function(i, data) {
+player.damage = ShaderEffect
+(   
+    100, // Timeout
+    function(i, data) {
         // The area that is not transparent, make white.
         if (data[i + 3] != 0) {
             data[i] = 255
             data[i + 1] = 255
             data[i + 2] = 255
         }
+    },
+    function() { // Setup the timer
+        this.timer = setTimeout(() => {
+            this.active = false;
+            this.timer = null;
+        }, this.timeout);
     }
-}
+)
+
+player.stun = ShaderEffect
+(
+    800, // Timeout
+    function(i, data) {
+        // The area that is not transparent, make red.
+        if (data[i + 3] != 0) {
+            data[i] = 255
+        }
+    },
+    function() {
+        if (!this.timer) {
+            player.speed = 0;
+            this.timer = setTimeout(() => {
+                player.speed = 250;
+                this.active = false;
+                this.timer = null;
+            }, this.timeout)
+        }
+    }
+)
 
 /**
  * When the player should power up,
@@ -141,10 +158,10 @@ player.damage = {
  * active = true
  * the timer is set in the drawing phase
  */
-player.powerUp = {
-    active: false,
-    timer: null,
-    shader: function(i, data) {
+player.powerUp = ShaderEffect
+(
+    3000, // Timeout
+    function(i, data) {
         // Blue fur convert to orange.
         if ((data[i] == 95 && data[i + 1] == 205 && data[i + 2] == 228)) {
             data[i] = 255
@@ -153,16 +170,26 @@ player.powerUp = {
         }
         // Highlight in fur.
         else if ((data[i] == 91 && data[i + 1] == 110 && data[i + 2] == 225)) {
-            data[i] = 248
-            data[i + 1] = 134
-            data[i + 2] = 58
+            data[i] = 255
+            data[i + 1] = 97
+            data[i + 2] = 35
         }
         /*
         else if (data[i] == 222) {
             // red belt
         }*/
+    },
+    function() { // Setup the timer if there's one active yet.
+        if (!this.timer) {
+            player.speed = 500
+            this.timer = setTimeout(() => {
+                player.speed = 250;
+                this.active = false;
+                this.timer = null;
+            }, this.timeout);
+        }
     }
-}
+)
 
 /**
  * Manipulate pixels to make cool effects.

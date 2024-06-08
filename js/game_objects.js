@@ -206,3 +206,21 @@ class GameAnimatedObject extends GameObject
         );
     }
 }
+
+/**
+ * Shader effect factory.
+ * @param {number} aTimeout the timeout value for the timer
+ * @param {function} aShaderF the shader function that takes an index, data.
+ * @param {function} aCallbackF the timeout function callback
+ * @returns a shader effect object
+ */
+
+function ShaderEffect(aTimeout, aShaderF, aCallbackF) {
+    return {
+        active: false,
+        timer: null,
+        shader: aShaderF,
+        timeout: aTimeout,
+        callback: aCallbackF
+    }
+}
