@@ -260,7 +260,7 @@ canvas {
 #cat{
     position: absolute;
     height:50px;
-    top: 20px;
+    /*top: 20px;*/
     left:90px;
     transform: translate(-50%, -50%);
     z-index:10;

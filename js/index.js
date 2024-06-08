@@ -78,6 +78,7 @@ function init()
 
     //window.addEventListener('resize', resizeCanvas, false);
     //resizeCanvas(); // call the first time page is loaded
+    drawHelp();
 }
 
 /*function resizeCanvas() {
