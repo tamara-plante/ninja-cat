@@ -117,7 +117,6 @@ player.draw = function() {
 player.slow = new Effect
 (
     function() { // Active callback function
-        console.log("SLOW!")
         if (player.stun.active) return this.cancel(); // Do nothing!
 
         if (player.powerUp.active) player.powerUp.cancel();
@@ -152,7 +151,6 @@ player.damage = new ShaderEffect
         }
     },
     function() { // Active callback function
-        console.log("DMG!")
         this.timer = setTimeout(() => this.cancel(), 100);
     },
     function() { // Cancel
@@ -178,7 +176,6 @@ player.stun = new ShaderEffect
         }
     },
     function() { // Active callback function
-        console.log("STUN!")
         if (player.powerUp.active) player.powerUp.cancel();
         if (player.slow.active) player.slow.cancel();
 
@@ -225,7 +222,6 @@ player.powerUp = new ShaderEffect
     },
     function() { // Active callback function
         /*if (this.timer) this.cancel();*/
-        console.log("POWERUP!")
         if (!this.timer) {
             //this.active = true; // renew the effect
             player.speed = 500
