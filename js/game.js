@@ -59,6 +59,10 @@ game.init = function()
  */
 game.end = function() 
 {
+    // Reset the player state
+    player.damage.active = false;
+    player.powerUp.active = false;
+
     game.drawGameOver();
     // Enable start game button
     start.disabled = "";
