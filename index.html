@@ -27,15 +27,63 @@
             
         </div>       
 
-        <canvas id="guiCanvas" width="360" height="50"></canvas>
+        <div id="header">                
+            <canvas id="guiCanvas" width="130" height="50"></canvas>
+            <canvas id="livesCanvas" width="230" height="50"></canvas>
+        </div>
         <div id="menu">
             <button id="start">Start game</button>
+            <canvas id="helpCanvas" width="50" height="50"></canvas>
+        </div>
+
+        <canvas id="bgCanvas" width="700" height="600">
+            Your browser does not support the HTML5 canvas tag.
+        </canvas>
+
+        <div id="helpInfo">
+            <p id="helpTitle">How to play</p>
+            <button id="closeHelp">x</button>
+            <div class="instruction-row">
+                <div class="column image-column">
+                    <img src="images/arrow-set-2.png" alt="Left Arrow">
+                </div>
+                <div class="column text-column">
+                    Use the left and right arrow key to move the ninja cat left and right.
+                </div>
+            </div>
+            <div class="instruction-row">
+                <div class="column image-column">
+                    <img src="images/ninja-cat-nugget.png" alt="Chicken Nugget">
+                </div>
+                <div class="column text-column">
+                    Catch the chicken nuggets to score points.
+                </div>
+            </div>
+            <div class="instruction-row">
+                <div class="column image-column">
+                    <img src="images/fish.png" alt="Fish">
+                </div>
+                <div class="column text-column">
+                    Catch the fish to score points.
+                </div>
+            </div>
+            <div class="instruction-row">
+                <div class="column image-column">
+                    <img src="images/water-1.png" alt="Water Drop">
+                </div>
+                <div class="column text-column">
+                    Avoid the water drops, each one costs a life. You have 4 lives.
+                </div>
+            </div>
+            
         </div>
 
         
         <img id="player" src="images/ninja-cat-spritesheet.png" style="display:none;">
         <img id="items" src="images/items-spritesheet.png" style="display:none;">
         <img id="water" src="images/water.png" style="display:none;">
+
+        <img id="bgImg" src="images/japan-6.png" style="display:none;">
         
         <script src="js/index.js"></script>
         <script src="js/game.js"></script>
