@@ -214,13 +214,13 @@ class GameAnimatedObject extends GameObject
 class Effect {
     /**
      * The effect object.
-     * @param {function} aCallbackF the active function callback, i.e what to do after it's activated is activated
+     * @param {function} aTriggerF the trigger function to activate the effect, by setting this.active = true;
      * @param {function} aCancelF the cancel function for the effect
      */
-    constructor(aCallbackF, aCancelF) {
+    constructor(aTriggerF, aCancelF) {
+        this.activate = aTriggerF;
         this.active = false;
         this.timer = null;
-        this.callback = aCallbackF;
         this.cancel = aCancelF;
     }
 }
@@ -232,11 +232,12 @@ class ShaderEffect extends Effect {
     /**
      * Shader effect factory.
      * @param {function} aShaderF the shader callback function that takes an index, data
-     * @param {function} aCallbackF the active function callback, i.e what to do after the shader is activated
+     * @param {function} aTriggerF the trigger function to activate the effect
      * @param {function} aCancelF the cancel function for the shader
      * @returns a shader effect object
 
-    * new ShaderEffect(   
+    * new ShaderEffect
+    (   
         function(i, data) { // Shader callback function
             // The area that is not transparent, make white.
             if (data[i + 3] != 0) {
@@ -245,7 +246,8 @@ class ShaderEffect extends Effect {
                 data[i + 2] = 255
             }
         },
-        function() { // Active callback function
+        function() { // Activate trigger function
+            this.active = true;
             this.timer = setTimeout(() => this.cancel(), 100);
         },
         function() { // Cancel
@@ -256,8 +258,8 @@ class ShaderEffect extends Effect {
         }
     )
     */
-    constructor(aShaderF, aCallbackF, aCancelF) {
-        super(aCallbackF, aCancelF);
+    constructor(aShaderF, aTriggerF, aCancelF) {
+        super(aTriggerF, aCancelF);
         this.shader = aShaderF;
     }
 }

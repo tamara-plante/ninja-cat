@@ -98,31 +98,27 @@ player._draw = player.draw; // original draw method preserved
 player.draw = function() {
     this._draw(); // Call the original draw method, no super?!
 
-    let specials = [this.stun, this.slow, this.powerUp, this.damage, ];
+    let specials = [this.stun, this.powerUp, this.damage];
 
     for (let special of specials) {
         if (special.active) {
-            if (special.shader) this.shader(special.shader);
-            
-            special.callback();
+            this.shader(special.shader);
         }
     }
 }
 
 /**
  * Slow the player, they just ate a big donut!
- * 
- * Do nothing if player is stunned. Lose the power up.
+ * Do nothing if player is stunned or powered up.
  */
 player.slow = new Effect
 (
-    function() { // Active callback function
-        if (player.stun.active) return this.cancel(); // Do nothing!
+    function() { // Activate trigger function
+        if (player.powerUp.active || player.stun.active) return;
 
-        if (player.powerUp.active) player.powerUp.cancel();
-
-        if (!this.timer) {
-             player.speed = 100;
+        if (!this.active) {
+            this.active = true;
+            player.speed = 100;
             this.timer = setTimeout(() => this.cancel(), 2000);
         }
     },
@@ -136,9 +132,7 @@ player.slow = new Effect
 )
 
 /**
- * When the player takes damage, 
- * use this object to activate the shader.
- * active = true
+ * When the player takes damage, ouch!
  */
 player.damage = new ShaderEffect
 (   
@@ -150,7 +144,8 @@ player.damage = new ShaderEffect
             data[i + 2] = 255
         }
     },
-    function() { // Active callback function
+    function() { // Activate trigger function
+        this.active = true;
         this.timer = setTimeout(() => this.cancel(), 100);
     },
     function() { // Cancel
@@ -164,7 +159,6 @@ player.damage = new ShaderEffect
 /**
  * Stun the player for a little bit.
  * They just ate a hot pepper, ouch!
- * 
  * Lose power up. Lose the slow.
  */
 player.stun = new ShaderEffect
@@ -179,8 +173,9 @@ player.stun = new ShaderEffect
         if (player.powerUp.active) player.powerUp.cancel();
         if (player.slow.active) player.slow.cancel();
 
-        if (!this.timer) {
-            player.speed = 0;
+        player.speed = 0;
+        if (!this.active) {
+            this.active = true;
             this.timer = setTimeout(() => this.cancel(), 800)
         }
     },
@@ -195,9 +190,6 @@ player.stun = new ShaderEffect
 
 /**
  * When the player should power up,
- * use this object to activate the shader
- * active = true
- * 
  * Effect can be renewed.
  */
 player.powerUp = new ShaderEffect
@@ -220,14 +212,14 @@ player.powerUp = new ShaderEffect
             // red belt
         }*/
     },
-    function() { // Active callback function
-        /*if (this.timer) this.cancel();*/
-        if (!this.timer) {
-            //this.active = true; // renew the effect
-            player.speed = 500
-            this.timer = setTimeout(() => this.cancel(), 3000);
-        }
-        
+    function() { // Activate trigger function
+        if (player.slow.active) player.slow.cancel();
+
+        if (this.active) this.cancel(); // Renew the effect
+
+        this.active = true;
+        player.speed = 500
+        this.timer = setTimeout(() => this.cancel(), 3000);
     },
     function() { // Cancel
         player.speed = SPEED;

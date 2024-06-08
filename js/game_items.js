@@ -110,7 +110,7 @@ game.items.generate = function()
     else {
         let spawn;
         // Try to spawn a nugget powerup
-        if (Math.random() < 0.0075) {
+        if (Math.random() < 0.005) {
             spawn = ITEMS[0];
         }
         // Add new items randomly
