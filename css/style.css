@@ -7,13 +7,39 @@ html, body {
     overflow: hidden;
 }
 
-#game {
+body {
+    background-color: #cfbf9d;
+}
+
+canvas {
+    image-rendering: pixelated;
+}
+
+/* TODO Break into small css files and keep central things here */
+
+#gameContainer {
+    position: relative;
+    width: 360px;
+    margin: auto;
+    top: 15px;
+}
+
+#gameContainer div:first-child {
     display: block;
+    height: 500px;
+}
+
+#playerCanvas {
+    position: absolute;
+}
+
+#game {
+    /*display: block;*/
     border: 1px solid lightgrey;
     margin: auto;
     padding: 0;
-    position: relative;
-    top: 15px;
+    position: absolute;
+    /*top: 15px;*/
 }
 
 
@@ -29,12 +55,12 @@ html, body {
 }
 
 #header{
-    width: 360px;
+    /*width: 360px;*/
     height: 50px;
     position: absolute;
-    top: 16px;
+    /*top: 16px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%);*/
     z-index: 1; 
     display: block;
     margin: auto;
@@ -47,19 +73,24 @@ html, body {
     float: left;
 }
 
-#guiCanvas, #game, #bgCanvas, #helpCanvas, #livesCanvas {
-    image-rendering: pixelated;
-}
-
 #menu {
-    display:flex;
+    display: flex;
     direction: ltr;
     justify-content: center;
+    margin: auto;
+    position: relative;
+    height: 55px;
+    margin-top: 10px;
+    align-items: center;
 }
 #helpCanvas{
     position: absolute;
-    top:520px;
-    left: 57%;
+    right: 10px;
+    bottom: 0;
+    /*top:520px;
+    left: 57%;*/
+    /*right: 25px;
+    bottom: 30px;*/
     width: 50px;
     height: 50px; 
     margin-top: 10px;  
@@ -123,14 +154,11 @@ html, body {
     height: auto;
 }
 
-#player {
-    border: 1px solid red;
-}
 
 #start{
     width: 140px;
     height: 36px;
-    margin-top: 20px;        
+    /*margin-top: 20px;*/
     font-family: 'Press Start 2P', sans-serif;
     font-size: 10px;
     text-transform: uppercase;
@@ -138,7 +166,7 @@ html, body {
     background: #5FCFD4;
     border: 0px;
     position: absolute;
-    top:520px;
+    /*top:520px;*/
     box-shadow: 
     inset -4px 2px 1px 1px grey,
     inset -4px -2px 1px 1px lightgray,
@@ -151,7 +179,7 @@ html, body {
 }
   
 #start:active {
-    top: 520px;
+    /*top: 520px;*/
     box-shadow: 
     -4px 2px 1px 1px grey,
     -4px -2px 1px 1px lightgray,
@@ -161,7 +189,7 @@ html, body {
 #start::after {
     content: '';
     background: #306082;
-    position: absolute;
+    /*position: absolute;*/
     left: -1%;
     top: 0;
     width: 102%;
@@ -172,7 +200,7 @@ html, body {
 #start::before {
     content: '';
     background: #306082;
-    position: absolute;
+    /*position: absolute;*/
     left: 0;
     top: -3%;
     width: 100%;
@@ -189,15 +217,18 @@ html, body {
 }
 */
 
+#intro {
+    position: absolute;
+}
 
 #splash {
-    position: absolute;
-    top: 266px;
+    /*position: absolute;*/
+    /*top: 266px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);*/
     text-align: center;
     background-color: rgba(0, 0, 0, 0.47);
-    width: 360px;
+    /*width: 360px;*/
 
 }
 
@@ -214,7 +245,7 @@ html, body {
 #logo{
     position: absolute;
     top: 80px;
-    left:50.5%;
+    left:51%;
     transform: translate(-50%, -50%);
     
 }

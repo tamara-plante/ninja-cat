@@ -15,7 +15,8 @@ let game = {
     points: 0,
     lives: 0,
     items: {
-        active: []
+        active: [],
+        destroy: [] // For animated items showing destroy animation
     }
 };
 let player;
@@ -43,7 +44,7 @@ game.init = function()
     game.lives = 4;
     game.secondsPassed = null;
     game.oldTimeStamp = null;
-    game.items.active = [];
+    game.items.clear();
 
     // Get a reference to our main elements
     player.init();
@@ -74,8 +75,10 @@ game.loop = function(timeStamp)
     game.secondsPassed = (timeStamp - game.oldTimeStamp) / 1000;
     game.oldTimeStamp = timeStamp;
 
-    let items = game.items.active;
+    // Remove items after their death animation.
+    game.items.clearDestroyed();
 
+    let items = game.items.active;
 
     // Update item positions and check collisions
     for (let i = items.length - 1; i >= 0; i--) {
@@ -87,7 +90,11 @@ game.loop = function(timeStamp)
         } else {
             if (player.isColliding(fallingItem)) {
                 // Remove collided items and add points
+                let removedItem = items.splice(i, 1)[0];
+
                 if (fallingItem instanceof Water) {
+                    player.damage.active = true;
+                    game.items.destroy.push(removedItem);
                     fallingItem.destroy();
                     game.lives--;
                     console.log("Remaining lives: " + game.lives);
@@ -97,12 +104,12 @@ game.loop = function(timeStamp)
                     }
                 }
                 else {
-                    game.points += fallingItem.points;
+                    if (fallingItem instanceof Item && fallingItem.name == "nugget") {
+                        player.powerUp.active = true;
+                    }
+                    game.points += removedItem.points;
                     //console.log("Current points: " + game.points);
                 }
-                items.splice(i, 1);
-                
-                
             }
         }
         fallingItem.update(game.secondsPassed); // Update the position
@@ -113,6 +120,7 @@ game.loop = function(timeStamp)
 
     // Clear canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
+    playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
 
     // Update player
     player.update(game.secondsPassed);
@@ -132,11 +140,7 @@ game.loop = function(timeStamp)
  */
 game.draw = function()
 {
-    // Draw all items
-    for (let item of game.items.active) {
-        item.draw();
-    }
-
+    game.items.draw();
     player.draw();
 }
 
