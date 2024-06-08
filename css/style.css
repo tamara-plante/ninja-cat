@@ -66,9 +66,7 @@ canvas {
     margin: auto;
     padding: 0; 
 }
-#livesCanvas {
-    background-color: lightblue;
-}
+
 #guiCanvas, #livesCanvas {    
     float: left;
 }
