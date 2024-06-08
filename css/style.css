@@ -64,6 +64,65 @@ html, body {
     height: 50px; 
     margin-top: 10px;   
 }
+
+#helpInfo{    
+    display: none; /* Initially hidden */
+    width: 360px;
+    max-height: 360px; 
+    overflow-y: auto;
+    position: absolute;
+    top:80px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2; 
+    background-color: #878787; 
+    font-family: 'Press Start 2P', sans-serif;
+}
+#closeHelp {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background-color: #5FCFD4;
+    color: white;
+    width: 30px;
+    height:30px;
+    border-radius: 50%;
+    padding: 5px;
+    font-family: 'Press Start 2P', sans-serif; 
+    font-size: 12px;
+}
+
+#helpTitle{     
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #222034;  
+    text-align: center;      
+    margin-top: 25px;
+}
+
+.instruction-row {      
+    margin-top: 10px;
+    font-size: 9px;
+    line-height: 2em;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.instruction-row .column {
+    padding: 5px;
+}
+.instruction-row .image-column {
+    width: 60px;
+}
+.instruction-row .text-column {
+    flex: 1;
+}
+.instruction-row img {
+    max-width: 100%;
+    height: auto;
+}
+
 #player {
     border: 1px solid red;
 }

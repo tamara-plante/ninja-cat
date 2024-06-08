@@ -14,6 +14,9 @@ let guiContext;
 let helpCanvas;
 let helpContext;
 
+// How to p[lay instruction (help)
+let helpInfo = document.getElementById('helpInfo');
+
 let rightPressed = false;
 let leftPressed = false;
 
@@ -39,11 +42,15 @@ function init()
     guiContext = guiCanvas.getContext('2d');
     
     // canvas for help icon
-    let helpCanvas = document.getElementById('helpCanvas');
+    helpCanvas = document.getElementById('helpCanvas');
     helpContext = helpCanvas.getContext('2d');
 
 
     start.addEventListener("click", game.init, false);
+
+    helpCanvas.addEventListener("click", function() {
+        helpInfo.style.display = 'block';
+    });
 
     // Setup the key listeners
     document.addEventListener("keydown", keyDownHandler, false);
