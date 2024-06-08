@@ -7,8 +7,7 @@ function intro() {
     let intro = document.getElementById("intro");
     let startButton = document.getElementById("start");
 
-    logoAnim();
-    movingCat()
+    animation();
 
     // Hide splash when start is clicked
     startButton.addEventListener("click", function() {
@@ -26,41 +25,42 @@ function intro() {
     });
 };
 
-function logoAnim(){
-    const elem = document.getElementById("logo");   
-    let pos = 0;
-    const speed = 3; // animation speed
-    const maxPos = 140;
+/**
+ * Function that animate the intro
+ * @param {*} elemId = id of the element in html
+ * @param {*} startPos = the starting position of the element
+ * @param {*} maxPos = where the element should stop moving
+ * @param {*} speed = the speed of the animation
+ * @param {*} direction = the direction in which the animation is happening (x or y)
+ */
+function animateElement(elemId, startPos, maxPos, speed, direction) {
+    const elem = document.getElementById(elemId);
+    let pos = startPos;
 
     function frame() {
         if (pos >= maxPos) {
             clearInterval(id);
         } else {
-            pos += speed; 
-            elem.style.top = pos + "px"; 
+            pos += speed;
+            if (direction === "y") {
+                elem.style.top = pos + "px";
+            } else {
+                elem.style.left = pos + "px";
+            }
         }
     }
 
     //animate
-    const id = setInterval(frame, 10); 
-};
+    const id = setInterval(frame, 10);
+}
 
-function movingCat(){
-    const elem = document.getElementById("cat");   
-    let pos = 40;
-    const speed = 3; // animation speed
-    const maxPos = 330;
+/**
+ * Function the make the animateElement function apply to one element
+ */
+function animation() {
+    animateElement("logo", 0, 140, 3, "y");
+    animateElement("cat", 0, 330, 3, "x");
+}
 
-    function frame() {
-        if (pos >= maxPos) {
-            clearInterval(id);
-        } else {
-            pos += speed; 
-            elem.style.left = pos + "px"; 
-        }
-    }
 
-    //animate
-    const id = setInterval(frame, 10); 
 
-};
