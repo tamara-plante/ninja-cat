@@ -53,7 +53,6 @@ game.init = function()
     game.lives = 9;
     game.secondsPassed = null;
     game.oldTimeStamp = null;
-    game.items.clear();
     game.drawLives();
 
     // Get a reference to our main elements
@@ -70,6 +69,7 @@ game.init = function()
 game.end = function() 
 {
     player.cancelAnimationsAndEffects();
+    game.items.clear();
     game.clearCanvas();
     game.drawGameOver();
     

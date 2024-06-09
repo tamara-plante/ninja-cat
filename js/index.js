@@ -1,3 +1,9 @@
+/**
+ * Initialize the html elements we need to setup the game.
+ * When the start button triggers, game.init (game.js) is called.
+ * 
+ */
+
 let canvas;
 let context;
 let start;
@@ -11,6 +17,8 @@ let playerContext;
 // gui canvas for displaying score
 let guiCanvas;
 let guiContext;
+
+
 
 // lives canvas
 let livesCanvas;
@@ -29,25 +37,23 @@ let closeHelp = document.getElementById('closeHelp');
 let rightPressed = false;
 let leftPressed = false;
 
-
 window.onload = init;
-
-
 
 function init() 
 {   
+
     intro();
 
     start = document.getElementById("start");
     canvas = document.getElementById("game");
-    context = canvas.getContext("2d");//, { willReadFrequently: true });
+    context = canvas.getContext("2d");
 
     //  background canvas
     bgCanvas = document.getElementById("bgCanvas");
     bgContext = bgCanvas.getContext("2d"); 
 
     playerCanvas = document.getElementById("playerCanvas");
-    playerContext = playerCanvas.getContext("2d", { willReadFrequently: true });
+    playerContext = playerCanvas.getContext("2d", { willReadFrequently: true }); // willReadFrequently=true - for the shader
 
     // gui canvas for displaying score
     guiCanvas = document.getElementById('guiCanvas');
@@ -87,24 +93,43 @@ function init()
 }*/
 
 
-
+/**
+ * Catch keyboard on key down events.
+ * @param {Event} e the event
+ */
 function keyDownHandler(e) 
 {
-    if (e.key === "Right" || e.key === "ArrowRight") {
-        rightPressed = true;
-    } 
-    else if (e.key === "Left" || e.key === "ArrowLeft") {
-        leftPressed = true;
+    switch (e.key) {
+        case "Right":
+        case "ArrowRight":
+        case "d":
+        case "D":
+            rightPressed = true;
+            break;
+        case "Left":
+        case "ArrowLeft":
+        case "a":
+        case "A":
+            leftPressed = true;
     }
 }
-  
+/**
+ * Catch keyboard on key up events.
+ * @param {Event} e the event
+ */
 function keyUpHandler(e) 
 {
-    if (e.key === "Right" || e.key === "ArrowRight") {
-        rightPressed = false;
-    } 
-    else if (e.key === "Left" || e.key === "ArrowLeft") {
-        leftPressed = false;
+    switch (e.key) {
+        case "Right":
+        case "ArrowRight":
+        case "d":
+        case "D":
+            rightPressed = false;
+            break;
+        case "Left":
+        case "ArrowLeft":
+        case "a":
+        case "A":
+            leftPressed = false;
     }
 }
-

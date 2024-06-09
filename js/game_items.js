@@ -5,7 +5,7 @@ const ITEMS = [
     {name: "nugget", coord_x:0, coord_y:0, fwidth:48, fheight:51, width:32, height:34, points:50},
     {name: "pepper", coord_x:426, coord_y:0, fwidth:96, fheight:96, width:40, height:40, points:-75},
     {name: "fish", coord_x:48, coord_y:0, fwidth:90, fheight:96, width:45, height:48},
-    {name: "donut", coord_x:138, coord_y:0, fwidth:96, fheight:93, width:36, height:36}
+    {name: "donut", coord_x:138, coord_y:0, fwidth:96, fheight:93, width:36, height:36, points:20}
     /*{name: "steak", coord_x:234, coord_y:0, fwidth:96, fheight:93, width:40, height:38}*/
     /*{name: "salmon", coord_x:330, coord_y:0, fwidth:96, fheight:84, width:40, height:35}*/
 ]

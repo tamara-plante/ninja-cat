@@ -197,16 +197,21 @@ player.powerUp = new ShaderEffect
 (
     function(i, data) { // Shader callback function
         // Blue fur convert to orange.
-        if ((data[i] == 95 && data[i + 1] == 205 && data[i + 2] == 228)) {
+        if (data[i] == 95 && data[i + 1] == 205 && data[i + 2] == 228) {
             data[i] = 255
             data[i + 1] = 151
             data[i + 2] = 87
         }
         // Highlight in fur.
-        else if ((data[i] == 91 && data[i + 1] == 110 && data[i + 2] == 225)) {
+        else if (data[i] == 91 && data[i + 1] == 110 && data[i + 2] == 225) {
             data[i] = 255
             data[i + 1] = 97
             data[i + 2] = 35
+        }
+        else if (data[i] == 48 && data[i + 1] == 96 && data[i + 2] == 130) {
+            data[i] = 251
+            data[i + 1] = 218
+            data[i + 2] = 61
         }
         /*
         else if (data[i] == 222) {
