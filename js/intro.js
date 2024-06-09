@@ -27,11 +27,11 @@ function intro() {
 
 /**
  * Function that animate the intro
- * @param {*} elemId = id of the element in html
- * @param {*} startPos = the starting position of the element
- * @param {*} maxPos = where the element should stop moving
- * @param {*} speed = the speed of the animation
- * @param {*} direction = the direction in which the animation is happening (x or y)
+ * @param {string} elemId = id of the element in html
+ * @param {number} startPos = the starting position of the element
+ * @param {number} maxPos = where the element should stop moving
+ * @param {number} speed = the speed of the animation
+ * @param {string} direction = the direction in which the animation is happening (x or y)
  */
 function animateElement(elemId, startPos, maxPos, speed, direction) {
     const elem = document.getElementById(elemId);
@@ -51,7 +51,7 @@ function animateElement(elemId, startPos, maxPos, speed, direction) {
     }
 
     //animate
-    const id = setInterval(frame, 10);
+    let id = setInterval(frame, 10);
 }
 
 /**
