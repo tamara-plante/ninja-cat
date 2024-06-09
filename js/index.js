@@ -131,5 +131,8 @@ function keyUpHandler(e)
         case "a":
         case "A":
             leftPressed = false;
+            break;
+        case "p":
+            game.pause();
     }
 }
