@@ -106,8 +106,30 @@ canvas {
     z-index: 2; 
     background-color: lightgrey; 
     font-family: 'Press Start 2P', sans-serif;
-    overflow-y: scroll;
+    overflow-y: scroll; /* Show vertical scrollbar */
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #a0e6fa;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #ff6344;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ff6344;
+  }
+
+
 #closeHelp {
     position: absolute;
     top: 10px;
