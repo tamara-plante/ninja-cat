@@ -10,8 +10,11 @@
 
 "use strict"; // only allow strict code
 let game = {
+    isEnded: false,
+    isPaused: false,
     secondsPassed: null,
     oldTimeStamp: null,
+    highScore: localStorage.getItem('highScore') || 0,
     points: 0,
     lives: 0,
     items: {
@@ -25,38 +28,26 @@ let player;
 // Background image
 let bgImg = document.getElementById('bgImg');
 
-// Background image
-let heart = document.getElementById('heart');
-let pulseStartTime;
-let pulsing = false;
-const pulseDuration = 2000; // 2 seconds
-const scaleMin = 0.8;
-const scaleMax = 1.2;
-
-// Game over
-let gameOverDiv = document.getElementById('gameOver');
-let gameOverMsg = document.getElementById('gameOverMsg');
-
-// high score
-let highScore = localStorage.getItem('highScore') || 0;
 
 /**
  * Initialize the game and the default values.
  */
 game.init = function()
 {
-    // Set key press and disable start game button
+    // Set key press and disable start game button and hide the game over.
     gameOverDiv.style.display = "none";
     leftPressed = false;
     rightPressed = false;
     start.disabled = "true";
-    drawBackground(); 
 
     // Set up initial game values
+    game.isEnded = false;
+    game.isPaused = false;
     game.points = 0;
     game.lives = 9;
     game.secondsPassed = null;
     game.oldTimeStamp = null;
+    drawBackground(); 
     game.drawLives();
 
     // Get a reference to our main elements
@@ -65,6 +56,22 @@ game.init = function()
     // Start the gameLoop
     window.requestAnimationFrame(game.loop);
     game.items.generate();
+}
+
+/**
+ * Toggle pause state
+ */
+game.pause = function()
+{
+    game.isPaused = !game.isPaused;
+
+    // Activate
+    if (game.isPaused) {
+        updateOverlay("PAUSED", undefined, "90px");
+        displayOverlay();
+    }
+    // Disable
+    else displayOverlay(true);
 }
 
 /**
@@ -81,7 +88,7 @@ game.end = function()
 
     // Check and update high score
     let msg = "";
-
+    let highScore = game.highScore;
     if (game.points > highScore) {
         highScore = game.points;
         localStorage.setItem('highScore', highScore);
@@ -91,16 +98,77 @@ game.end = function()
     }
    // alert(msg); // A
     // display the game over message in the gameOver div
-    gameOverMsg.innerHTML = msg;
-    gameOverDiv.style.display = 'block';
+    updateOverlay("GAME OVER", msg, "180px");
+    displayOverlay();
     
+    /*
     // Disable start game button (if you have one)
     let startButton = document.getElementById('startButton');
     if (startButton) {
         startButton.disabled = "";
     }
+    */
 }
 
+/**
+ * Check collisions between items and the player and items and the ground.
+ */
+game.checkCollision = function() 
+{
+    let items = game.items.active;
+
+    // Update item positions and check collisions
+    for (let i in items) {
+        let item = items[i];
+
+        // Remove items that fall beyond the canvas bottom edge
+        if (item.y + item.height > canvas.height) {
+            items.splice(i, 1);
+        }
+        // Remove the item colliding with the player,
+        // add points and activate special effects
+        else if (player.isColliding(item)) {
+            let removed = items.splice(i, 1)[0];
+
+            // Take damage
+            if (removed instanceof Water) {
+                player.damage.activate();
+                // Play the death animation
+                game.items.destroy.push(removed);
+                removed.destroy();
+
+                if (!game.loseLife()) return; // Game over.
+            }
+            // Add points
+            else {
+                game.points = Math.max(0, game.points + removed.points);
+                // Trigger special effects
+                if (removed.name == "nugget") player.powerUp.activate();
+                else if (removed.name == "pepper") player.stun.activate();
+                else if (removed.name == "donut") player.slow.activate();
+            }
+        }
+        // Update the item position
+        else item.update(game.secondsPassed);
+    }
+}
+
+/**
+ * Lose a life. If no more life, set the flag game.isEnded = true. 
+ * You are a cat so you have more lives... hopefully.
+ * @returns false if there's no more lives.
+ */
+game.loseLife = function()
+{
+    game.lives--;
+    onLivesChange();
+
+    if (game.lives == 0) {
+        game.isEnded = true;
+        return false;
+    }
+    return true;
+}
 
 /**
  * The main game loop.
@@ -112,64 +180,28 @@ game.loop = function(timeStamp)
     game.secondsPassed = (timeStamp - game.oldTimeStamp) / 1000;
     game.oldTimeStamp = timeStamp;
 
-    // Remove items after their death animation.
-    game.items.clearDestroyed();
+    if (!game.isPaused) {
+        // Remove items after their death animation.
+        game.items.clearDestroyed();
 
-    let items = game.items.active;
+        // Check for collision and update items position.
+        game.checkCollision();
 
-    // Update item positions and check collisions
-    for (let i = items.length - 1; i >= 0; i--) {
-        let fallingItem = items[i];
+        // Game over! No more lives after collision check.
+        if (game.isEnded) return game.end();
 
-        if (fallingItem.y + fallingItem.height > canvas.height) {
-            // Remove items that fall beyond the canvas
-            items.splice(i, 1);
-        } else {
-            if (player.isColliding(fallingItem)) {
-                // Remove collided items and add points
-                let removedItem = items.splice(i, 1)[0];
+        // Add new items randomly
+        game.items.generate();
 
-                if (fallingItem instanceof Water) {
-                    player.damage.activate();
-                    game.items.destroy.push(removedItem);
-                    fallingItem.destroy();
-                    game.lives--;
-                    /*console.log("Remaining lives: " + game.lives);*/
-                    onLivesChange();
+        // Update player
+        player.update(game.secondsPassed);
 
-                    if (game.lives == 0) {
-                        return game.end();
-                    }
-                }
-                else {
-                    if (fallingItem.name == "nugget") {
-                        player.powerUp.activate();
-                    }
-                    else if (fallingItem.name == "pepper") {
-                        player.stun.activate();
-                    }
-                    else if (fallingItem.name == "donut") {
-                        player.slow.activate();
-                    }
-                    game.points += removedItem.points;
-                    //console.log("Current points: " + game.points);
-                }
-            }
-        }
-        fallingItem.update(game.secondsPassed); // Update the position
+        // Clear canvas
+        game.clearCanvas();
+
+        // Draw items and player
+        game.draw();
     }
-
-    // Add new items randomly
-    game.items.generate();
-
-    // Update player
-    player.update(game.secondsPassed);
-
-    // Clear canvas
-    game.clearCanvas();
-
-    // Draw items and player
-    game.draw();
 
     // Request next frame
     window.requestAnimationFrame(game.loop);
