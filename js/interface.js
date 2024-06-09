@@ -112,8 +112,7 @@ game.drawScore = function() {
     drawRect(guiContext, "#e0e0e0", 11, 37, 114, 2);
 
     // draw score on button
-    drawText(guiContext, '9px', "Press Start 2P", "#222034", 20, 30, "Score: "+ game.points);
-
+    drawText(guiContext, '10px', "Press Start 2P", "#222034", 20, 30, game.points);
 };
 
 
