@@ -109,6 +109,39 @@ canvas {
     overflow-y: scroll; /* Show vertical scrollbar */
 }
 
+#gameOver {
+    display: none;
+    position: absolute;
+    width: 360px;
+    height: 180px; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Press Start 2P', sans-serif;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 3;
+}
+
+#gameOver h2 {    
+    font-size: 30px;
+    background: linear-gradient(to bottom, #E9B23D, #AA373C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 30px;
+}
+
+#gameOver p{   
+    font-size: 14px;
+    color: white;
+    line-height: 30px;
+}
+
+#gameOver span{   
+    font-size: 20px;
+    color: #E9B23D;
+    line-height: 30px;
+}
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
