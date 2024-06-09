@@ -5,7 +5,7 @@
  * Points are accumulated when catching good items.
  * Lives are lost when getting hit by a bad item.
  * 
- * @author Alexie LaGarde, Iana Setrakova, Tamara Plante
+ * @author Alexie Lagarde, Iana Setrakova, Tamara Plante
  */
 
 "use strict"; // only allow strict code
@@ -42,7 +42,9 @@ let highScore = localStorage.getItem('highScore') || 0;
  */
 game.init = function()
 {
-    // Disable start game button
+    // Set key press and disable start game button
+    leftPressed = false;
+    rightPressed = false;
     start.disabled = "true";
     drawBackground(); 
 
@@ -67,21 +69,24 @@ game.init = function()
  */
 game.end = function() 
 {
+    player.cancelAnimationsAndEffects();
     game.clearCanvas();
     game.drawGameOver();
+    
     // Enable start game button
     start.disabled = "";
+
     // Check and update high score
-    highScore = localStorage.getItem('highScore') || 0;
+    let msg = "";
+
     if (game.points > highScore) {
         highScore = game.points;
         localStorage.setItem('highScore', highScore);
-        //alert("New High Score! " + highScore);
-        console.log("New High Score! " + highScore);
+        msg = "New High Score! " + highScore;
     } else {
-        //alert("Game Over! Your score: " + game.points + ". High Score: " + highScore);
-        console.log("Game Over! Your score: " + game.points + ". High Score: " + highScore);
+        msg = "Game Over! Your score: " + game.points + ". High Score: " + highScore;
     }
+    alert(msg); // A
 }
 
 
