@@ -94,7 +94,7 @@ game.end = function()
         localStorage.setItem('highScore', highScore);
         msg = "<span>New High Score!</span> <br>" + highScore + "points!";
     } else {
-        msg = "<span>New High Score!</span> <br>" + highScore + " points!";
+        msg = "Your score: " + game.points + "<br>High Score: " + highScore;
     }
    // alert(msg); // A
     // display the game over message in the gameOver div
