@@ -46,6 +46,7 @@ let highScore = localStorage.getItem('highScore') || 0;
 game.init = function()
 {
     // Set key press and disable start game button
+    gameOverDiv.style.display = "none";
     leftPressed = false;
     rightPressed = false;
     start.disabled = "true";
