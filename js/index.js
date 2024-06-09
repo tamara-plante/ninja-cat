@@ -42,21 +42,18 @@ window.onload = init;
 function init() 
 {   
 
-    // Fun little 50/50 on the background color.
-    document.getElementById("bgItems").src = "images/bg-intro-items" + ((Math.random() > 0.5) ? "" : "-2") + ".png";
-
     intro();
 
     start = document.getElementById("start");
     canvas = document.getElementById("game");
-    context = canvas.getContext("2d");//, { willReadFrequently: true });
+    context = canvas.getContext("2d");
 
     //  background canvas
     bgCanvas = document.getElementById("bgCanvas");
     bgContext = bgCanvas.getContext("2d"); 
 
     playerCanvas = document.getElementById("playerCanvas");
-    playerContext = playerCanvas.getContext("2d", { willReadFrequently: true });
+    playerContext = playerCanvas.getContext("2d", { willReadFrequently: true }); // willReadFrequently=true - for the shader
 
     // gui canvas for displaying score
     guiCanvas = document.getElementById('guiCanvas');
