@@ -76,9 +76,11 @@ game.end = function()
     if (game.points > highScore) {
         highScore = game.points;
         localStorage.setItem('highScore', highScore);
-        alert("New High Score! " + highScore);
+        //alert("New High Score! " + highScore);
+        console.log("New High Score! " + highScore);
     } else {
-        alert("Game Over! Your score: " + game.points + ". High Score: " + highScore);
+        //alert("Game Over! Your score: " + game.points + ". High Score: " + highScore);
+        console.log("Game Over! Your score: " + game.points + ". High Score: " + highScore);
     }
 }
 
