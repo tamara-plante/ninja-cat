@@ -24,9 +24,6 @@ let guiContext;
 let livesCanvas;
 let livesContext;
 
-// help canvas
-let helpCanvas;
-let helpContext;
 
 // How to p[lay instruction (help)
 let helpInfo = document.getElementById('helpInfo');
@@ -36,6 +33,7 @@ let closeHelp = document.getElementById('closeHelp');
 
 let rightPressed = false;
 let leftPressed = false;
+let pauseBtn;
 
 window.onload = init;
 
@@ -48,31 +46,37 @@ function init()
     canvas = document.getElementById("game");
     context = canvas.getContext("2d");
 
-    //  background canvas
+    // Background canvas
     bgCanvas = document.getElementById("bgCanvas");
     bgContext = bgCanvas.getContext("2d"); 
 
+    // Player canvas
     playerCanvas = document.getElementById("playerCanvas");
     playerContext = playerCanvas.getContext("2d", { willReadFrequently: true }); // willReadFrequently=true - for the shader
 
     // gui canvas for displaying score
-    guiCanvas = document.getElementById('guiCanvas');
-    guiContext = guiCanvas.getContext('2d');
+    guiCanvas = document.getElementById("guiCanvas");
+    guiContext = guiCanvas.getContext("2d");
     
     // lives canvas
-    livesCanvas = document.getElementById('livesCanvas');
-    livesContext = livesCanvas.getContext('2d');
+    livesCanvas = document.getElementById("livesCanvas");
+    livesContext = livesCanvas.getContext("2d");
+
+    pauseBtn = document.getElementById("pause");
+
+    // Setup menu listeners
+    pauseBtn.addEventListener("click", function() {game.pause()});
     
-    // canvas for help icon
-    helpCanvas = document.getElementById('helpCanvas');
-    helpContext = helpCanvas.getContext('2d');
-
-
+    document.getElementById("help")
+        .addEventListener("click", function() {
+            if (game.isInit) {
+                game.pause(true);
+            }
+            // Toggle
+            helpInfo.style.display = (helpInfo.style.display == "block") ? "none" : "block";
+        })
+    
     start.addEventListener("click", game.init, false);
-
-    helpCanvas.addEventListener("click", function() {
-        helpInfo.style.display = 'block';
-    });
 
     closeHelp.addEventListener("click", function() {
         helpInfo.style.display = 'none';
