@@ -45,10 +45,14 @@ function displayOverlay(hide=false) {
     gameOverDiv.style.display = (hide) ? "none" : "block";
 }
 
-// image background
+// 
+/**
+ * The function to draw background image on backfground canvas
+ */
 function drawBackground() {
-    bgContext.drawImage(bgImg, 0, 0,  (bgImg.width * bgCanvas.height/ bgImg.height), bgCanvas.height);
-   
+    const width = bgImg.width * bgCanvas.height / bgImg.height;
+    const height = bgCanvas.height;
+    drawImage(bgContext, bgImg, 0, 0, width, height);    
 }
 
 function onLivesChange() {
@@ -73,7 +77,7 @@ function pulseHeart(timestamp) {
 }
 game.drawLives = function(scale = 1) {  
     // Clear the lives canvas
-    livesContext.clearRect(0, 0, livesCanvas.width, livesCanvas.height);  
+    clearCanvas(livesContext);
 
     // Draw the heart image with scaling
     const heartWidth = heart.width / 4 * scale;
@@ -81,111 +85,108 @@ game.drawLives = function(scale = 1) {
     const heartX = 160 - (heartWidth / 2 - heart.width / 8);
     const heartY = 15 - (heartHeight / 2 - heart.height / 8);
 
-    livesContext.drawImage(
-        heart, 
-        heartX, heartY, heartWidth, heartHeight
-    );
+    drawImage(livesContext, heart, heartX, heartY, heartWidth, heartHeight);
 
-    // Set text properties
-    livesContext.font = '14px "Press Start 2P"'; 
-    livesContext.fillStyle = '#222034'; 
-
-    // Draw the score on the GUI canvas
-    livesContext.fillText(game.lives, 200, 34); // Text and position (x: 200, y: 34)
+     // draw the remaing lives text on the canvas
+    drawText(livesContext, '14px', "Press Start 2P", "#222034", 200, 34, game.lives);
 }
-
-
-// draw on help canvas
-function drawHelp() {
-    helpContext.beginPath();
-    helpContext.arc(22, 22, 18, 0, 2 * Math.PI);    
-    helpContext.fillStyle = '#5FCFD4';
-    helpContext.fill();
-
-    helpContext.beginPath();
-    helpContext.arc(22, 22, 18, 0, 2 * Math.PI);    
-    helpContext.strokeStyle = '#222034';
-    helpContext.lineWidth = 1;
-    helpContext.stroke();
-
-    helpContext.beginPath();
-    helpContext.arc(22, 22, 16, 0, 2 * Math.PI);    
-    helpContext.strokeStyle = '#bfbfbf';
-    helpContext.lineWidth = 3;
-    helpContext.stroke();
-
-    
-    
-    // Set text properties
-    helpContext.font = '14px "Press Start 2P"'; 
-    helpContext.fillStyle = '#222034'; 
-
-    // Draw the score on the GUI canvas
-    helpContext.fillText("?", 16, 30); // Text and position (x: 10, y: 30)
-
-
-}
-
 
 game.drawScore = function() {
-    // Clear the GUI canvas
-    guiContext.clearRect(0, 0, guiCanvas.width, guiCanvas.height);
-
-
-    // Draw the button
-    guiContext.fillStyle = '#5FCFD4'; // Background color
+    clearCanvas(guiContext);
 
     // Draw the button background
-    guiContext.fillRect(10, 10, 116, 30); // x, y, width, height
+    drawRect(guiContext, "#5FCFD4", 10, 10, 116, 30);
 
-    // strokes
-    guiContext.strokeStyle = '#222034'; // Border color #306082
-    guiContext.lineWidth = 1; // Border width
-   // guiContext.strokeRect(10, 10, 110, 30);  // complete stroke of the button
-
-
-    // Draw the lines
-    // left border line 
-    guiContext.beginPath(); // Start a new path
-    guiContext.moveTo(10, 11); // Move to the starting point
-    guiContext.lineTo(10, 38); // Draw a line to the ending point
-    guiContext.stroke(); // Stroke the line
-
-    // top border line 
-    guiContext.beginPath(); // Start a new path
-    guiContext.moveTo(11, 10); // Move to the starting point
-    guiContext.lineTo(125, 10); // Draw a line to the ending point
-    guiContext.stroke(); // Stroke the line
-
-
-    // right border line 
-    guiContext.beginPath(); // Start a new path
-    guiContext.moveTo(126, 11); // Move to the starting point
-    guiContext.lineTo(126, 38); // Draw a line to the ending point
-    guiContext.stroke(); // Stroke the line
-
-    // bottom border line 
-    guiContext.beginPath(); // Start a new path
-    guiContext.moveTo(11, 40); // Move to the starting point
-    guiContext.lineTo(125, 40); // Draw a line to the ending point
-    guiContext.stroke(); // Stroke the line
-
+    // the button border lines   
+    drawLine(guiContext, "#222034", 1, 10, 11, 10, 38);  // left border line 
+    drawLine(guiContext, "#222034", 1, 11, 10, 125, 10); // top border line 
+    drawLine(guiContext, "#222034", 1, 126, 11, 126, 38); // right border line 
+    drawLine(guiContext, "#222034", 1, 11, 40, 125, 40);  // bottom border line 
     
-    // gray highlights 
-    guiContext.fillStyle = '#bfbfbf'; 
-    guiContext.fillRect(11, 11, 114, 2);
-    guiContext.fillRect(121, 11, 4, 28);
+    // the button gray highlights 
+    drawRect(guiContext, "#bfbfbf", 11, 11, 114, 2);
+    drawRect(guiContext, "#bfbfbf", 121, 11, 4, 28);
     
-    // lightgray highlights 
-    guiContext.fillStyle = '#e0e0e0'; 
-    guiContext.fillRect(11, 11, 4, 28);
-    guiContext.fillRect(11, 37, 114, 2);
+    // the button lightgray highlights 
+    drawRect(guiContext, "#e0e0e0", 11, 11, 4, 28);
+    drawRect(guiContext, "#e0e0e0", 11, 37, 114, 2);
 
-    
-    // Set text properties
-    guiContext.font = '9px "Press Start 2P"'; 
-    guiContext.fillStyle = '#222034'; 
+    // draw score on button
+    drawText(guiContext, '9px', "Press Start 2P", "#222034", 20, 30, "Score: "+ game.points);
 
-    // Draw the score on the GUI canvas
-    guiContext.fillText('Score: ' + game.points, 20, 30); // Text and position (x: 10, y: 30)
 };
+
+
+/**
+ * Clears the canvas by removing all content.
+ * @param {CanvasRenderingContext2D} context The canvas rendering context to clear.
+ */
+function clearCanvas(context) {
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+} 
+
+/**
+ * A function that draws the specified text on the canvas.
+ * @param {CanvasRenderingContext2D} context - the canvas rendering context to draw on
+ * @param {string} fontSize - the font size (e.g., "9px")
+ * @param {string} fontName - the font name or family (e.g., "Arial")
+ * @param {string} fillStyle - the fill color or style for the text (e.g. "#0000FF" or "blue")
+ * @param {number} startX - the X-coordinate of the starting point for drawing the text
+ * @param {number} startY - the Y-coordinate of the starting point for drawing the text
+ * @param {string} text the text to display.
+ */
+function drawText(context, fontSize, fontName, fillStyle, startX, startY, text) {
+    const font = fontSize + " \""+fontName+"\"";
+    context.font = font; 
+    context.fillStyle = fillStyle; 
+    context.fillText(text, startX, startY);
+}
+
+/**
+ * A function that draws a line with specified style and width on the canvas.
+ * @param {CanvasRenderingContext2D} context - the canvas rendering context to draw on
+ * @param {string} strokeStyle - the color of the line (stroke color)
+ * @param {number} lineWidth - the width of the line
+ * @param {number} startX - the x-coordinate of the starting point of the line
+ * @param {number} startY - the y-coordinate of the starting point of the line
+ * @param {number} endX - the x-coordinate of the ending point of the line
+ * @param {number} endY - the y-coordinate of the ending point of the line
+ */
+function drawLine(context, strokeStyle, lineWidth, startX, startY, endX, endY) {
+    context.strokeStyle = strokeStyle; // stroke color
+    context.lineWidth = lineWidth; // stroke or line width
+    context.beginPath(); 
+    context.moveTo(startX, startY); // the starting point
+    context.lineTo(endX, endY); // the ending point
+    context.stroke(); // draw the line
+}
+
+
+/**
+ * A function that draws a filled rectangle with specified fill style on the canvas.
+ * @param {CanvasRenderingContext2D} context The canvas rendering context to draw on
+ * @param {string} fillStyle - the fill color or style for the rectangle
+ * @param {number} x - the X-coordinate of the top-left corner of the rectangle
+ * @param {number} y - the Y-coordinate of the top-left corner of the rectangle
+ * @param {number} width - the width of the rectangle
+ * @param {number} height - the height of the rectangle
+ */
+function drawRect(context, fillStyle, x, y, width, height) {
+    context.fillStyle = fillStyle; // set fill color
+    context.fillRect(x, y, width, height); // draw the filled rectangle
+}
+
+/**
+ * A function that draws an image on the canvas with optional scaling.
+ * @param {CanvasRenderingContext2D} context - the canvas rendering context to draw on.
+ * @param {HTMLImageElement} image - the image to draw.
+ * @param {number} x - the x-coordinate of the top-left corner of the image
+ * @param {number} y - the y-coordinate of the top-left corner of the image
+ * @param {number} [width=image.naturalWidth] - the width of the image. Defaults to the image's natural width.
+ * @param {number} [height=image.naturalHeight] - the height of the image. Defaults to the image's natural height.
+ * @param {number} [scale=1] - the scaling factor to apply to the image dimensions. Defaults to 1 (no scaling).
+ */
+function drawImage(context, image, x, y, width = image.naturalWidth, height = image.naturalHeight, scale = 1) {
+    context.drawImage(image, x, y, width * scale, height * scale);
+}
+
