@@ -36,6 +36,7 @@ player.init = function()
     player.damage.active = false;
     player.powerUp.active = false;
     player.stun.active = false;
+    player.slow.active = false;
 
     // Start the animation
     this.animation.play();
@@ -66,7 +67,7 @@ player.isColliding = function(item)
 player.update = function(secondsPassed) 
 {    
     if (rightPressed || leftPressed) {
-
+        
         let distance = this.speed * secondsPassed;
         let posX;
 
@@ -213,6 +214,7 @@ player.powerUp = new ShaderEffect
         }*/
     },
     function() { // Activate trigger function
+        if (player.stun.active) return;
         if (player.slow.active) player.slow.cancel();
 
         if (this.active) this.cancel(); // Renew the effect
@@ -250,4 +252,16 @@ player.shader = function(aCallback)
     }
     
     this.context.putImageData(imageData, 0, 0);
+}
+
+/**
+ * Cancel the animation setInterval 
+ * and all other setTimeouts for special effects.
+ */
+player.cancelAnimationsAndEffects = function() {
+    this.slow.cancel();
+    this.stun.cancel();
+    this.powerUp.cancel();
+    this.damage.cancel();
+    this.animation.stop();
 }

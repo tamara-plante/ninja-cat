@@ -106,7 +106,7 @@ canvas {
     z-index: 2; 
     background-color: lightgrey; 
     font-family: 'Press Start 2P', sans-serif;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 #closeHelp {
     position: absolute;
