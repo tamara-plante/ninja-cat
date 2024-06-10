@@ -90,6 +90,56 @@ canvas {
     overflow-y: scroll; /* Show vertical scrollbar */
 }
 
+.scrollIndicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    top:-45px;
+}
+
+.scrollDown {
+    position: relative; 
+}
+
+.scrollDown span::before,
+.scrollDown span::after {
+    position: absolute;
+    content: '';
+    width: 15px;
+    height: 15px;
+    border: none;
+    border-right: 2px solid #404040;
+    border-top: 2px solid #404040;
+    transform: translate(-50%, -50%) rotate(135deg);
+    left: 50%;
+    opacity: 0;
+    animation: ani 1.8s infinite linear;
+}
+
+.scrollDown span::after {
+    animation-delay: 0.8s; /* Delay the animation for the ::after pseudo-element */
+}
+
+@keyframes ani {
+    0% {
+        margin-top: 10px;
+        opacity: 0;
+    }
+
+    50% {
+        margin-top: 25px;
+        opacity: 1;
+    }
+
+    100% {
+        margin-top: 40px;
+        opacity: 0;
+    }
+}
+
+
 #gameOver {
     display: none;
     position: absolute;
