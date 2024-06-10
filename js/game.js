@@ -37,7 +37,7 @@ game.init = function()
     rightPressed = false;
     start.style.display = "none";
     pauseBtn.style.visibility = "visible";
-
+    game.toggleMobileControls()
 
     // Set up initial game values
     game.isEnded = false;
@@ -77,6 +77,13 @@ game.pause = function(quiet = false)
     
 }
 
+game.toggleMobileControls = function(hide=false) {
+    let elements = document.getElementsByClassName("touch");
+    for (let elem of elements) {
+        elem.style.visibility = (hide) ? "hidden" : "visible";
+    }
+}
+
 /**
  * When the game ends.
  */
@@ -88,8 +95,8 @@ game.end = function()
    
     // Enable start game button
     start.style.display = "block";
-    pause.style.visibility = "hidden";
-
+    pauseBtn.style.visibility = "hidden";
+    game.toggleMobileControls(true)
     // Check and update high score
     let msg = "";
     let highScore = game.highScore;

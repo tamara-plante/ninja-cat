@@ -2,7 +2,9 @@
  * Initialize the html elements we need to setup the game.
  * When the start button triggers, game.init (game.js) is called.
  * 
+ * Support keyboard, touchscreen
  */
+
 
 let canvas;
 let context;
@@ -33,7 +35,7 @@ let closeHelp = document.getElementById('closeHelp');
 
 let rightPressed = false;
 let leftPressed = false;
-let pauseBtn;
+let pauseBtn, touchLeftBtn, touchRightBtn;
 
 window.onload = init;
 
@@ -63,6 +65,8 @@ function init()
     livesContext = livesCanvas.getContext("2d");
 
     pauseBtn = document.getElementById("pause");
+    touchLeftBtn = document.getElementById("buttonLeft");
+    touchRightBtn = document.getElementById("buttonRight");
 
     // Setup menu listeners
     pauseBtn.addEventListener("click", function() {game.pause()});
@@ -86,8 +90,26 @@ function init()
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
 
+    // Setup touchscreen buttons
+    if (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement) {
+        setupTouchscreen();
+    }
+
+    
+
     //window.addEventListener('resize', resizeCanvas, false);
     //resizeCanvas(); // call the first time page is loaded
+}
+
+
+function setupTouchscreen() 
+{
+    document.getElementById("touchControl").style.display = "block";
+    game.toggleMobileControls(true);
+    for (let btn of [touchLeftBtn, touchRightBtn]) {
+        btn.addEventListener("touchstart", touchDownHandler, false);
+        btn.addEventListener("touchend", touchUpHandler, false);
+    }
 }
 
 /*function resizeCanvas() {
@@ -139,3 +161,28 @@ function keyUpHandler(e)
             game.pause();
     }
 }
+
+function touchDownHandler(e)
+{
+    if (e.srcElement.id == "buttonLeft") {
+        leftPressed = true;
+        touchLeftBtn.style.backgroundColor = "red";
+    }
+    else if (e.srcElement.id == "buttonRight") {
+        rightPressed = true;
+        touchRightBtn.style.backgroundColor = "green";
+    }
+}
+
+function touchUpHandler(e)
+{
+    if (e.srcElement.id === "buttonLeft") {
+        leftPressed = false;
+        touchLeftBtn.style.backgroundColor = "#0000ff59";
+    }
+    else if (e.srcElement.id == "buttonRight") {
+        rightPressed = false;
+        touchRightBtn.style.backgroundColor = "#00ffc860";
+    }
+}
+

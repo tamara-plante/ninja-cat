@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+* { /* Try to disable double tap zoom behavior on mobile*/
+    touch-action: manipulation;
+}
+
 html, body {
     width: 100%;
     height: 100%;
@@ -24,7 +28,7 @@ canvas {
     top: 15px;
 }
 
-#gameContainer div:first-child {
+#gameContainer > div:first-child {
     display: block;
     height: 500px;
 }
@@ -80,7 +84,7 @@ canvas {
     top:70px; 
     left: 50%;
     transform: translateX(-50%);
-    z-index: 2; 
+    z-index: 3; 
     background-color: lightgrey; 
     font-family: 'Press Start 2P', sans-serif;
     overflow-y: scroll; /* Show vertical scrollbar */
@@ -260,10 +264,11 @@ canvas {
     background-color: #ebebeb;
 }
 #help {
-    background-color: #ffd95a; 
+    font-size: 12px;
+    background-color: #ffd95a;
 }
 #help:hover {
-    background-color: #ffe284; 
+    background-color: #ffe284;
 }
 
 /*
