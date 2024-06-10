@@ -16,7 +16,6 @@ const scaleMax = 1.2;
 
 // Game over
 let gameOverDiv = document.getElementById("gameOver");
-let gameOverMsg = document.getElementById("gameOverMsg");
 
 
 /**
@@ -28,6 +27,7 @@ let gameOverMsg = document.getElementById("gameOverMsg");
 function updateOverlay(aTitle, aText=undefined, aHeight=undefined)
 {
     document.querySelector("#gameOver h2").innerHTML = aTitle;
+    let gameOverMsg = document.querySelector("#gameOver p");
     
     // Hide the message box
     if (typeof aText === "undefined") {

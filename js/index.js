@@ -11,7 +11,7 @@ let leftPressed = false;
 let startBtn, pauseBtn, helpBtn, touchLeftBtn, touchRightBtn;
 
 // How to play instruction (help)
-let helpInfo, closeHelp, scrollIndicator;
+let helpInfo, helpInstruction, closeHelp, scrollIndicator;
 
 // Main Game canvas
 let canvas, context;
@@ -39,6 +39,7 @@ function init()
     touchRightBtn = document.getElementById("buttonRight");
     helpBtn = document.getElementById("help");
     helpInfo = document.getElementById("helpInfo");
+    helpInstruction = document.querySelector("#helpInfo > div");
     scrollIndicator = document.getElementById("scrollIndicator");
     closeHelp = document.getElementById("closeHelp");
 
@@ -53,14 +54,15 @@ function init()
     // Lives canvas
     [livesCanvas, livesContext] = loadCanvas("livesCanvas");
 
+
     // Setup instruction listeners
     helpBtn.addEventListener("click", game.toggleInstruction);
     // Close the instruction button "x"
     closeHelp.addEventListener("click", game.toggleInstruction);
     // Add scroll event listener to helpInfo
-    helpInfo.addEventListener("scroll", () => {
+    helpInstruction.addEventListener("scroll", () => {
         // Check if the content is at the top
-        if (helpInfo.scrollTop === 0) {
+        if (helpInstruction.scrollTop === 0) {
             // If at the top, show the scroll indicator
             scrollIndicator.style.display = "flex";
         } else {
@@ -68,6 +70,9 @@ function init()
             scrollIndicator.style.display = "none";
         }
     });
+
+    // Setup game instruction entries
+    setupInstruction();
 
     // Setup the key listeners
     document.addEventListener("keydown", keyDownHandler);
@@ -80,6 +85,49 @@ function init()
     // Game listener
     pauseBtn.addEventListener("click", function() {game.pause();});
     startBtn.addEventListener("click", game.init);
+}
+
+function setupInstruction() 
+{
+    let xhr = new XMLHttpRequest();
+    // Open the request
+    xhr.open("GET", "js/instruction.json");
+    // Send the request
+    xhr.send();
+    // Handle the response
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && xhr.status == 200) { // request is complete and successful
+            let instruction = JSON.parse(xhr.responseText);
+
+            for (let key in instruction) {
+                let entry = instruction[key];
+
+                // Create the row for the entry
+                let row = document.createElement("div");
+                row.classList.add("instruction-row");
+                helpInstruction.appendChild(row);
+
+                // Create the image div
+                let divImg = document.createElement("div");
+                divImg.classList.add("column", "image-column");
+                row.appendChild(divImg);
+
+                // Create the image
+                let img = document.createElement("img");
+                img.src = "images/" + entry.src;
+                img.alt = entry.alt;
+                divImg.appendChild(img);
+
+                // Create the description div
+                let descDiv = document.createElement("div");
+                descDiv.classList.add("column", "text-column");
+                row.appendChild(descDiv);
+
+                // Add the description
+                descDiv.appendChild(document.createTextNode(entry.desc));
+            }
+        }
+    }
 }
 
 /**
