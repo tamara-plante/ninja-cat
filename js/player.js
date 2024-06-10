@@ -46,6 +46,7 @@ player.init = function()
  * Verify if an item (item.x and item.y) is colliding with the player.
  * @param {object} item the object collision to validate
  * @returns true if the item is colliding the player.
+ * @author Tamara Plante, Iana Setrakova
  */
 player.isColliding = function(item) 
 {

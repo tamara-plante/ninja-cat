@@ -97,6 +97,7 @@ class Water extends GameAnimatedObject
  * Function to randomly create new items that start at a random x position and above the canvas
  * that start from the start at a random x position
  * Add New item to the active items array.
+ * @author Tamara Plante, Alexie Lagarde
  */
 game.items.generate = function() 
 {

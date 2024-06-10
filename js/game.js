@@ -16,7 +16,7 @@ let game = {
     activePauseOverlay: false,
     secondsPassed: null,
     oldTimeStamp: null,
-    highScore: localStorage.getItem('highScore') || 0,
+    highScore: 0,
     points: 0,
     lives: 0,
     items: {
@@ -33,20 +33,21 @@ game.init = function()
 {
     // Set key press and disable start game button and hide the game over.
     game.isInit = true;
-    gameOverDiv.style.display = "none";
     leftPressed = false;
     rightPressed = false;
-    start.style.display = "none";
+    gameOverDiv.style.display = "none";
+    startBtn.style.display = "none";
     pauseBtn.style.visibility = "visible";
     game.toggleMobileControls()
 
     // Set up initial game values
     game.isEnded = false;
     game.isPaused = false;
-    game.points = 0;
-    game.lives = 9;
     game.secondsPassed = null;
     game.oldTimeStamp = null;
+    game.highScore = localStorage.getItem("highScore") || 0; // Load local highscore
+    game.points = 0;
+    game.lives = 9;
     drawBackground(); 
     game.drawLives();
 
@@ -56,6 +57,17 @@ game.init = function()
     // Start the gameLoop
     window.requestAnimationFrame(game.loop);
     game.items.generate();
+}
+
+/**
+ * Toggle the visibility the mobile controls for moving left/right.
+ * @param {boolean} hide If the mobile controls should be hidden.
+ */
+game.toggleMobileControls = function(hide=false) 
+{
+    for (let elem of document.querySelectorAll(".touch")) {
+        elem.style.visibility = (hide) ? "hidden" : "visible";
+    }
 }
 
 /**
@@ -71,7 +83,7 @@ game.pause = function(state=undefined, quiet=false)
         // Activate
         if (game.isPaused) {
             game.activePauseOverlay = true;
-            updateOverlay("PAUSED", undefined, "90px");
+            updateOverlay("Paused", undefined, "90px");
             displayOverlay();
         }
         // Disable
@@ -79,13 +91,6 @@ game.pause = function(state=undefined, quiet=false)
             game.activePauseOverlay = false;
             displayOverlay(true);
         }
-    }
-}
-
-game.toggleMobileControls = function(hide=false) {
-    let elements = document.getElementsByClassName("touch");
-    for (let elem of elements) {
-        elem.style.visibility = (hide) ? "hidden" : "visible";
     }
 }
 
@@ -99,8 +104,9 @@ game.end = function()
     game.items.clear();
     game.clearCanvas();
    
-    // Enable start game button
-    start.style.display = "block";
+    // Enable start game button and 
+    // hide the pause button, touch controls.
+    startBtn.style.display = "block";
     pauseBtn.style.visibility = "hidden";
     game.toggleMobileControls(true)
 
@@ -109,13 +115,13 @@ game.end = function()
     let highScore = game.highScore;
     if (game.points > highScore) {
         highScore = game.points;
-        localStorage.setItem('highScore', highScore);
+        localStorage.setItem('highScore', highScore); // Store locally
         msg = "<span>New High Score!</span><br>" + highScore + " points!";
     } else {
         msg = "Your score: " + game.points + "<br>High Score: " + highScore;
     }
     // display the game over message in the gameOver div
-    updateOverlay("GAME OVER", msg, "180px");
+    updateOverlay("Game Over", msg, "180px");
     displayOverlay();    
 }
 

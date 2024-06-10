@@ -1,5 +1,6 @@
 /**
  * Intro - Ninja cat designed by 
+ * @author Alexie Lagarde
  */
 function intro() {
 

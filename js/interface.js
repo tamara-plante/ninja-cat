@@ -1,5 +1,6 @@
 /**
  * All the interface functions to help create the gui.
+ * @author Iana Setrakova
  */
 
 // Background image
