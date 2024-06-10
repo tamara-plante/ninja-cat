@@ -13,6 +13,7 @@ let game = {
     isInit: false,
     isEnded: false,
     isPaused: false,
+    activePauseOverlay: false,
     secondsPassed: null,
     oldTimeStamp: null,
     highScore: localStorage.getItem('highScore') || 0,
@@ -58,23 +59,27 @@ game.init = function()
 }
 
 /**
- * Toggle pause state
+ * Toggle pause state. If value provided, use that instead of toggling.
+ * @param {boolean} [state] if provided, will assign the value to isPaused
  * @param {boolean} [quiet] if we should display the overlay
  */
-game.pause = function(quiet = false)
+game.pause = function(state=undefined, quiet=false)
 {
-    game.isPaused = !game.isPaused;
+    game.isPaused = (typeof state === "boolean") ? state : !game.isPaused;
 
     if (!quiet) {
         // Activate
         if (game.isPaused) {
+            game.activePauseOverlay = true;
             updateOverlay("PAUSED", undefined, "90px");
             displayOverlay();
         }
         // Disable
-        else displayOverlay(true);
+        else {
+            game.activePauseOverlay = false;
+            displayOverlay(true);
+        }
     }
-    
 }
 
 game.toggleMobileControls = function(hide=false) {
@@ -89,6 +94,7 @@ game.toggleMobileControls = function(hide=false) {
  */
 game.end = function() 
 {
+    // Stop the game
     player.cancelAnimationsAndEffects();
     game.items.clear();
     game.clearCanvas();
@@ -97,13 +103,14 @@ game.end = function()
     start.style.display = "block";
     pauseBtn.style.visibility = "hidden";
     game.toggleMobileControls(true)
+
     // Check and update high score
     let msg = "";
     let highScore = game.highScore;
     if (game.points > highScore) {
         highScore = game.points;
         localStorage.setItem('highScore', highScore);
-        msg = "<span>New High Score!</span> <br>" + highScore + "points!";
+        msg = "<span>New High Score!</span><br>" + highScore + " points!";
     } else {
         msg = "Your score: " + game.points + "<br>High Score: " + highScore;
     }

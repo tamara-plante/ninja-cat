@@ -87,11 +87,17 @@ function init()
     
     document.getElementById("help")
         .addEventListener("click", function() {
-            if (game.isInit && !game.isPaused) {
-                game.pause(true);
+            let active = helpInfo.style.display == "block";
+
+            // Only activate/disable pause if the pause overlay isn't active
+            // Disable the pause button while displaying instruction
+            pauseBtn.disabled = (!active) ? "true": "";
+            if (!game.activePauseOverlay) {
+                game.pause(!active, true);
             }
+            
             // Toggle
-            helpInfo.style.display = (helpInfo.style.display == "block") ? "none" : "block";
+            helpInfo.style.display = (active) ? "none" : "block";
         })
     
     start.addEventListener("click", game.init, false);
