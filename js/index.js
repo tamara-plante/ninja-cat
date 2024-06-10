@@ -30,6 +30,22 @@ let livesContext;
 // How to p[lay instruction (help)
 let helpInfo = document.getElementById('helpInfo');
 
+// Get the helpInfo and scrollIndicator elements
+let scrollIndicator = document.getElementById('scrollIndicator');
+
+// Add scroll event listener to helpInfo
+helpInfo.addEventListener('scroll', () => {
+    // Check if the content is at the top
+    if (helpInfo.scrollTop === 0) {
+        // If at the top, show the scroll indicator
+        scrollIndicator.style.display = 'flex';
+    } else {
+        // If not at the top, hide the scroll indicator
+        scrollIndicator.style.display = 'none';
+    }
+});
+
+
 // Close help
 let closeHelp = document.getElementById('closeHelp');
 
