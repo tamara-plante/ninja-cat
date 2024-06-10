@@ -38,7 +38,7 @@ game.init = function()
     gameOverDiv.style.display = "none";
     startBtn.style.display = "none";
     pauseBtn.style.visibility = "visible";
-    game.toggleMobileControls()
+    game.toggleMobileControls();
 
     // Set up initial game values
     game.isEnded = false;
@@ -68,6 +68,25 @@ game.toggleMobileControls = function(hide=false)
     for (let elem of document.querySelectorAll(".touch")) {
         elem.style.visibility = (hide) ? "hidden" : "visible";
     }
+}
+
+/**
+ * Toggle the game instructions. When active, pause the game.
+ * Disable pause button when game instructions are showing.
+ */
+game.toggleInstruction = function()
+{
+    let active = helpInfo.style.display == "block";
+
+    // Only activate/disable pause if the pause overlay isn't active
+    // Disable the pause button while displaying instruction
+    pauseBtn.disabled = (!active) ? "true": "";
+    if (game.isInit && !game.activePauseOverlay) {
+        game.pause(!active, true);
+    }
+
+    // Toggle info screen
+    helpInfo.style.display = (active) ? "none" : "block";
 }
 
 /**
@@ -127,6 +146,7 @@ game.end = function()
 
 /**
  * Check collisions between items and the player and items and the ground.
+ * @author Alexie Lagarde, Tamara Plante
  */
 game.checkCollision = function() 
 {
@@ -242,11 +262,3 @@ game.clearCanvas = function()
     context.clearRect(0, 0, canvas.width, canvas.height);
     playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
 }
-
-
-
-
-
-
-
-

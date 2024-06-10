@@ -90,9 +90,9 @@ canvas {
     font-size: 30px;
     text-transform: uppercase;
     background: linear-gradient(to bottom, #E9B23D, #AA373C);
-    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-top: 30px;
 }
 
@@ -175,12 +175,11 @@ canvas {
     width: 50px;
 }
 #pause {
-    position: relative;
     visibility: hidden;
     background-color: lightgrey;
 }
 #pause > svg {
-    margin: auto;
+    margin-right: 5px;
 }
 #pause:hover {
     background-color: #ebebeb;

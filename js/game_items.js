@@ -1,5 +1,6 @@
 /**
  * Where we generate fancy nuggets (and more) or damaging items!
+ * @author Tamara Plante, Alexie Lagarde
  */
 const ITEMS = [
     {name: "nugget", coord_x:0, coord_y:0, fwidth:48, fheight:51, width:32, height:34, points:50},
@@ -97,7 +98,7 @@ class Water extends GameAnimatedObject
  * Function to randomly create new items that start at a random x position and above the canvas
  * that start from the start at a random x position
  * Add New item to the active items array.
- * @author Tamara Plante, Alexie Lagarde
+ * @author Alexie Lagarde, Tamara Plante
  */
 game.items.generate = function() 
 {
@@ -153,7 +154,6 @@ game.items.clear = function()
     game.items.active = [];
     game.items.destroy = [];
 }
-
 
 /**
  * Destroy the items when they are ready to be destroyed 

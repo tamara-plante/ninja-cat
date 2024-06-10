@@ -3,6 +3,7 @@
  * When the start button triggers, game.init (game.js) is called.
  * 
  * Support keyboard, touchscreen
+ * @author Tamara Plante, Iana Setrakova, Alexie Lagarde
  */
 
 let rightPressed = false;
@@ -31,7 +32,7 @@ function init()
     // Show the splash intro
     intro();
 
-    // Setup the import elements variables
+    // Setup the important elements variables
     startBtn = document.getElementById("start");
     pauseBtn = document.getElementById("pause");
     touchLeftBtn = document.getElementById("buttonLeft");
@@ -53,45 +54,32 @@ function init()
     [livesCanvas, livesContext] = loadCanvas("livesCanvas");
 
     // Setup instruction listeners
-    helpBtn.addEventListener("click", function() {
-        let active = helpInfo.style.display == "block";
-
-        // Only activate/disable pause if the pause overlay isn't active
-        // Disable the pause button while displaying instruction
-        pauseBtn.disabled = (!active) ? "true": "";
-        if (game.isInit && !game.activePauseOverlay) {
-            game.pause(!active, true);
-        }
-
-        // Toggle info screen
-        helpInfo.style.display = (active) ? "none" : "block";
-    });
+    helpBtn.addEventListener("click", game.toggleInstruction);
+    // Close the instruction button "x"
+    closeHelp.addEventListener("click", game.toggleInstruction);
     // Add scroll event listener to helpInfo
-    helpInfo.addEventListener('scroll', () => {
+    helpInfo.addEventListener("scroll", () => {
         // Check if the content is at the top
         if (helpInfo.scrollTop === 0) {
             // If at the top, show the scroll indicator
-            scrollIndicator.style.display = 'flex';
+            scrollIndicator.style.display = "flex";
         } else {
             // If not at the top, hide the scroll indicator
-            scrollIndicator.style.display = 'none';
+            scrollIndicator.style.display = "none";
         }
-    });
-    closeHelp.addEventListener("click", function() {
-        helpInfo.style.display = 'none';
     });
 
     // Setup the key listeners
-    document.addEventListener("keydown", keyDownHandler, false);
-    document.addEventListener("keyup", keyUpHandler, false);
+    document.addEventListener("keydown", keyDownHandler);
+    document.addEventListener("keyup", keyUpHandler);
 
     // Setup touchscreen buttons
-    if (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement) {
+    if (navigator.maxTouchPoints || "ontouchstart" in document.documentElement) {
         setupTouchscreen();
     }
     // Game listener
-    pauseBtn.addEventListener("click", function() {game.pause()});
-    startBtn.addEventListener("click", game.init, false);
+    pauseBtn.addEventListener("click", function() {game.pause();});
+    startBtn.addEventListener("click", game.init);
 }
 
 /**
@@ -119,8 +107,8 @@ function setupTouchscreen()
     game.toggleMobileControls(true);
 
     for (let btn of [touchLeftBtn, touchRightBtn]) {
-        btn.addEventListener("touchstart", touchDownHandler, false);
-        btn.addEventListener("touchend", touchUpHandler, false);
+        btn.addEventListener("touchstart", touchDownHandler);
+        btn.addEventListener("touchend", touchUpHandler);
     }
 }
 
@@ -176,11 +164,11 @@ function keyUpHandler(e)
  */
 function touchDownHandler(e)
 {
-    if (e.srcElement.id == "buttonLeft") {
+    if (e.target.id == "buttonLeft") {
         leftPressed = true;
         touchLeftBtn.classList.add("pressed");
     }
-    else if (e.srcElement.id == "buttonRight") {
+    else if (e.target.id == "buttonRight") {
         rightPressed = true;
         touchRightBtn.classList.add("pressed");
     }
@@ -193,14 +181,13 @@ function touchDownHandler(e)
  */
 function touchUpHandler(e)
 {
-    if (e.srcElement.id === "buttonLeft") {
+    if (e.target.id === "buttonLeft") {
         leftPressed = false;
         touchLeftBtn.classList.remove("pressed");
     }
-    else if (e.srcElement.id == "buttonRight") {
+    else if (e.target.id == "buttonRight") {
         rightPressed = false;
         touchRightBtn.classList.remove("pressed");
     }
     e.preventDefault();
 }
-

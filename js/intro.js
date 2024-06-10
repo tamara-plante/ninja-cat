@@ -63,5 +63,3 @@ function animation() {
     animateElement("cat", 0, 330, 3, "x");
 }
 
-
-

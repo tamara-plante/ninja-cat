@@ -4,10 +4,10 @@
  */
 
 // Background image
-let bgImg = document.getElementById('bgImg');
+let bgImg = document.getElementById("bgImg");
 
 // Lives remaining
-let heart = document.getElementById('heart');
+let heart = document.getElementById("heart");
 let pulseStartTime;
 let pulsing = false;
 const pulseDuration = 2000; // 2 seconds
@@ -15,10 +15,16 @@ const scaleMin = 0.8;
 const scaleMax = 1.2;
 
 // Game over
-let gameOverDiv = document.getElementById('gameOver');
-let gameOverMsg = document.getElementById('gameOverMsg');
+let gameOverDiv = document.getElementById("gameOver");
+let gameOverMsg = document.getElementById("gameOverMsg");
 
 
+/**
+ * Update the gameOver overlay with different string (html compatible).
+ * @param {string} aTitle change the <h2> element
+ * @param {string} aText change the gameOverMsg element
+ * @param {string} aHeight update the height of the overlay
+ */
 function updateOverlay(aTitle, aText=undefined, aHeight=undefined)
 {
     document.querySelector("#gameOver h2").innerHTML = aTitle;
@@ -189,4 +195,3 @@ function drawRect(context, fillStyle, x, y, width, height) {
 function drawImage(context, image, x, y, width = image.naturalWidth, height = image.naturalHeight, scale = 1) {
     context.drawImage(image, x, y, width * scale, height * scale);
 }
-
