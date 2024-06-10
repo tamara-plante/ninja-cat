@@ -16,7 +16,7 @@ let game = {
     activePauseOverlay: false,
     secondsPassed: null,
     oldTimeStamp: null,
-    highScore: localStorage.getItem('highScore') || 0,
+    highScore: 0,
     points: 0,
     lives: 0,
     items: {
@@ -44,6 +44,7 @@ game.init = function()
     game.isEnded = false;
     game.isPaused = false;
     game.points = 0;
+    game.highScore = localStorage.getItem("highScore") || 0;
     game.lives = 9;
     game.secondsPassed = null;
     game.oldTimeStamp = null;
@@ -83,7 +84,7 @@ game.pause = function(state=undefined, quiet=false)
 }
 
 game.toggleMobileControls = function(hide=false) {
-    let elements = document.getElementsByClassName("touch");
+    let elements = [touchLeftBtn, touchRightBtn];
     for (let elem of elements) {
         elem.style.visibility = (hide) ? "hidden" : "visible";
     }
