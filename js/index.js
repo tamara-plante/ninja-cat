@@ -58,26 +58,18 @@ function init()
 
     intro();
 
-    start = document.getElementById("start");
-    canvas = document.getElementById("game");
-    context = canvas.getContext("2d");
-
+    // Load game canvases
+    [canvas, context] = loadCanvas("game"); // main, with items
     // Background canvas
-    bgCanvas = document.getElementById("bgCanvas");
-    bgContext = bgCanvas.getContext("2d"); 
-
+    [bgCanvas, bgContext] = loadCanvas("bgCanvas");
     // Player canvas
-    playerCanvas = document.getElementById("playerCanvas");
-    playerContext = playerCanvas.getContext("2d", { willReadFrequently: true }); // willReadFrequently=true - for the shader
+    [playerCanvas, playerContext] = loadCanvas("playerCanvas", true);
+    // Gui canvas for displaying score
+    [guiCanvas, guiContext] = loadCanvas("guiCanvas");
+    // Lives canvas
+    [livesCanvas, livesContext] = loadCanvas("livesCanvas");
 
-    // gui canvas for displaying score
-    guiCanvas = document.getElementById("guiCanvas");
-    guiContext = guiCanvas.getContext("2d");
-    
-    // lives canvas
-    livesCanvas = document.getElementById("livesCanvas");
-    livesContext = livesCanvas.getContext("2d");
-
+    start = document.getElementById("start");
     pauseBtn = document.getElementById("pause");
     touchLeftBtn = document.getElementById("buttonLeft");
     touchRightBtn = document.getElementById("buttonRight");
@@ -87,11 +79,17 @@ function init()
     
     document.getElementById("help")
         .addEventListener("click", function() {
-            if (game.isInit) {
-                game.pause(true);
+            let active = helpInfo.style.display == "block";
+
+            // Only activate/disable pause if the pause overlay isn't active
+            // Disable the pause button while displaying instruction
+            pauseBtn.disabled = (!active) ? "true": "";
+            if (game.isInit && !game.activePauseOverlay) {
+                game.pause(!active, true);
             }
+
             // Toggle
-            helpInfo.style.display = (helpInfo.style.display == "block") ? "none" : "block";
+            helpInfo.style.display = (active) ? "none" : "block";
         })
     
     start.addEventListener("click", game.init, false);
@@ -108,11 +106,20 @@ function init()
     if (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement) {
         setupTouchscreen();
     }
+}
 
-    
+/**
+ * Get our canvas and context object and return them.
+ * @param {string} aName the name of the canvas
+ * @param {boolean} [isFrequentlyRead] if willReadFrequently should be activated (for shaders)
+ * @returns the canvas and context
+ */
+function loadCanvas(aName, isFrequentlyRead=false) 
+{
+    let canvas = document.getElementById(aName);
+    let context = canvas.getContext("2d", (isFrequentlyRead) ? { willReadFrequently: true } : undefined);
 
-    //window.addEventListener('resize', resizeCanvas, false);
-    //resizeCanvas(); // call the first time page is loaded
+    return [canvas, context];
 }
 
 
@@ -126,10 +133,6 @@ function setupTouchscreen()
     }
 }
 
-/*function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}*/
 
 
 /**
@@ -180,23 +183,25 @@ function touchDownHandler(e)
 {
     if (e.srcElement.id == "buttonLeft") {
         leftPressed = true;
-        touchLeftBtn.style.backgroundColor = "red";
+        touchLeftBtn.classList.add("pressed");
     }
     else if (e.srcElement.id == "buttonRight") {
         rightPressed = true;
-        touchRightBtn.style.backgroundColor = "green";
+        touchRightBtn.classList.add("pressed");
     }
+    e.preventDefault(); // Prevent touch screen gestures
 }
 
 function touchUpHandler(e)
 {
     if (e.srcElement.id === "buttonLeft") {
         leftPressed = false;
-        touchLeftBtn.style.backgroundColor = "#0000ff59";
+        touchLeftBtn.classList.remove("pressed");
     }
     else if (e.srcElement.id == "buttonRight") {
         rightPressed = false;
-        touchRightBtn.style.backgroundColor = "#00ffc860";
+        touchRightBtn.classList.remove("pressed");
     }
+    e.preventDefault(); // Prevent touch screen gestures
 }
 
