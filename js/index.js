@@ -87,7 +87,7 @@ function init()
     
     document.getElementById("help")
         .addEventListener("click", function() {
-            if (game.isInit) {
+            if (game.isInit && !game.isPaused) {
                 game.pause(true);
             }
             // Toggle
