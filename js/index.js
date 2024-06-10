@@ -92,10 +92,10 @@ function init()
             // Only activate/disable pause if the pause overlay isn't active
             // Disable the pause button while displaying instruction
             pauseBtn.disabled = (!active) ? "true": "";
-            if (!game.activePauseOverlay) {
+            if (game.isInit && !game.activePauseOverlay) {
                 game.pause(!active, true);
             }
-            
+
             // Toggle
             helpInfo.style.display = (active) ? "none" : "block";
         })
