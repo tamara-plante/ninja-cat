@@ -10,6 +10,7 @@
 
 "use strict"; // only allow strict code
 let game = {
+    isInit: false,
     isEnded: false,
     isPaused: false,
     secondsPassed: null,
@@ -30,10 +31,13 @@ let player;
 game.init = function()
 {
     // Set key press and disable start game button and hide the game over.
+    game.isInit = true;
     gameOverDiv.style.display = "none";
     leftPressed = false;
     rightPressed = false;
-    start.disabled = "true";
+    start.style.display = "none";
+    pauseBtn.style.visibility = "visible";
+    game.toggleMobileControls()
 
     // Set up initial game values
     game.isEnded = false;
@@ -55,18 +59,29 @@ game.init = function()
 
 /**
  * Toggle pause state
+ * @param {boolean} [quiet] if we should display the overlay
  */
-game.pause = function()
+game.pause = function(quiet = false)
 {
     game.isPaused = !game.isPaused;
 
-    // Activate
-    if (game.isPaused) {
-        updateOverlay("PAUSED", undefined, "90px");
-        displayOverlay();
+    if (!quiet) {
+        // Activate
+        if (game.isPaused) {
+            updateOverlay("PAUSED", undefined, "90px");
+            displayOverlay();
+        }
+        // Disable
+        else displayOverlay(true);
     }
-    // Disable
-    else displayOverlay(true);
+    
+}
+
+game.toggleMobileControls = function(hide=false) {
+    let elements = document.getElementsByClassName("touch");
+    for (let elem of elements) {
+        elem.style.visibility = (hide) ? "hidden" : "visible";
+    }
 }
 
 /**
@@ -79,8 +94,9 @@ game.end = function()
     game.clearCanvas();
    
     // Enable start game button
-    start.disabled = "";
-
+    start.style.display = "block";
+    pauseBtn.style.visibility = "hidden";
+    game.toggleMobileControls(true)
     // Check and update high score
     let msg = "";
     let highScore = game.highScore;

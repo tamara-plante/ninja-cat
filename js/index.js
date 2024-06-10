@@ -2,7 +2,9 @@
  * Initialize the html elements we need to setup the game.
  * When the start button triggers, game.init (game.js) is called.
  * 
+ * Support keyboard, touchscreen
  */
+
 
 let canvas;
 let context;
@@ -24,9 +26,6 @@ let guiContext;
 let livesCanvas;
 let livesContext;
 
-// help canvas
-let helpCanvas;
-let helpContext;
 
 // How to p[lay instruction (help)
 let helpInfo = document.getElementById('helpInfo');
@@ -36,6 +35,7 @@ let closeHelp = document.getElementById('closeHelp');
 
 let rightPressed = false;
 let leftPressed = false;
+let pauseBtn, touchLeftBtn, touchRightBtn;
 
 window.onload = init;
 
@@ -48,31 +48,39 @@ function init()
     canvas = document.getElementById("game");
     context = canvas.getContext("2d");
 
-    //  background canvas
+    // Background canvas
     bgCanvas = document.getElementById("bgCanvas");
     bgContext = bgCanvas.getContext("2d"); 
 
+    // Player canvas
     playerCanvas = document.getElementById("playerCanvas");
     playerContext = playerCanvas.getContext("2d", { willReadFrequently: true }); // willReadFrequently=true - for the shader
 
     // gui canvas for displaying score
-    guiCanvas = document.getElementById('guiCanvas');
-    guiContext = guiCanvas.getContext('2d');
+    guiCanvas = document.getElementById("guiCanvas");
+    guiContext = guiCanvas.getContext("2d");
     
     // lives canvas
-    livesCanvas = document.getElementById('livesCanvas');
-    livesContext = livesCanvas.getContext('2d');
+    livesCanvas = document.getElementById("livesCanvas");
+    livesContext = livesCanvas.getContext("2d");
+
+    pauseBtn = document.getElementById("pause");
+    touchLeftBtn = document.getElementById("buttonLeft");
+    touchRightBtn = document.getElementById("buttonRight");
+
+    // Setup menu listeners
+    pauseBtn.addEventListener("click", function() {game.pause()});
     
-    // canvas for help icon
-    helpCanvas = document.getElementById('helpCanvas');
-    helpContext = helpCanvas.getContext('2d');
-
-
+    document.getElementById("help")
+        .addEventListener("click", function() {
+            if (game.isInit) {
+                game.pause(true);
+            }
+            // Toggle
+            helpInfo.style.display = (helpInfo.style.display == "block") ? "none" : "block";
+        })
+    
     start.addEventListener("click", game.init, false);
-
-    helpCanvas.addEventListener("click", function() {
-        helpInfo.style.display = 'block';
-    });
 
     closeHelp.addEventListener("click", function() {
         helpInfo.style.display = 'none';
@@ -82,8 +90,26 @@ function init()
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
 
+    // Setup touchscreen buttons
+    if (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement) {
+        setupTouchscreen();
+    }
+
+    
+
     //window.addEventListener('resize', resizeCanvas, false);
     //resizeCanvas(); // call the first time page is loaded
+}
+
+
+function setupTouchscreen() 
+{
+    document.getElementById("touchControl").style.display = "block";
+    game.toggleMobileControls(true);
+    for (let btn of [touchLeftBtn, touchRightBtn]) {
+        btn.addEventListener("touchstart", touchDownHandler, false);
+        btn.addEventListener("touchend", touchUpHandler, false);
+    }
 }
 
 /*function resizeCanvas() {
@@ -135,3 +161,28 @@ function keyUpHandler(e)
             game.pause();
     }
 }
+
+function touchDownHandler(e)
+{
+    if (e.srcElement.id == "buttonLeft") {
+        leftPressed = true;
+        touchLeftBtn.style.backgroundColor = "red";
+    }
+    else if (e.srcElement.id == "buttonRight") {
+        rightPressed = true;
+        touchRightBtn.style.backgroundColor = "green";
+    }
+}
+
+function touchUpHandler(e)
+{
+    if (e.srcElement.id === "buttonLeft") {
+        leftPressed = false;
+        touchLeftBtn.style.backgroundColor = "#0000ff59";
+    }
+    else if (e.srcElement.id == "buttonRight") {
+        rightPressed = false;
+        touchRightBtn.style.backgroundColor = "#00ffc860";
+    }
+}
+

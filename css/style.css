@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+* { /* Try to disable double tap zoom behavior on mobile*/
+    touch-action: manipulation;
+}
+
 html, body {
     width: 100%;
     height: 100%;
@@ -24,7 +28,7 @@ canvas {
     top: 15px;
 }
 
-#gameContainer div:first-child {
+#gameContainer > div:first-child {
     display: block;
     height: 500px;
 }
@@ -71,29 +75,6 @@ canvas {
     float: left;
 }
 
-#menu {
-    display: flex;
-    direction: ltr;
-    justify-content: center;
-    margin: auto;
-    position: relative;
-    height: 55px;
-    margin-top: 10px;
-    align-items: center;
-}
-#helpCanvas{
-    position: absolute;
-    right: 10px;
-    bottom: 0;
-    /*top:520px;
-    left: 57%;*/
-    /*right: 25px;
-    bottom: 30px;*/
-    width: 50px;
-    height: 50px; 
-    margin-top: 10px;  
-    cursor: pointer; 
-}
 
 #helpInfo{    
     display: none; /* Initially hidden */
@@ -103,7 +84,7 @@ canvas {
     top:70px; 
     left: 50%;
     transform: translateX(-50%);
-    z-index: 2; 
+    z-index: 3; 
     background-color: lightgrey; 
     font-family: 'Press Start 2P', sans-serif;
     overflow-y: scroll; /* Show vertical scrollbar */
@@ -208,40 +189,44 @@ canvas {
     height: auto;
 }
 
+/*
+    Menu
+*/
 
-#start{
-    width: 140px;
-    height: 36px;
-    /*margin-top: 20px;*/
+#menu {
+    margin-top: 30px;
+    height: 40px;
+    display: flex;
+    direction: ltr;
+    justify-content: center;
+    position: relative;
+}
+
+.menuBtn {
+    height: 100%;
     font-family: 'Press Start 2P', sans-serif;
     font-size: 10px;
     text-transform: uppercase;
     color: #222034;  
-    background: #5FCFD4;
-    border: 0px;
-    position: absolute;
-    /*top:520px;*/
-    box-shadow: 
-    inset -4px 2px 1px 1px grey,
-    inset -4px -2px 1px 1px lightgray,
-    inset 4px 0px 1px 1px lightgray;  
-}
-
-#start:hover {
-    cursor: pointer;
-    background-color: #40a1a6;
-}
-  
-#start:active {
-    /*top: 520px;*/
+    border: 0;
     box-shadow: 
     -4px 2px 1px 1px grey,
     -4px -2px 1px 1px lightgray,
-    4px 0px 1px 1px lightgray; 
+    4px 0px 1px 1px lightgray;
 }
-  
-#start::after {
-    content: '';
+.menuBtn:hover {
+    cursor: pointer;
+}
+.menuBtn:active {
+    /*top: 520px;*/
+    /*box-shadow: inset 4px 0 100px 100px rgba(255, 255, 255, 0.5);*/
+    box-shadow: 
+    inset -4px 2px 1px 1px grey,
+    inset -4px -2px 1px 1px lightgray,
+    inset 4px 0px 1px 1px lightgray;
+}
+.menuBtn::after {
+    /*content: '';*/
     background: #306082;
     /*position: absolute;*/
     left: -1%;
@@ -249,10 +234,9 @@ canvas {
     width: 102%;
     height: 100%;
     z-index: -1;
-}
-  
-#start::before {
-    content: '';
+}  
+.menuBtn::before {
+    /*content: '';*/
     background: #306082;
     /*position: absolute;*/
     left: 0;
@@ -260,6 +244,31 @@ canvas {
     width: 100%;
     height: 108%;
     z-index: -1;
+}
+
+#start {
+    width: 140px;
+    background-color: #5FCFD4;
+}
+#start:hover {
+    background-color: #70e6ec;
+}
+#pause, #help {
+    width: 50px;
+}
+#pause {
+    visibility: hidden;
+    background-color: lightgrey;
+}
+#pause:hover {
+    background-color: #ebebeb;
+}
+#help {
+    font-size: 12px;
+    background-color: #ffd95a;
+}
+#help:hover {
+    background-color: #ffe284;
 }
 
 /*
