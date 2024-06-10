@@ -29,8 +29,6 @@ let livesContext;
 
 // How to p[lay instruction (help)
 let helpInfo = document.getElementById('helpInfo');
-
-// Get the helpInfo and scrollIndicator elements
 let scrollIndicator = document.getElementById('scrollIndicator');
 
 // Add scroll event listener to helpInfo
