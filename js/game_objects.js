@@ -1,5 +1,6 @@
 /**
  * Create a game object which includes a position, size including a sprite.
+ * @author Tamara Plante
  */
 class GameObject
 {

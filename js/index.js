@@ -5,58 +5,41 @@
  * Support keyboard, touchscreen
  */
 
-
-let canvas;
-let context;
-let start;
-
-// background canvas
-let bgCanvas;
-let bgContext;
-let playerCanvas;
-let playerContext;
-
-// gui canvas for displaying score
-let guiCanvas;
-let guiContext;
-
-
-
-// lives canvas
-let livesCanvas;
-let livesContext;
-
-
-// How to p[lay instruction (help)
-let helpInfo = document.getElementById('helpInfo');
-let scrollIndicator = document.getElementById('scrollIndicator');
-
-// Add scroll event listener to helpInfo
-helpInfo.addEventListener('scroll', () => {
-    // Check if the content is at the top
-    if (helpInfo.scrollTop === 0) {
-        // If at the top, show the scroll indicator
-        scrollIndicator.style.display = 'flex';
-    } else {
-        // If not at the top, hide the scroll indicator
-        scrollIndicator.style.display = 'none';
-    }
-});
-
-
-// Close help
-let closeHelp = document.getElementById('closeHelp');
-
 let rightPressed = false;
 let leftPressed = false;
-let pauseBtn, touchLeftBtn, touchRightBtn;
+let startBtn, pauseBtn, helpBtn, touchLeftBtn, touchRightBtn;
+
+// How to play instruction (help)
+let helpInfo, closeHelp, scrollIndicator;
+
+// Main Game canvas
+let canvas, context;
+// Background canvas
+let bgCanvas, bgContext;
+// Player canvas
+let playerCanvas, playerContext;
+// gui canvas for displaying score
+let guiCanvas, guiContext;
+// lives canvas
+let livesCanvas, livesContext;
+
 
 window.onload = init;
 
 function init() 
 {   
-
+    // Show the splash intro
     intro();
+
+    // Setup the import elements variables
+    startBtn = document.getElementById("start");
+    pauseBtn = document.getElementById("pause");
+    touchLeftBtn = document.getElementById("buttonLeft");
+    touchRightBtn = document.getElementById("buttonRight");
+    helpBtn = document.getElementById("help");
+    helpInfo = document.getElementById("helpInfo");
+    scrollIndicator = document.getElementById("scrollIndicator");
+    closeHelp = document.getElementById("closeHelp");
 
     // Load game canvases
     [canvas, context] = loadCanvas("game"); // main, with items
@@ -69,31 +52,31 @@ function init()
     // Lives canvas
     [livesCanvas, livesContext] = loadCanvas("livesCanvas");
 
-    start = document.getElementById("start");
-    pauseBtn = document.getElementById("pause");
-    touchLeftBtn = document.getElementById("buttonLeft");
-    touchRightBtn = document.getElementById("buttonRight");
+    // Setup instruction listeners
+    helpBtn.addEventListener("click", function() {
+        let active = helpInfo.style.display == "block";
 
-    // Setup menu listeners
-    pauseBtn.addEventListener("click", function() {game.pause()});
-    
-    document.getElementById("help")
-        .addEventListener("click", function() {
-            let active = helpInfo.style.display == "block";
+        // Only activate/disable pause if the pause overlay isn't active
+        // Disable the pause button while displaying instruction
+        pauseBtn.disabled = (!active) ? "true": "";
+        if (game.isInit && !game.activePauseOverlay) {
+            game.pause(!active, true);
+        }
 
-            // Only activate/disable pause if the pause overlay isn't active
-            // Disable the pause button while displaying instruction
-            pauseBtn.disabled = (!active) ? "true": "";
-            if (game.isInit && !game.activePauseOverlay) {
-                game.pause(!active, true);
-            }
-
-            // Toggle
-            helpInfo.style.display = (active) ? "none" : "block";
-        })
-    
-    start.addEventListener("click", game.init, false);
-
+        // Toggle info screen
+        helpInfo.style.display = (active) ? "none" : "block";
+    });
+    // Add scroll event listener to helpInfo
+    helpInfo.addEventListener('scroll', () => {
+        // Check if the content is at the top
+        if (helpInfo.scrollTop === 0) {
+            // If at the top, show the scroll indicator
+            scrollIndicator.style.display = 'flex';
+        } else {
+            // If not at the top, hide the scroll indicator
+            scrollIndicator.style.display = 'none';
+        }
+    });
     closeHelp.addEventListener("click", function() {
         helpInfo.style.display = 'none';
     });
@@ -106,6 +89,9 @@ function init()
     if (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement) {
         setupTouchscreen();
     }
+    // Game listener
+    pauseBtn.addEventListener("click", function() {game.pause()});
+    startBtn.addEventListener("click", game.init, false);
 }
 
 /**
@@ -122,17 +108,21 @@ function loadCanvas(aName, isFrequentlyRead=false)
     return [canvas, context];
 }
 
-
+/**
+ * Display the touch controls container
+ * but hide the controls until the game starts.
+ * Setup the event listeners for touchscreen.
+ */
 function setupTouchscreen() 
 {
     document.getElementById("touchControl").style.display = "block";
     game.toggleMobileControls(true);
+
     for (let btn of [touchLeftBtn, touchRightBtn]) {
         btn.addEventListener("touchstart", touchDownHandler, false);
         btn.addEventListener("touchend", touchUpHandler, false);
     }
 }
-
 
 
 /**
@@ -179,6 +169,11 @@ function keyUpHandler(e)
     }
 }
 
+/**
+ * Catch touch down events on the mobile player controls.
+ * Prevent default touch screen gestures/behaviors.
+ * @param {Event} e the event
+ */
 function touchDownHandler(e)
 {
     if (e.srcElement.id == "buttonLeft") {
@@ -189,9 +184,13 @@ function touchDownHandler(e)
         rightPressed = true;
         touchRightBtn.classList.add("pressed");
     }
-    e.preventDefault(); // Prevent touch screen gestures
+    e.preventDefault();
 }
-
+/**
+ * Catch touch up events on the mobile player controls.
+ * Prevent default touch screen gestures/behaviors.
+ * @param {Event} e the event
+ */
 function touchUpHandler(e)
 {
     if (e.srcElement.id === "buttonLeft") {
@@ -202,6 +201,6 @@ function touchUpHandler(e)
         rightPressed = false;
         touchRightBtn.classList.remove("pressed");
     }
-    e.preventDefault(); // Prevent touch screen gestures
+    e.preventDefault();
 }
 

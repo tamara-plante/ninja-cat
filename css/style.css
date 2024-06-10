@@ -15,8 +15,10 @@ canvas {
     image-rendering: pixelated;
 }
 
-/* TODO Break into small css files and keep central things here */
 
+/*
+    Main game canvases
+*/
 #gameContainer {
     position: relative;
     width: 360px;
@@ -24,12 +26,12 @@ canvas {
     top: 15px;
 }
 
-#gameContainer > div:first-child {
+#gameContainer > div:first-child { /* Actual game container div */
     display: block;
     height: 500px;
 }
 
-#playerCanvas {
+#playerCanvas, #game, #bgCanvas, #header {
     position: absolute;
 }
 
@@ -38,13 +40,10 @@ canvas {
     border: 1px solid lightgrey;
     margin: auto;
     padding: 0;
-    position: absolute;
     /*top: 15px;*/
 }
 
-
 #bgCanvas {
-    position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -57,7 +56,6 @@ canvas {
 #header{
     /*width: 360px;*/
     height: 50px;
-    position: absolute;
     /*top: 16px;
     left: 50%;
     transform: translateX(-50%);*/
@@ -71,71 +69,9 @@ canvas {
     float: left;
 }
 
-
-#helpInfo{    
-    display: none; /* Initially hidden */
-    width: 360px;
-    max-height: 365px; 
-    position: absolute;
-    top:70px; 
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3; 
-    background-color: lightgrey; 
-    font-family: 'Press Start 2P', sans-serif;
-    overflow-y: scroll; /* Show vertical scrollbar */
-}
-
-.scrollIndicator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    position: relative;
-    top:-45px;
-}
-
-.scrollDown {
-    position: relative; 
-}
-
-.scrollDown span::before,
-.scrollDown span::after {
-    position: absolute;
-    content: '';
-    width: 15px;
-    height: 15px;
-    border: none;
-    border-right: 2px solid #404040;
-    border-top: 2px solid #404040;
-    transform: translate(-50%, -50%) rotate(135deg);
-    left: 50%;
-    opacity: 0;
-    animation: ani 1.8s infinite linear;
-}
-
-.scrollDown span::after {
-    animation-delay: 0.8s; /* Delay the animation for the ::after pseudo-element */
-}
-
-@keyframes ani {
-    0% {
-        margin-top: 10px;
-        opacity: 0;
-    }
-
-    50% {
-        margin-top: 25px;
-        opacity: 1;
-    }
-
-    100% {
-        margin-top: 40px;
-        opacity: 0;
-    }
-}
-
-
+/*
+    Game over/Pause overlay
+*/
 #gameOver {
     display: none;
     position: absolute;
@@ -152,7 +88,9 @@ canvas {
 
 #gameOver h2 {    
     font-size: 30px;
+    text-transform: uppercase;
     background: linear-gradient(to bottom, #E9B23D, #AA373C);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-top: 30px;
@@ -169,76 +107,10 @@ canvas {
     color: #E9B23D;
     line-height: 30px;
 }
-/* width */
-::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #a0e6fa;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #ff6344;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #ff6344;
-  }
-
-
-#closeHelp {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    background-color: #5FCFD4;
-    color: #000000;
-    width: 30px;
-    height:30px;
-    border-radius: 50%;
-    padding-left: 7px;
-    font-family: 'Press Start 2P', sans-serif; 
-    font-size: 12px;
-}
-
-#helpTitle{     
-    font-size: 12px;
-    text-transform: uppercase;
-    color: #ff6600;  
-    text-align: center;      
-    margin-top: 25px;
-}
-
-.instruction-row {      
-    margin-top: 10px;
-    font-size: 9px;
-    line-height: 2em;
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-.instruction-row .column {
-    padding: 5px;
-}
-.instruction-row .image-column {
-    width: 60px;
-}
-.instruction-row .text-column {
-    flex: 1;
-}
-.instruction-row img {
-    max-width: 100%;
-    height: auto;
-}
 
 /*
     Menu
 */
-
 #menu {
     margin-top: 30px;
     height: 40px;
@@ -303,28 +175,20 @@ canvas {
     width: 50px;
 }
 #pause {
+    position: relative;
     visibility: hidden;
     background-color: lightgrey;
+}
+#pause > svg {
+    margin: auto;
 }
 #pause:hover {
     background-color: #ebebeb;
 }
 #help {
-    font-size: 12px;
+    font-size: 14px;
     background-color: #ffd95a;
 }
 #help:hover {
     background-color: #ffe284;
 }
-
-/*
-@media (min-width: 768px) {
-    #game {
-        width: 360px;
-        height: 680px;
-    }
-}
-*/
-
-
-

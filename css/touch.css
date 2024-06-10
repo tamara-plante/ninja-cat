@@ -29,8 +29,8 @@ body, .touch {
     top: 10px;
     width: 64px;
     height: 64px;
-    visibility: "hidden";
     z-index: 10;
+    visibility: "hidden";
 }
 
 #buttonLeft {
