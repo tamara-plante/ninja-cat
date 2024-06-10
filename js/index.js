@@ -186,23 +186,25 @@ function touchDownHandler(e)
 {
     if (e.srcElement.id == "buttonLeft") {
         leftPressed = true;
-        touchLeftBtn.style.backgroundColor = "red";
+        touchLeftBtn.classList.add("pressed");
     }
     else if (e.srcElement.id == "buttonRight") {
         rightPressed = true;
-        touchRightBtn.style.backgroundColor = "green";
+        touchRightBtn.classList.add("pressed");
     }
+    e.preventDefault(); // Prevent touch screen gestures
 }
 
 function touchUpHandler(e)
 {
     if (e.srcElement.id === "buttonLeft") {
         leftPressed = false;
-        touchLeftBtn.style.backgroundColor = "#0000ff59";
+        touchLeftBtn.classList.remove("pressed");
     }
     else if (e.srcElement.id == "buttonRight") {
         rightPressed = false;
-        touchRightBtn.style.backgroundColor = "#00ffc860";
+        touchRightBtn.classList.remove("pressed");
     }
+    e.preventDefault(); // Prevent touch screen gestures
 }
 
