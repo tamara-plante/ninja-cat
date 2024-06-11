@@ -22,7 +22,7 @@
     "hotPepper": {
         "src": "pepper.png",
         "alt": "Hot pepper",
-        "desc": "Avoid the hot peppers, they make you lose 75 points and instantly stun you."
+        "desc": "Avoid the hot peppers, they make you lose 75 points and instantly freeze you."
     },
     "waterDrop": {
         "src": "water-1.png",

@@ -41,6 +41,19 @@
                     <canvas id="livesCanvas" width="230" height="50"></canvas>
                 </div>
             </div>
+
+            <div id="overlay">
+                <div id="chicken-anim">
+                    <img id="chicken-nugget" src="images/chicken-nugget.png">
+                    <div id="chicken-nuggets"></div>
+                </div>
+                <div id="gameOver">
+                    <img src="images/ninja-cat-logo.svg" alt="Logo">
+                    <h2>Game Over</h2>
+                    <p></p>
+                </div>
+            </div>
+            
             
             <div id="touchControl">
                 <div id="buttonLeft" class="touch"></div>
@@ -57,11 +70,6 @@
                 <button id="help" class="menuBtn">?</button>
             </div>
 
-            <div id="gameOver">
-                <h2>Game Over</h2>
-                <p id="gameOverMsg"></p>
-            </div>
-
         </div>
 
         <canvas id="bgCanvas" width="700" height="600">
@@ -69,7 +77,6 @@
         </canvas>
 
         <div id="helpInfo">
-            
             <p id="helpTitle">How to play</p>
             <button id="closeHelp">x</button>
             <div></div> <!-- Instructions added dynamically -->

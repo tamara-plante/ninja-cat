@@ -54,6 +54,8 @@ function init()
     // Lives canvas
     [livesCanvas, livesContext] = loadCanvas("livesCanvas");
 
+    // Setup game instruction entries
+    setupInstruction();
 
     // Setup instruction listeners
     helpBtn.addEventListener("click", game.toggleInstruction);
@@ -71,8 +73,6 @@ function init()
         }
     });
 
-    // Setup game instruction entries
-    setupInstruction();
 
     // Setup the key listeners
     document.addEventListener("keydown", keyDownHandler);
@@ -87,6 +87,9 @@ function init()
     startBtn.addEventListener("click", game.init);
 }
 
+/**
+ * Setup the game instruction html structure inside the helpInfo div.
+ */
 function setupInstruction() 
 {
     let xhr = new XMLHttpRequest();
