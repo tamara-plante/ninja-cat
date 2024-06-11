@@ -26,6 +26,13 @@ let guiCanvas, guiContext;
 let livesCanvas, livesContext;
 
 
+// audio
+let audioToggle = document.getElementById("audioToggle");
+let audioOnIcon = document.getElementById("audioOnIcon");
+let audioOffIcon = document.getElementById("audioOffIcon");
+let gameAudio = new Audio("audio/waiting.wav"); 
+let isAudioPlaying = false;
+
 window.onload = init;
 
 function init() 
@@ -54,6 +61,26 @@ function init()
     [guiCanvas, guiContext] = loadCanvas("guiCanvas");
     // Lives canvas
     [livesCanvas, livesContext] = loadCanvas("livesCanvas");
+
+    
+    // initialize audio icons state
+    audioOnIcon.style.display = 'none';
+    audioOffIcon.style.display = 'block';
+
+    audioToggle.addEventListener('click', function() {
+        if (isAudioPlaying) {
+            gameAudio.pause();
+            audioOnIcon.style.display = 'none';
+            audioOffIcon.style.display = 'block';
+            audioToggle.style.backgroundColor = 'grey';
+        } else {
+            gameAudio.play();
+            audioOnIcon.style.display = 'block';
+            audioOffIcon.style.display = 'none';
+            audioToggle.style.backgroundColor = 'orange';
+        }
+        isAudioPlaying = !isAudioPlaying;
+    });    
 
     // Setup game instruction entries
     setupInstruction();

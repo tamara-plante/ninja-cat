@@ -9,6 +9,7 @@
         <meta name="author" content="Tamara Plante, Alexie Lagarde, Iana Setrakova">        
         <link rel="icon" href="images/ninja-cat-fav.png" type="image/x-icon">
 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <link rel="stylesheet" href="css/intro.css">
         <link rel="stylesheet" href="css/touch.css">
         <link rel="stylesheet" href="css/help.css">
@@ -67,7 +68,11 @@
                     </svg>                      
                 </button>
                 <button id="start" class="menuBtn">Start Game</button>
-                <button id="help" class="menuBtn">?</button>
+                <button id="help" class="menuBtn">
+                    <span class="material-symbols-outlined">
+                        settings
+                    </span>
+                </button>
             </div>
 
         </div>
@@ -76,7 +81,7 @@
             Your browser does not support the HTML5 canvas tag.
         </canvas>
 
-        <div id="helpInfo">
+        <div id="helpInfo"> 
             <p id="helpTitle">How to play</p>
             <button id="closeHelp">x</button>
             <div></div> <!-- Instructions added dynamically -->
@@ -85,6 +90,13 @@
                     <span></span>
                 </div>
             </div>
+            <span id="volume">
+                <!-- audio switch -->
+                <span class="audio-toggle" id="audioToggle">
+                    <span class="material-symbols-outlined" id="audioOnIcon" style="display:none;">volume_up</span>
+                    <span class="material-symbols-outlined" id="audioOffIcon">volume_off</span>
+                </span>
+            </span>
         </div>
 
         <!-- Game placeholder elements -->

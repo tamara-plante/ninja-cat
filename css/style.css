@@ -290,3 +290,26 @@ canvas {
 #help:hover {
     background-color: #ffe284;
 }
+
+#volume {
+    position: absolute;
+    display: flex;
+    align-items: center; 
+    top: 10px;
+    left: 15px;
+}
+
+#audioToggle{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: grey;
+    transition: background-color 0.3s;
+}
+#audioToggle:hover {
+    background-color: rgb(71, 66, 57);
+}
