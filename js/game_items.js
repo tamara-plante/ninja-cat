@@ -16,7 +16,7 @@ const WATER_SPR = document.getElementById("water");
 
 /**
  * Get a random item.
- * @returns a random entry from goodTypes
+ * @returns a random entry from ITEMS
  */
 function randomizer() 
 {
@@ -33,11 +33,10 @@ class Item extends GameObject
     constructor(anItem, aSpeed)
     {
         super();
-        // TODO: Make a function to check if value is a number
         // Fill in optional parameters
-        if (typeof anItem.points !== "number") anItem.points = 10;
-        if (typeof anItem.fwidth !== "number") anItem.fwidth = anItem.width;
-        if (typeof anItem.fheight !== "number") anItem.fheight = anItem.height;
+        if (!isNumber(anItem.points)) anItem.points = 10;
+        if (!isNumber(anItem.fwidth)) anItem.fwidth = anItem.width;
+        if (!isNumber(anItem.fheight)) anItem.fheight = anItem.height;
 
         this.sprite = ITEMS_SPR;
         this.name = anItem.name;

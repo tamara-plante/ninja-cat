@@ -64,7 +64,7 @@ class GameObject
         let coordX = this.sheet.coordX;
         let coordY = this.sheet.coordY;
 
-        if (typeof coordX === "number" && typeof coordY === "number") {
+        if (isNumber(coordX) && isNumber(coordY)) {
             ctx.drawImage
             (
                 this.sprite, 

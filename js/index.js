@@ -258,7 +258,7 @@ function touchUpHandler(e)
  */
 let secretCodeSequence = [0, 1, 1, 0];
 let sequence = [];
-let sequenceStart;
+let sequenceStart = null;
 
 function secretCode(code) {
 

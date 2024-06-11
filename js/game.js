@@ -51,7 +51,7 @@ game.init = function()
     game.oldTimeStamp = null;
     game.highScore = localStorage.getItem("highScore") || 0; // Load local highscore
     game.points = 0;
-    game.lives = (typeof forceLives === "number") ? forceLives : 9;
+    game.lives = isNumber(forceLives) ? forceLives : 9;
     drawBackground(); 
     game.drawLives();
 
