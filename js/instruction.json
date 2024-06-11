@@ -1,4 +1,9 @@
 {
+    "gameWin": {
+        "src": "ninja-cat-fav.png",
+        "alt": "Game win",
+        "desc": "To win: Get the highest score before losing all your lives."
+    },
     "arrows": {
         "src": "arrow-set-2.png",
         "alt": "Left and right arrows",
@@ -12,7 +17,7 @@
     "donut": {
         "src": "donut.png",
         "alt": "Donut",
-        "desc": "Catch the donuts to score 20 points, but each one slows you down."
+        "desc": "Catch the donuts to score 20 points, but each one slows you down (unless...)"
     },
     "fish": {
         "src": "fish.png",
