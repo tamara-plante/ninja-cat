@@ -29,6 +29,13 @@ let guiCanvas, guiContext;
 let livesCanvas, livesContext;
 
 
+// audio
+let audioToggle = document.getElementById("audioToggle");
+let audioOnIcon = document.getElementById("audioOnIcon");
+let audioOffIcon = document.getElementById("audioOffIcon");
+let gameAudio = new Audio("audio/waiting.wav"); 
+let isAudioPlaying = false;
+
 window.onload = init;
 
 function init() 
@@ -50,7 +57,7 @@ function init()
     touchRightBtn = document.getElementById("buttonRight");
     helpBtn = document.getElementById("help");
     helpInfo = document.getElementById("helpInfo");
-    helpInstruction = document.querySelector("#helpInfo > div:first-of-type");
+    helpInstruction = document.querySelector("#instruction");
     scrollIndicator = document.getElementById("scrollIndicator");
     closeHelp = document.getElementById("closeHelp");
 
@@ -64,6 +71,26 @@ function init()
     [guiCanvas, guiContext] = loadCanvas("guiCanvas");
     // Lives canvas
     [livesCanvas, livesContext] = loadCanvas("livesCanvas");
+
+    
+    // initialize audio icons state
+    audioOnIcon.style.display = 'none';
+    audioOffIcon.style.display = 'block';
+
+    audioToggle.addEventListener('click', function() {
+        if (isAudioPlaying) {
+            gameAudio.pause();
+            audioOnIcon.style.display = 'none';
+            audioOffIcon.style.display = 'block';
+            audioToggle.style.backgroundColor = '#9a9a9a';
+        } else {
+            gameAudio.play();
+            audioOnIcon.style.display = 'block';
+            audioOffIcon.style.display = 'none';
+            audioToggle.style.backgroundColor = 'orange';
+        }
+        isAudioPlaying = !isAudioPlaying;
+    });    
 
     // Setup game instruction entries
     setupInstruction();

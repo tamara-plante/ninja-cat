@@ -14,7 +14,7 @@
     font-family: 'Press Start 2P', sans-serif;
     overflow-y: hidden;
 }
-#helpInfo > div:first-of-type {
+#instruction {
     max-height: 320px; 
     overflow-y: scroll; /* Show vertical scrollbar */
 }
