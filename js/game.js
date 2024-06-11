@@ -42,6 +42,8 @@ game.init = function()
     pauseBtn.style.visibility = "visible";
     game.toggleMobileControls();
 
+    if (game.isInstruction) game.toggleInstruction(); // Force close the instruction.
+
     // Set up initial game values
     game.isEnded = false;
     game.isPaused = false;
