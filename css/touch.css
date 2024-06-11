@@ -35,10 +35,10 @@ body, .touch {
 
 #buttonLeft {
     left: 10px;
-    background-position: 128px 0;
+    background-position: -128px 0;
 }
 #buttonLeft.pressed {
-    background-position: 64px 0;
+    background-position: -192px 0;
 }
 
 #buttonRight {
@@ -46,5 +46,5 @@ body, .touch {
     background-position: 0 0;
 }
 #buttonRight.pressed {
-    background-position: 192px 0;
+    background-position: -64px 0;
 }

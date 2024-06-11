@@ -36,9 +36,10 @@ game.init = function()
     leftPressed = false;
     rightPressed = false;
     gameOverDiv.style.display = "none";
+    resetNuggets();
     startBtn.style.display = "none";
     pauseBtn.style.visibility = "visible";
-    game.toggleMobileControls()
+    game.toggleMobileControls();
 
     // Set up initial game values
     game.isEnded = false;
@@ -71,6 +72,25 @@ game.toggleMobileControls = function(hide=false)
 }
 
 /**
+ * Toggle the game instructions. When active, pause the game.
+ * Disable pause button when game instructions are showing.
+ */
+game.toggleInstruction = function()
+{
+    let active = helpInfo.style.display == "block";
+
+    // Only activate/disable pause if the pause overlay isn't active
+    // Disable the pause button while displaying instruction
+    pauseBtn.disabled = (!active) ? "true": "";
+    if (game.isInit && !game.activePauseOverlay) {
+        game.pause(!active, true);
+    }
+
+    // Toggle info screen
+    helpInfo.style.display = (active) ? "none" : "block";
+}
+
+/**
  * Toggle pause state. If value provided, use that instead of toggling.
  * @param {boolean} [state] if provided, will assign the value to isPaused
  * @param {boolean} [quiet] if we should display the overlay
@@ -83,12 +103,14 @@ game.pause = function(state=undefined, quiet=false)
         // Activate
         if (game.isPaused) {
             game.activePauseOverlay = true;
+            overlayLogo.style.visibility = "visible";
             updateOverlay("Paused", undefined, "90px");
             displayOverlay();
         }
         // Disable
         else {
             game.activePauseOverlay = false;
+            overlayLogo.style.visibility = "hidden";
             displayOverlay(true);
         }
     }
@@ -122,11 +144,14 @@ game.end = function()
     }
     // display the game over message in the gameOver div
     updateOverlay("Game Over", msg, "180px");
-    displayOverlay();    
+    displayOverlay();
+    // Show the nugget falling animation
+    nuggetAnimStart();
 }
 
 /**
  * Check collisions between items and the player and items and the ground.
+ * @author Alexie Lagarde, Tamara Plante
  */
 game.checkCollision = function() 
 {
@@ -242,11 +267,3 @@ game.clearCanvas = function()
     context.clearRect(0, 0, canvas.width, canvas.height);
     playerContext.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
 }
-
-
-
-
-
-
-
-

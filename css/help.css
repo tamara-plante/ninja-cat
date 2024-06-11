@@ -12,6 +12,10 @@
     z-index: 3; 
     background-color: lightgrey; 
     font-family: 'Press Start 2P', sans-serif;
+    overflow-y: hidden;
+}
+#helpInfo > div {
+    max-height: 320px; 
     overflow-y: scroll; /* Show vertical scrollbar */
 }
 
@@ -67,7 +71,7 @@
     align-items: center;
     width: 100%;
     position: relative;
-    top:-45px;
+    top:-50px;
 }
 
 .scrollDown {
@@ -113,7 +117,7 @@
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
-  }
+}
 
 /* Track */
 ::-webkit-scrollbar-track {

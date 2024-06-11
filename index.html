@@ -17,7 +17,7 @@
     <body>
 
         <div id="gameContainer"><!-- width: 360px -->
-            <div>
+            <div> <!-- game screen / height: 500px -->
                 <canvas id="game" width="360" height="500">
                     Your browser does not support the HTML5 canvas tag.
                 </canvas>
@@ -41,6 +41,19 @@
                     <canvas id="livesCanvas" width="230" height="50"></canvas>
                 </div>
             </div>
+
+            <div id="overlay">
+                <div id="chicken-anim">
+                    <img id="chicken-nugget" src="images/chicken-nugget.png">
+                    <div id="chicken-nuggets"></div>
+                </div>
+                <div id="gameOver">
+                    <img src="images/ninja-cat-logo.svg" alt="Logo">
+                    <h2>Game Over</h2>
+                    <p></p>
+                </div>
+            </div>
+            
             
             <div id="touchControl">
                 <div id="buttonLeft" class="touch"></div>
@@ -48,7 +61,7 @@
             </div>
 
             <div id="menu">
-                <button id="pause" class="menuBtn pauseOn" title="pause">
+                <button id="pause" class="menuBtn" title="pause">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path fill-rule="evenodd" d="M8 5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H8Zm7 0a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1Z" clip-rule="evenodd"/>
                     </svg>                      
@@ -57,81 +70,21 @@
                 <button id="help" class="menuBtn">?</button>
             </div>
 
-            <div id="gameOver">
-                <h2>Game Over</h2>
-                <p id="gameOverMsg"></p>
-            </div>
-
         </div>
-
 
         <canvas id="bgCanvas" width="700" height="600">
             Your browser does not support the HTML5 canvas tag.
         </canvas>
 
         <div id="helpInfo">
-            
             <p id="helpTitle">How to play</p>
             <button id="closeHelp">x</button>
-            <div class="instruction-row">
-                <div class="column image-column">
-                    <img src="images/arrow-set-2.png" alt="Left Arrow">
-                </div>
-                <div class="column text-column">
-                    Use the left and right arrow key to move the ninja cat left and right.
-                </div>
-            </div>
-            <div class="instruction-row">
-                <div class="column image-column">
-                    <img src="images/ninja-cat-nugget.png" alt="Chicken Nugget">
-                </div>
-                <div class="column text-column">
-                    Catch the chicken nuggets to score 50 points and gain a speed up power.
-                </div>
-            </div>
-            <div class="instruction-row">
-                <div class="column image-column">
-                    <img src="images/donut.png" alt="Donut">
-                </div>
-                <div class="column text-column">
-                    Catch the donuts to score 20 points, but each one slows you down.
-                </div>
-            </div>
-            <div class="instruction-row">
-                <div class="column image-column">
-                    <img src="images/fish.png" alt="Fish">
-                </div>
-                <div class="column text-column">
-                    Catch the fish to score 10 points.
-                </div>
-            </div>
-
+            <div></div> <!-- Instructions added dynamically -->
             <section id="scrollIndicator" class="scrollIndicator">
                 <div class="scrollDown">
                     <span></span>
                 </div>
             </section>
-
-
-            <div class="instruction-row">
-                <div class="column image-column">
-                    <img src="images/pepper.png" alt="Hot pepper">
-                </div>
-                <div class="column text-column">
-                    Avoid the hot peppers, they make you lose 75 points and instantly freeze you.
-                </div>
-            </div>
-            <div class="instruction-row">
-                <div class="column image-column">
-                    <img src="images/water-1.png" alt="Water Drop">
-                </div>
-                <div class="column text-column">
-                    Avoid the water drops, they cost a life. You have 9 lives.
-                </div>
-            </div>
-
-            
-            
         </div>
 
         <!-- Game placeholder elements -->
