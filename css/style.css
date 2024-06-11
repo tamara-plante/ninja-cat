@@ -7,8 +7,10 @@ html, body {
     overflow: hidden;
 }
 
-body {
-    background-color: #cfbf9d;
+body {/* 207, 191, 157*/ 
+    background: linear-gradient(rgba(207, 191, 157, 1),rgba(207, 198, 157, 1), rgba(207, 191, 157, 0.7), rgba(1, 105, 131, 0.7)),
+                url("../images/bg.jpg") repeat;
+    background-color: rgb(32, 86, 131);
 }
 
 canvas {
