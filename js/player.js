@@ -3,8 +3,6 @@
  * @author Tamara Plante
  */
 const SPEED = 250;
-let audioDamage = new Audio("audio/DWILLY_vocal_ninja_kick.wav");
-audioDamage.volume = 0.10;
 
 player = new GameAnimatedObject();
 
@@ -182,6 +180,7 @@ player.stun = new ShaderEffect
         player.speed = 0;
         if (!this.active) {
             this.active = true;
+            audioStun.play();
             this.timer = setTimeout(() => this.cancel(), 800)
         }
     },
