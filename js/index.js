@@ -40,7 +40,7 @@ function init()
     touchRightBtn = document.getElementById("buttonRight");
     helpBtn = document.getElementById("help");
     helpInfo = document.getElementById("helpInfo");
-    helpInstruction = document.querySelector("#helpInfo > div");
+    helpInstruction = document.querySelector("#helpInfo > div:first-of-type");
     scrollIndicator = document.getElementById("scrollIndicator");
     closeHelp = document.getElementById("closeHelp");
 
@@ -252,7 +252,8 @@ function touchUpHandler(e)
 }
 
 /**
- * Fun little dev backdoor to set the number of lives.
+ * Fun little dev backdoor to set the number of lives
+ * Specific condition to trigger the secret code: game is started and options are opened.
  * @author Tamara Plante
  */
 let secretCodeSequence = [0, 1, 1, 0];
