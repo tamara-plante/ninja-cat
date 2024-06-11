@@ -47,7 +47,7 @@ function init()
     touchRightBtn = document.getElementById("buttonRight");
     helpBtn = document.getElementById("help");
     helpInfo = document.getElementById("helpInfo");
-    helpInstruction = document.querySelector("#helpInfo > div:first-of-type");
+    helpInstruction = document.querySelector("#instruction");
     scrollIndicator = document.getElementById("scrollIndicator");
     closeHelp = document.getElementById("closeHelp");
 
