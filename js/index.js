@@ -72,7 +72,7 @@ function init()
             gameAudio.pause();
             audioOnIcon.style.display = 'none';
             audioOffIcon.style.display = 'block';
-            audioToggle.style.backgroundColor = 'grey';
+            audioToggle.style.backgroundColor = '#9a9a9a';
         } else {
             gameAudio.play();
             audioOnIcon.style.display = 'block';
