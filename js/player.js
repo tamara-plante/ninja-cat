@@ -3,8 +3,11 @@
  * @author Tamara Plante
  */
 const SPEED = 250;
+let audioDamage = new Audio("audio/DWILLY_vocal_ninja_kick.wav");
+audioDamage.volume = 0.10;
 
 player = new GameAnimatedObject();
+
 
 /**
  * Initialize the player.
@@ -148,6 +151,7 @@ player.damage = new ShaderEffect
     },
     function() { // Activate trigger function
         this.active = true;
+        audioDamage.play();
         this.timer = setTimeout(() => this.cancel(), 100);
     },
     function() { // Cancel
@@ -209,6 +213,7 @@ player.powerUp = new ShaderEffect
             data[i + 1] = 97
             data[i + 2] = 35
         }
+        // Dark border of the fur.
         else if (data[i] == 48 && data[i + 1] == 96 && data[i + 2] == 130) {
             data[i] = 251
             data[i + 1] = 218
@@ -220,8 +225,8 @@ player.powerUp = new ShaderEffect
         }*/
     },
     function() { // Activate trigger function
-        if (player.stun.active) return;
-        if (player.slow.active) player.slow.cancel();
+        if (player.stun.active) return; // Do nothing when stunned
+        if (player.slow.active) player.slow.cancel(); // Disable slow
 
         if (this.active) this.cancel(); // Renew the effect
 
@@ -250,8 +255,8 @@ player.powerUp = new ShaderEffect
  */
 player.shader = function(aCallback) 
 {
-    const imageData = this.context.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
+    const imageData = this.context.getImageData(0, 0, canvas.width, canvas.height); // Canvas imageData
+    const data = imageData.data; // Each pixel (array of arrays)
 
     for (let i = 0; i < data.length; i += 4) {
         aCallback(i, data);
