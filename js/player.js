@@ -3,9 +3,6 @@
  * @author Tamara Plante
  */
 const SPEED = 250;
-let audioDamage = new Audio("audio/select-sound-121244.mp3");
-let audioStun = new Audio("audio/DWILLY_vocal_ninja_kick.wav");
-audioDamage.volume = 0.50;
 
 player = new GameAnimatedObject();
 

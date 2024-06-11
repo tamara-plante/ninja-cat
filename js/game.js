@@ -149,6 +149,7 @@ game.end = function()
     // display the game over message in the gameOver div
     updateOverlay("Game Over", msg, "180px");
     displayOverlay();
+    audioGameOver.play();
     // Show the nugget falling animation
     nuggetAnimStart();
 }

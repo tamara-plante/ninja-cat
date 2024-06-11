@@ -14,6 +14,9 @@ let startBtn, pauseBtn, helpBtn, touchLeftBtn, touchRightBtn;
 // How to play instruction (help)
 let helpInfo, helpInstruction, closeHelp, scrollIndicator;
 
+// Audio
+let audioDamage, audioStun, audioGameOver;
+
 // Main Game canvas
 let canvas, context;
 // Background canvas
@@ -30,6 +33,13 @@ window.onload = init;
 
 function init() 
 {   
+    // Load audio;
+    audioGameOver = new Audio("audio/game-over_wind-172559.mp3");
+    audioDamage = new Audio("audio/damage_select-sound-121244.mp3");
+    audioStun = new Audio("audio/stun_DWILLY_vocal_ninja_kick.wav");
+    audioDamage.volume = 0.50;
+    audioStun.volume = 0.15;
+
     // Show the splash intro
     intro();
 
