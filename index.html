@@ -81,7 +81,14 @@
             Your browser does not support the HTML5 canvas tag.
         </canvas>
 
-        <div id="helpInfo"> 
+        <div id="helpInfo">
+            <span id="volume">
+                <!-- audio switch -->
+                <span class="audio-toggle" id="audioToggle">
+                    <span class="material-symbols-outlined" id="audioOnIcon" style="display:none;">volume_up</span>
+                    <span class="material-symbols-outlined" id="audioOffIcon">volume_off</span>
+                </span>
+            </span> 
             <p id="helpTitle">How to play</p>
             <button id="closeHelp">x</button>
             <div id="instruction"></div> <!-- Instructions added dynamically -->
@@ -90,13 +97,6 @@
                     <span></span>
                 </div>
             </div>
-            <span id="volume">
-                <!-- audio switch -->
-                <span class="audio-toggle" id="audioToggle">
-                    <span class="material-symbols-outlined" id="audioOnIcon" style="display:none;">volume_up</span>
-                    <span class="material-symbols-outlined" id="audioOffIcon">volume_off</span>
-                </span>
-            </span>
         </div>
 
         <!-- Game placeholder elements -->
