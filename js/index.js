@@ -199,15 +199,15 @@ function keyUpHandler(e)
         case "ArrowRight":
         case "d":
         case "D":
-            if (game.isInit && game.isInstruction) secretCode(1);
             rightPressed = false;
+            if (game.isInstruction && game.isInit) secretCode(1);
             break;
         case "Left":
         case "ArrowLeft":
         case "a":
         case "A":
-            if (game.isInit && game.isInstruction) secretCode(0);
             leftPressed = false;
+            if (game.isInstruction && game.isInit) secretCode(0);
             break;
         case "p":
             game.pause();
@@ -239,14 +239,14 @@ function touchDownHandler(e)
 function touchUpHandler(e)
 {
     if (e.target.id === "buttonLeft") {
-        if (game.isInit && game.isInstruction) secretCode(0);
         leftPressed = false;
         touchLeftBtn.classList.remove("pressed");
+        if (game.isInstruction && game.isInit) secretCode(0);
     }
     else if (e.target.id == "buttonRight") {
-        if (game.isInit && game.isInstruction) secretCode(1);
         rightPressed = false;
         touchRightBtn.classList.remove("pressed");
+        if (game.isInstruction && game.isInit) secretCode(1);
     }
     e.preventDefault();
 }
@@ -298,12 +298,17 @@ function secretCode(code) {
 
     // Prompt the user
     let lives = parseInt(prompt("How many lives? (infinite: -1)"));
-    if (lives >= -1) { // Number given
+    // Valid number was given
+    if (lives >= -1) {
         if (lives == 0) lives = 1; // Trap 0, convert to 1 life.
         forceLives = lives;
         game.lives = lives;
-        onLivesChange();
     }
-
+    // Anything else, treat as a reset to 9 lives.
+    else {
+        forceLives = undefined;
+        game.lives = 9;
+    }
+    onLivesChange();
     resetCode();
 }
