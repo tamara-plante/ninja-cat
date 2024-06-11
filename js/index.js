@@ -73,6 +73,9 @@ function init()
         }
     });
 
+    // Setup chicken nugget(s)
+    nuggetAnim.addEventListener("animationend", nuggetAnimEnded);
+    nuggetsAnim.addEventListener("animationend", nuggetsAnimEnded);
 
     // Setup the key listeners
     document.addEventListener("keydown", keyDownHandler);

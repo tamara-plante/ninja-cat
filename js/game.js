@@ -36,6 +36,7 @@ game.init = function()
     leftPressed = false;
     rightPressed = false;
     gameOverDiv.style.display = "none";
+    resetNuggets();
     startBtn.style.display = "none";
     pauseBtn.style.visibility = "visible";
     game.toggleMobileControls();
@@ -102,12 +103,14 @@ game.pause = function(state=undefined, quiet=false)
         // Activate
         if (game.isPaused) {
             game.activePauseOverlay = true;
+            overlayLogo.style.visibility = "visible";
             updateOverlay("Paused", undefined, "90px");
             displayOverlay();
         }
         // Disable
         else {
             game.activePauseOverlay = false;
+            overlayLogo.style.visibility = "hidden";
             displayOverlay(true);
         }
     }
@@ -141,7 +144,9 @@ game.end = function()
     }
     // display the game over message in the gameOver div
     updateOverlay("Game Over", msg, "180px");
-    displayOverlay();    
+    displayOverlay();
+    // Show the nugget falling animation
+    nuggetAnimStart();
 }
 
 /**

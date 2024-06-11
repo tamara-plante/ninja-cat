@@ -16,7 +16,12 @@ const scaleMax = 1.2;
 
 // Game over
 let gameOverDiv = document.getElementById("gameOver");
+let overlayLogo = document.querySelector("#gameOver img");
 
+// Chicken nugget
+let nuggetAnimContainer = document.getElementById("chicken-anim");
+let nuggetAnim = document.getElementById("chicken-nugget");
+let nuggetsAnim = document.getElementById("chicken-nuggets");
 
 /**
  * Update the gameOver overlay with different string (html compatible).
@@ -48,9 +53,53 @@ function updateOverlay(aTitle, aText=undefined, aHeight=undefined)
  * Display the overlay. Hide = true to hide the overlay instead.
  * @param {boolean} [hide] hide the display
  */
-function displayOverlay(hide=false) {
+function displayOverlay(hide=false) 
+{
     gameOverDiv.style.display = (hide) ? "none" : "block";
 }
+
+/**
+ * Start the falling nugget animation.
+ * Display the container and keep track of the events (start, end) 
+ * of the nugget(s) with css animations.
+ * @author Tamara Plante
+ */
+function nuggetAnimStart() 
+{
+    nuggetAnimContainer.style.display = "block";
+    nuggetsAnim.style.display = "block";
+    nuggetAnim.classList.add("chicken-nugget-anim1");
+    nuggetAnim.style.display = "block";
+}
+/**
+ * When the nugget is done falling.
+ */
+function nuggetAnimEnded()
+{
+    nuggetAnim.classList.remove("chicken-nugget-anim1");
+    nuggetsAnim.classList.add("chicken-nuggets-anim1");
+    nuggetAnim.style.display = "none";
+}
+/**
+ * When the nuggets are in place, then we switch to the infinite animation.
+ * @param {Event} e the event
+ */
+function nuggetsAnimEnded(e) 
+{
+    if (e.animationName.endsWith("anim1kf")) {
+        nuggetsAnim.classList.remove("chicken-nuggets-anim1");
+        nuggetsAnim.classList.add("chicken-nuggets-anim2"); // infinite animation
+    }
+}
+/**
+ * Reset the animations on the chicken nuggets.
+ */
+function resetNuggets()
+{
+    nuggetAnimContainer.style.display = "none";
+    nuggetsAnim.classList.remove("chicken-nuggets-anim2");
+}
+
 
 // 
 /**

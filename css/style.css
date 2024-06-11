@@ -69,6 +69,103 @@ canvas {
     float: left;
 }
 
+#overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+#chicken-anim {
+    position: absolute;
+    top: 0;
+    left: 20%;
+    width: 210px;
+    height: calc(50% - 48px);
+    overflow: hidden;
+    display: none;
+}
+
+#chicken-nuggets {
+    position: absolute;
+    bottom: 0;
+    width: 210px;
+    height: 172px;
+    background-image: url("../images/chicken-nuggets-spritesheet.png");
+    background-position-x: 0;
+    background-repeat: no-repeat;
+    transform: scale(0.75); /* scale down a bit */
+    z-index: 4;
+}
+#chicken-nugget {
+    display: block;
+    position: absolute;
+    top: -172px;
+    left: 42px;
+    transform: scale(0.75); /* scale down a bit */
+    /*bottom: 52px;*/
+}
+
+
+/*  
+    Make the nugget fall!
+
+    Calculate 50% to get placement of chicken nuggets.
+    Substract the height from the bottom of the nuggets sprite at which to the nugget should touch.
+    Add the height of the nugget sprite.
+*/
+.chicken-nugget-anim1 {
+    animation-name: chicken-nugget-anim1kf;
+    animation-duration: 0.4s;
+    animation-delay: 0.3s;
+}
+@keyframes chicken-nugget-anim1kf {
+	0% {
+        top: -172px;
+	}
+	100% {
+        top: calc(50% - 3px);
+	}
+}
+.chicken-nuggets-anim1 {
+    animation-name: chicken-nuggets-anim1kf;
+    animation-duration: 0.2s;
+    animation-timing-function: steps(3);
+}
+@keyframes chicken-nuggets-anim1kf {
+    from {
+        background-position-x: -210px;
+    }
+    to {
+        background-position-x: -840px;
+    }
+}
+.chicken-nuggets-anim2 {
+    animation-name: chicken-nuggets-anim2kf;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: steps(2);
+}
+@keyframes chicken-nuggets-anim2kf {
+    from {
+        background-position-x: -630px;
+    }
+    to { 
+        background-position-x: -1050px;
+    }
+}
+
+/*
+    Pause logo
+*/
+#gameOver img {
+    visibility: hidden;
+    position: absolute;
+    width: 150px;
+    top: -5px;
+    transform: translate(-50%, -50%);
+}
+
 /*
     Game over/Pause overlay
 */
