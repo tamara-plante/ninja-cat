@@ -6,6 +6,7 @@
  * @author Tamara Plante, Iana Setrakova, Alexie Lagarde
  */
 
+let forceLives;
 let rightPressed = false;
 let leftPressed = false;
 let startBtn, pauseBtn, helpBtn, touchLeftBtn, touchRightBtn;
@@ -39,7 +40,7 @@ function init()
     touchRightBtn = document.getElementById("buttonRight");
     helpBtn = document.getElementById("help");
     helpInfo = document.getElementById("helpInfo");
-    helpInstruction = document.querySelector("#helpInfo > div");
+    helpInstruction = document.querySelector("#helpInfo > div:first-of-type");
     scrollIndicator = document.getElementById("scrollIndicator");
     closeHelp = document.getElementById("closeHelp");
 
@@ -198,12 +199,14 @@ function keyUpHandler(e)
         case "ArrowRight":
         case "d":
         case "D":
+            if (game.isInit && game.isInstruction) secretCode(1);
             rightPressed = false;
             break;
         case "Left":
         case "ArrowLeft":
         case "a":
         case "A":
+            if (game.isInit && game.isInstruction) secretCode(0);
             leftPressed = false;
             break;
         case "p":
@@ -236,12 +239,71 @@ function touchDownHandler(e)
 function touchUpHandler(e)
 {
     if (e.target.id === "buttonLeft") {
+        if (game.isInit && game.isInstruction) secretCode(0);
         leftPressed = false;
         touchLeftBtn.classList.remove("pressed");
     }
     else if (e.target.id == "buttonRight") {
+        if (game.isInit && game.isInstruction) secretCode(1);
         rightPressed = false;
         touchRightBtn.classList.remove("pressed");
     }
     e.preventDefault();
+}
+
+/**
+ * Fun little dev backdoor to set the number of lives
+ * Specific condition to trigger the secret code: game is started and options are opened.
+ * @author Tamara Plante
+ */
+let secretCodeSequence = [0, 1, 1, 0];
+let sequence = [];
+let sequenceStart;
+
+function secretCode(code) {
+
+    function resetCode() {
+        sequence = [];
+        sequenceStart = null;
+    }
+    // In seconds
+    function getCurrentTime() {
+        return performance.now() / 1000;
+    }
+
+    // Start the sequence
+    if (!sequence.length) {
+        sequenceStart = getCurrentTime();
+    }
+    // Expired sequence
+    else if ((getCurrentTime() - sequenceStart) > 10) {
+        console.log("Too slow!");
+        resetCode();
+        return;
+    }
+
+    sequence.push(code);
+
+    // Check if the sequence is completed.
+    if (!(sequence.length == secretCodeSequence.length)) return;
+
+    // Check the sequence matches.
+    for (let i in sequence) {
+        if (sequence[i] != secretCodeSequence[i]) {
+            console.log("wrong guess!");
+            resetCode()
+            return;
+        }
+    }
+
+    // Prompt the user
+    let lives = parseInt(prompt("How many lives? (infinite: -1)"));
+    if (lives >= -1) { // Number given
+        if (lives == 0) lives = 1; // Trap 0, convert to 1 life.
+        forceLives = lives;
+        game.lives = lives;
+        onLivesChange();
+    }
+
+    resetCode();
 }

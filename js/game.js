@@ -13,6 +13,7 @@ let game = {
     isInit: false,
     isEnded: false,
     isPaused: false,
+    isInstruction: false,
     activePauseOverlay: false,
     secondsPassed: null,
     oldTimeStamp: null,
@@ -48,7 +49,7 @@ game.init = function()
     game.oldTimeStamp = null;
     game.highScore = localStorage.getItem("highScore") || 0; // Load local highscore
     game.points = 0;
-    game.lives = 9;
+    game.lives = (typeof forceLives === "number") ? forceLives : 9;
     drawBackground(); 
     game.drawLives();
 
@@ -77,7 +78,8 @@ game.toggleMobileControls = function(hide=false)
  */
 game.toggleInstruction = function()
 {
-    let active = helpInfo.style.display == "block";
+    let active = helpInfo.style.display == "block"; // Starting state
+    game.isInstruction = !active;
 
     // Only activate/disable pause if the pause overlay isn't active
     // Disable the pause button while displaying instruction

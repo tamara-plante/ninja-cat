@@ -1,10 +1,6 @@
 /*
     Touch buttons
 */
-/* Disable double-tap on mobile */
-* {
-    touch-action: "manipulation";
-}
 body, .touch {
     -webkit-touch-callout:none;
     -webkit-user-select:none;

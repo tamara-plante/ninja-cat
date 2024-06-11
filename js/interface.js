@@ -144,7 +144,7 @@ game.drawLives = function(scale = 1) {
     drawImage(livesContext, heart, heartX, heartY, heartWidth, heartHeight);
 
      // draw the remaing lives text on the canvas
-    drawText(livesContext, '14px', "Press Start 2P", "#222034", 200, 34, game.lives);
+    drawText(livesContext, '14px', "Press Start 2P", "#222034", 200, 34, ((game.lives > -1) ? game.lives : "-1"));
 }
 
 game.drawScore = function() {
