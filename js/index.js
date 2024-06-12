@@ -15,7 +15,10 @@ let startBtn, pauseBtn, helpBtn, touchLeftBtn, touchRightBtn;
 let helpInfo, helpInstruction, closeHelp, scrollIndicator;
 
 // Audio
-let audioDamage, audioStun, audioGameOver;
+let audioGame, audioGameOver, audioDamage, audioStun;
+// Audio control
+let isAudioPlaying = true;
+let audioToggle, audioOnIcon, audioOffIcon;
 
 // Main Game canvas
 let canvas, context;
@@ -28,23 +31,19 @@ let guiCanvas, guiContext;
 // lives canvas
 let livesCanvas, livesContext;
 
-
-// audio
-let audioToggle = document.getElementById("audioToggle");
-let audioOnIcon = document.getElementById("audioOnIcon");
-let audioOffIcon = document.getElementById("audioOffIcon");
-let gameAudio = new Audio("audio/waiting.wav"); 
-let isAudioPlaying = false;
-
 window.onload = init;
 
 function init() 
 {   
-    // Load audio;
-    audioGameOver = new Audio("audio/game-over_wind-172559.mp3");
-    audioDamage = new Audio("audio/damage_select-sound-121244.mp3");
-    audioStun = new Audio("audio/stun_DWILLY_vocal_ninja_kick.wav");
-    audioDamage.volume = 0.50;
+    // Load game audio
+    audioGame = new Audio("audio/game-music-loop-3-144252.mp3"); //https://pixabay.com/sound-effects/game-music-loop-3-144252/
+    audioGame.volume = 0.1;
+    audioGame.loop = true;
+    // Load special effects audio
+    audioGameOver = new Audio("audio/game-over_wind-172559.mp3"); // https://pixabay.com/sound-effects/wind-172559/
+    audioDamage = new Audio("audio/damage_select-sound-121244.mp3"); // https://pixabay.com/sound-effects/select-sound-121244/
+    audioStun = new Audio("audio/stun_DWILLY_vocal_ninja_kick.wav"); // splice
+    audioDamage.volume = 0.30;
     audioStun.volume = 0.15;
 
     // Show the splash intro
@@ -60,6 +59,9 @@ function init()
     helpInstruction = document.querySelector("#instruction");
     scrollIndicator = document.getElementById("scrollIndicator");
     closeHelp = document.getElementById("closeHelp");
+    audioToggle = document.getElementById("audioToggle");
+    audioOnIcon = document.getElementById("audioOnIcon");
+    audioOffIcon = document.getElementById("audioOffIcon");
 
     // Load game canvases
     [canvas, context] = loadCanvas("game"); // main, with items
@@ -72,28 +74,15 @@ function init()
     // Lives canvas
     [livesCanvas, livesContext] = loadCanvas("livesCanvas");
 
-    
-    // initialize audio icons state
-    audioOnIcon.style.display = 'none';
-    audioOffIcon.style.display = 'block';
-
-    audioToggle.addEventListener('click', function() {
-        if (isAudioPlaying) {
-            gameAudio.pause();
-            audioOnIcon.style.display = 'none';
-            audioOffIcon.style.display = 'block';
-            audioToggle.style.backgroundColor = '#9a9a9a';
-        } else {
-            gameAudio.play();
-            audioOnIcon.style.display = 'block';
-            audioOffIcon.style.display = 'none';
-            audioToggle.style.backgroundColor = 'orange';
-        }
-        isAudioPlaying = !isAudioPlaying;
-    });    
-
     // Setup game instruction entries
     setupInstruction();
+
+    // Setup audio
+    let audioSetting = localStorage.getItem("audioSetting");
+    game.toggleAudio((audioSetting == null) ? true : audioSetting === "true");
+
+    // Audio listener
+    audioToggle.addEventListener("click", game.toggleAudio);
 
     // Setup instruction listeners
     helpBtn.addEventListener("click", game.toggleInstruction);
@@ -124,7 +113,7 @@ function init()
         setupTouchscreen();
     }
     // Game listener
-    pauseBtn.addEventListener("click", function() {game.pause();});
+    pauseBtn.addEventListener("click", game.pause);
     startBtn.addEventListener("click", game.init);
 }
 

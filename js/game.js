@@ -59,8 +59,9 @@ game.init = function()
     player.init();
 
     // Start the gameLoop
-    window.requestAnimationFrame(game.loop);
+    audioGame.play();
     game.items.generate();
+    window.requestAnimationFrame(game.loop);
 }
 
 /**
@@ -95,6 +96,29 @@ game.toggleInstruction = function()
 }
 
 /**
+ * Toggle all the audios.
+ * @author Iana Setrakova, Tamara Plante
+ */
+game.toggleAudio = function(isEnabled=undefined)
+{
+    isAudioPlaying = (typeof isEnabled === "boolean") ? isEnabled: !isAudioPlaying;
+
+    for (let audio of [audioGame, audioDamage, audioStun, audioGameOver]) {
+        audio.muted = !isAudioPlaying;
+    }
+
+    if (!isAudioPlaying) { // Disable
+        localStorage.setItem("audioSetting", false); // Store locally
+        audioOnIcon.classList.add("audioDisabled");
+        audioOffIcon.classList.remove("audioDisabled");
+    } else { // Enable
+        localStorage.setItem("audioSetting", true); // Store locally
+        audioOnIcon.classList.remove("audioDisabled");
+        audioOffIcon.classList.add("audioDisabled");
+    }
+}
+
+/**
  * Toggle pause state. If value provided, use that instead of toggling.
  * @param {boolean} [state] if provided, will assign the value to isPaused
  * @param {boolean} [quiet] if we should display the overlay
@@ -106,6 +130,7 @@ game.pause = function(state=undefined, quiet=false)
     if (!quiet) {
         // Activate
         if (game.isPaused) {
+            audioGame.pause();
             game.activePauseOverlay = true;
             overlayLogo.style.visibility = "visible";
             updateOverlay("Paused", undefined, "90px");
@@ -113,6 +138,7 @@ game.pause = function(state=undefined, quiet=false)
         }
         // Disable
         else {
+            audioGame.play();
             game.activePauseOverlay = false;
             overlayLogo.style.visibility = "hidden";
             displayOverlay(true);

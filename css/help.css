@@ -14,6 +14,35 @@
     font-family: 'Press Start 2P', sans-serif;
     overflow-y: hidden;
 }
+
+#audioToggle{
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+#audioToggle span {
+    border-radius: 50%;
+    padding: 5px;
+}
+#audioToggle span:hover {
+    filter: brightness(0.9)
+}
+#audioOnIcon {
+    background-color: orange;
+}
+#audioOffIcon {
+    background-color: #9a9a9a;
+}
+.audioDisabled {
+    display: none;
+}
+
 #instruction {
     max-height: 320px; 
     overflow-y: scroll; /* Show vertical scrollbar */
