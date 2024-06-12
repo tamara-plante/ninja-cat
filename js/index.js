@@ -42,7 +42,7 @@ function init()
     // Load special effects audio
     audioGameOver = new Audio("audio/game-over_wind-172559.mp3"); // https://pixabay.com/sound-effects/wind-172559/
     audioDamage = new Audio("audio/damage_select-sound-121244.mp3"); // https://pixabay.com/sound-effects/select-sound-121244/
-    audioStun = new Audio("audio/stun_DWILLY_vocal_ninja_kick.wav"); // splice
+    audioStun = new Audio("audio/stun_DWILLY_vocal_ninja_kick.mp3"); // splice
     audioDamage.volume = 0.30;
     audioStun.volume = 0.15;
 
