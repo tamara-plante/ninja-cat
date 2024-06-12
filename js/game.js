@@ -35,7 +35,6 @@ game.init = function()
     // Set key press and disable start game button and hide the game over.
     game.isInit = true;
     drawBackground(); 
-    game.drawLives();
 
     // Initiate our audio it requires a user click event to play on mobile.
     // So we will initiate all of the audios immediately.
@@ -74,6 +73,7 @@ game.reset = function()
     game.highScore = localStorage.getItem("highScore") || 0; // Load local highscore
     game.points = 0;
     game.lives = isNumber(forceLives) ? forceLives : 9;
+    game.drawLives();
 
     // Get a reference to our main elements
     player.init();
