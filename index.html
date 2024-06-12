@@ -82,13 +82,11 @@
         </canvas>
 
         <div id="helpInfo">
-            <span id="volume">
-                <!-- audio switch -->
-                <span class="audio-toggle" id="audioToggle">
-                    <span class="material-symbols-outlined" id="audioOnIcon" style="display:none;">volume_up</span>
-                    <span class="material-symbols-outlined" id="audioOffIcon">volume_off</span>
-                </span>
-            </span> 
+            <!-- audio switch -->
+            <div class="audio-toggle" id="audioToggle">
+                <span class="material-symbols-outlined" id="audioOnIcon">volume_up</span>
+                <span class="material-symbols-outlined audioDisabled" id="audioOffIcon">volume_off</span>
+            </div>
             <p id="helpTitle">How to play</p>
             <button id="closeHelp">x</button>
             <div id="instruction"></div> <!-- Instructions added dynamically -->
@@ -100,12 +98,12 @@
         </div>
 
         <!-- Game placeholder elements -->
-        <img id="player" src="images/ninja-cat-spritesheet.png" alt="ninja cat player" style="display:none;">
-        <img id="items" src="images/items-spritesheet.png" alt="falling items" style="display:none;">
-        <img id="water" src="images/water.png" alt="water drop item" style="display:none;">
+        <img id="player" src="images/ninja-cat-spritesheet.png" alt="ninja cat player">
+        <img id="items" src="images/items-spritesheet.png" alt="falling items">
+        <img id="water" src="images/water.png" alt="water drop item">
 
-        <img id="bgImg" src="images/japan-6.png" alt="game background" style="display:none;">
-        <img id="heart" src="images/heart.png" alt="player lives" style="display:none;">
+        <img id="bgImg" src="images/japan-6.png" alt="game background">
+        <img id="heart" src="images/heart.png" alt="player lives">
         
         <script src="js/utils.js"></script>
         <script src="js/index.js"></script>
