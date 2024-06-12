@@ -114,7 +114,12 @@ function init()
     }
     // Game listener
     pauseBtn.addEventListener("click", game.pause);
-    startBtn.addEventListener("click", game.init);
+    startBtn.addEventListener("click", function() {
+        // Reset the game
+        if (game.isInit) game.reset(); 
+        // Initialize the game, which will trigger the game after.
+        else game.init(); 
+    });
 }
 
 /**

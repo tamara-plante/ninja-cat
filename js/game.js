@@ -34,17 +34,40 @@ game.init = function()
 {
     // Set key press and disable start game button and hide the game over.
     game.isInit = true;
+    drawBackground(); 
+    game.drawLives();
+
+    // Initiate our audio it requires a user click event to play on mobile.
+    // So we will initiate and immediately pause it so it's ready for
+    // when the game runs.
+    audioDamage.play().then(() => {audioDamage.pause()});
+    audioStun.play().then(() => {audioStun.pause()});
+    audioGameOver.play().then(() => {audioGameOver.pause()});
+    audioGame.play()
+
+    // Start the game
+    game.reset();
+}
+
+/**
+ * Reset the game state and play!
+ */
+game.reset = function()
+{
+    // Reset key presses
     leftPressed = false;
     rightPressed = false;
-    gameOverDiv.style.display = "none";
+    game.toggleMobileControls();
+
+    // Reset gui
     resetNuggets();
+    gameOverDiv.style.display = "none";
     startBtn.style.display = "none";
     pauseBtn.style.visibility = "visible";
-    game.toggleMobileControls();
 
     if (game.isInstruction) game.toggleInstruction(); // Force close the instruction.
 
-    // Set up initial game values
+    // Reset game values
     game.isEnded = false;
     game.isPaused = false;
     game.secondsPassed = null;
@@ -52,14 +75,11 @@ game.init = function()
     game.highScore = localStorage.getItem("highScore") || 0; // Load local highscore
     game.points = 0;
     game.lives = isNumber(forceLives) ? forceLives : 9;
-    drawBackground(); 
-    game.drawLives();
 
     // Get a reference to our main elements
     player.init();
 
     // Start the gameLoop
-    audioGame.play();
     game.items.generate();
     window.requestAnimationFrame(game.loop);
 }
