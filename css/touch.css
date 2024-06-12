@@ -1,16 +1,6 @@
 /*
     Touch buttons
 */
-body, .touch {
-    -webkit-touch-callout:none;
-    -webkit-user-select:none;
-    -khtml-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
-    -webkit-tap-highlight-color:rgba(0,0,0,0);
-}
-
 #touchControl {
     display: none;
     position: absolute;
@@ -27,6 +17,7 @@ body, .touch {
     height: 64px;
     z-index: 10;
     visibility: "hidden";
+    transform: scale(1.1) /* Make buttons slightly bigger */
 }
 
 #buttonLeft {
