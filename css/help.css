@@ -150,15 +150,15 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-background: #a0e6fa;
+    background: #a0e6fa;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-background: #ff6344;
+    background: #ff6344;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-background: #ff6344;
+    background: #ff6344;
 }
