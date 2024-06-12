@@ -38,11 +38,10 @@ game.init = function()
     game.drawLives();
 
     // Initiate our audio it requires a user click event to play on mobile.
-    // So we will initiate and immediately pause it so it's ready for
-    // when the game runs.
-    audioDamage.play().then(() => {audioDamage.pause()});
-    audioStun.play().then(() => {audioStun.pause()});
-    audioGameOver.play().then(() => {audioGameOver.pause()});
+    // So we will initiate all of the audios immediately.
+    audioDamage.load();
+    audioStun.load();
+    audioGameOver.load();
     audioGame.play()
 
     // Start the game
